@@ -1,0 +1,254 @@
+html {
+  font-size: 13px;
+}
+
+//image input
+
+.img-inputer__inputer {
+  display: none;
+}
+
+.img-inputer__preview-box {
+  position: relative;
+}
+
+.img-inputer--large {
+  width: 100%;
+  min-height: 100px;
+  height: auto;
+}
+.img-inputer__preview-img {
+  height: 100%;
+
+}
+
+select.form-control:not([size]):not([multiple]){
+  height: auto;
+}
+.color-blue {
+  color: #2e9ad0;
+}
+.wrapper .sidebar .nav .nav-item .nav-link {
+  padding: 10px 25px;
+  margin: 0px;
+  opacity: .7;
+}
+
+.multiselect__tags {
+  min-height: 40px;
+  display: block;
+  padding: 8px 40px 0 8px;
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+  background: #fff;
+  font-size: 14px;
+  direction: ltr;
+  text-align: left;
+}
+
+#nprogress .spinner {
+  background: white;
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  height: 250px;
+  top: calc((100vh / 2) - 125px) !important;
+  right: calc((100vw / 2) - 150px) !important;
+}
+
+#nprogress .spinner-icon {
+  //width: 50px !important;
+  //height: 50px !important;
+  //background: url(../img/login_logo.png) no-repeat;
+  //background-size: cover;
+  //box-sizing: border-box !important;
+  border: solid 0px transparent !important;
+  //border-top-color: #3cd3ad !important;
+  //border-left-color: #3cd3ad !important;
+  //-webkit-animation: nprogress-spinner 1000ms linear infinite !important;
+  //animation: nprogress-spinner 1000ms linear infinite !important;
+  animation: none !important;
+}
+
+
+.spinner-icon{
+  background-image: url("../img/login_logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: top center;
+  border-radius: 0px !important;
+  width: 160px!important;
+  height: 200px!important;
+  margin: auto;
+}
+.spinner .spinner-icon:after {
+  content: " ";
+  width: 20%;
+  /* z-index: 9; */
+  height: 100%;
+  position: absolute;
+  background-image: url(../img/loader.gif);
+  /* position: initial; */
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom center;
+  /* box-shadow: 0 0 black; */
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin: auto;
+  margin-top: auto;
+  //top: 350px;
+}
+
+.navbar .nav-link p {
+  color: unset !important;
+}
+
+.mr-badge {
+  background-color: #8efda1;
+  color: #000 !important;
+  padding: 0.3rem 1rem !important;
+  border-radius: 74px;
+}
+
+.navbar-light .container-fluid .navbar-brand {
+  display: none;
+}
+
+#nprogress .bar {
+  background-color: #3cd3ad !important;
+  height: 3px !important;
+}
+
+#nprogress {
+  background: rgba(89, 89, 89, 0.6);
+  left: 0px;
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 8;
+  pointer-events: unset !important;
+
+}
+
+.actions-title span.notification .caret {
+  display: none;
+}
+
+/*Pageination*/
+
+.pagination li:first-child,
+.pagination li:last-child {
+  padding: 4px 9px;
+  border: 1px solid #ababab;
+  border-radius: 9px;
+  margin: 0px 2px;
+}
+
+.pagination li:first-child a,
+.pagination li:last-child a {
+  color: #000;
+}
+
+.pagination {
+  text-align: center;
+  //direction: ltr;
+  //margin: auto;
+}
+
+.page-item {
+  padding: 4px 9px;
+  border: 1px solid #ababab;
+  border-radius: 9px;
+  margin: 0px 2px;
+}
+
+li.page-item.active {
+  background-color: #4848485e;
+}
+
+.page-item a {
+  color: #000;
+}
+
+.particles-js-canvas-el {
+  position: absolute;
+  z-index: -1;
+}
+
+/*Pageination*/
+
+.sub-links ul li.nav-item {
+  list-style: none !important;
+}
+
+.wrapper .sidebar .sidebar-wrapper {
+  height: calc(100% - 76px);
+}
+
+.table-filter-wrapper {
+  padding: 0px 20px;
+}
+
+.table-search-input {
+  border-radius: 5px;
+  padding: 8px 6px;
+  color: #6d6d6d;
+  background-color: #fffcf5;
+  border: 1px solid #a8a8a8;
+}
+
+.table-search-input:focus {
+  color: rgba(0, 0, 0, 0.7);
+  background-color: #fff;
+  border: 1px solid #a8a8a8;;
+}
+
+.table-search-select {
+  width: auto;
+}
+
+.table-wrapper {
+  padding: 70px 0px;
+}
+
+.page-item {
+  padding: 0.3rem;
+}
+
+.page-link {
+  border: none;
+  padding: 0.25rem 0.25rem;
+}
+
+.page-item.active .page-link {
+  background-color: #bcbcbc;
+}
+
+.form-control {
+  font-size: 1rem;
+  padding: .4rem .2rem;
+  height: auto;
+}
+
+.card label {
+  font-size: 1rem;
+}
+@media screen and (max-width: 991px) {
+  html {
+    font-size: 13px;
+  }
+  .table-responsive {
+    border: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  html {
+    font-size: calc(100vw / 35);
+  }
+}
