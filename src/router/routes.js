@@ -6,23 +6,34 @@ import AccessDenied from "@/pages/AccessDenied";
 import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
 import UserList from "@/pages/UserList.vue";
+
 import CarBrandList from "@/pages/CarBrandList.vue";
 import CarsList from "@/pages/CarsList.vue";
 import CreateCar from "@/pages/Car/CreateCar.vue";
 import EditCar from "@/pages/Car/EditCar.vue";
+
 import Discount from "@/pages/Discount.vue";
+
 import Experts from "@/pages/Experts.vue";
+
 import Messages from "@/pages/Messages.vue";
 import MessagesGroup from "@/pages/MessagesGroup.vue";
 import Message from "@/pages/Messages/Message.vue";
+
 import Orders from "@/pages/Orders.vue";
 import OrderDetail from '@/pages/OrderDetail.vue';
+
 import ProductCategoryList from "@/pages/ProductCategoryList.vue";
 import ProductList from "@/pages/ProductList.vue";
+
 import ServiceCategoryList from "@/pages/ServiceCategoryList.vue";
 import ServiceList from "@/pages/ServiceList.vue";
+import ServiceCategoryDetail from "@/pages/Service/ServiceCategoryDetail.vue";
+import ServiceDetail from "@/pages/Service/ServiceDetail.vue";
+
 import Slider from "@/pages/Slider.vue";
 import Slide from "@/pages/Slider/Slide.vue";
+
 import StoreList from "@/pages/StoreList.vue";
 import StoreProduct from "@/pages/StoreProduct.vue";
 // Login Register
@@ -122,16 +133,25 @@ const routes = [
                 name: "product-list",
                 component: ProductList,
             },
-
             {
                 path: "service-category-list",
                 name: "service-category-list",
                 component: ServiceCategoryList,
             },
             {
+                path: "service-category-detail/:id?",
+                name: "service-category-detail",
+                component: ServiceCategoryDetail
+            },
+            {
                 path: "service-list",
                 name: "service-list",
                 component: ServiceList,
+            },
+            {
+                path: "service-detail/:id?",
+                name: "service-detail",
+                component: ServiceDetail
             },
             {
                 path: "slider",

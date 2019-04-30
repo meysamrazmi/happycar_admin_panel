@@ -23,7 +23,7 @@
                                 <div class="table-wrapper">
                                     <v-client-table :columns="columns" :data="data" :options="options">
                                         <div slot="thumbnail" slot-scope="props">
-                                            <img class="img-thumbnail mr-thumb" :src="`${$http.defaults.mediaUrl}${props.row.image}`" alt="">
+                                            <img class="mr-thumb" :src="`${$http.defaults.mediaUrl}${props.row.image}`" alt="">
                                         </div>
                                         <div slot="slider_type" slot-scope="props">
                                             {{ sliderTypes[props.row.slider_type]}}
@@ -171,8 +171,9 @@
     }
 </script>
 
-<style scoped>
+<style>
     .mr-thumb {
-        max-width: 100px;
+        width: auto;
+        height: 75px;
     }
 </style>

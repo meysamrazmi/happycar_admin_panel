@@ -10,7 +10,7 @@
                             <div class="table-responsive">
                                 <div class="table-wrapper">
                                     <v-client-table :columns="columns" :data="data" :options="options">
-                                        <a slot="uri" slot-scope="props" target="_blank" :href="props.row.uri" class="ti ti-eye"></a>
+
                                     </v-client-table>
                                 </div>
                             </div>

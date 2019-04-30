@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import users from './users';
 import messages from './messages';
 import services from './services';
+import placeholderImage from '../assets/img/image-placeholder-square.png';
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
         services
     },
     state: {
+        placeholderImage: placeholderImage,
         tebleConfig: {
             sortIcon: {
                 base:'ti',
