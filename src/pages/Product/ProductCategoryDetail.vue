@@ -2,7 +2,7 @@
     <div>
         <div class="row">
             <div class="col-12">
-                <card title="گروه سرویس" :subTitle="subTitle">
+                <card title="گروه کالا" :subTitle="subTitle">
                     <div class="row mt-5 justify-content-center">
                         <div class="col-md-6 m-2">
                             <img-inputer
@@ -43,7 +43,7 @@
 <script>
 
     export default {
-        name: "service-category-detail",
+        name: "product-category-detail",
         components: {},
         data() {
             return {
@@ -60,9 +60,9 @@
         computed: {
             subTitle() {
                 if (this.create) {
-                    return 'اضافه کردن گروه سرویس جدید'
+                    return 'اضافه کردن گروه کالا جدید'
                 } else {
-                    return `بروز رسانی گروه سرویس ${this.fetchedCategory.name}`
+                    return `بروز رسانی گروه کالا ${this.fetchedCategory.name}`
                 }
             },
 
@@ -84,15 +84,14 @@
 
         methods: {
             fetchCategory() {
-                this.$http.get(`/services/category/`).then((res) => {
+                this.$http.get(`/products/category/`).then((res) => {
                     let temp = undefined;
                     if (res.data.result.length !== 0) {
-                        console.log('lngth     ',res.data.result);
                         res.data.result.forEach((category)=> {
                             console.log('cat id', category.id);
-                              if(category.id === this.id) {
-                                  temp = category
-                              }
+                            if(category.id === this.id) {
+                                temp = category
+                            }
                         });
 
                         console.log('temp  ', temp);
@@ -124,13 +123,13 @@
                                 const slideFormData = new FormData();
                                 slideFormData.set('name', this.category.name);
                                 slideFormData.append('image', this.imageFile);
-                                this.$http.post('/services/category/', slideFormData).then((res) => {
+                                this.$http.post('/products/category/', slideFormData).then((res) => {
                                     this.$swal({
                                         type: 'success',
                                         title: 'موفق',
                                         text: 'عملیات با موفقیت انجام شد'
                                     });
-                                    this.$router.push({name: 'service-category-list'});
+                                    this.$router.push({name: 'product-category-list'});
                                 }).catch((err) => {
                                     this.$swal({
                                         type: 'warning',
@@ -153,13 +152,13 @@
                         categoryFormData.append('image', this.imageFile);
                     }
 
-                    this.$http.patch('/services/category/', categoryFormData).then((res)=> {
+                    this.$http.patch('/products/category/', categoryFormData).then((res)=> {
                         this.$swal({
                             type: 'success',
                             title: 'موفق',
                             text: 'عملیات با موفقیت انجام شد'
                         });
-                        this.$router.push({name: 'service-category-list'});
+                        this.$router.push({name: 'product-category-list'});
                     }).catch((err)=> {
                         this.$swal({
                             type: 'warning',

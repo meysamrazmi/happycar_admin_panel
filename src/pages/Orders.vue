@@ -10,7 +10,23 @@
                             <div class="table-responsive">
                                 <div class="table-wrapper">
                                     <v-client-table :columns="columns" :data="data" :options="options">
-                                        <a slot="uri" slot-scope="props" target="_blank" :href="props.row.uri" class="ti ti-eye"></a>
+                                        <div slot="payment_type" slot-scope="props">
+                                            <span v-if="props.row.payment_type === 'cash'" class="badge-info p-2 rounded">
+                                                نقدی
+                                            </span>
+                                            <span v-else class="badge-success p-2 rounded">
+                                                آنلاین
+                                            </span>
+                                        </div>
+                                        <div slot="services" slot-scope="props">
+                                            <vue-input-tag :tags="props.row.services" :read-only="true" :allow-duplicates="true">
+                                            </vue-input-tag>
+                                        </div>
+                                        <div slot="actions" slot-scope="props">
+                                            <router-link :to="{name: 'order-detail'}">
+                                                <a class="ti-eye text-primary"></a>
+                                            </router-link>
+                                        </div>
                                     </v-client-table>
                                 </div>
                             </div>
@@ -27,7 +43,30 @@
     import { ClientTable } from 'vue-tables-2'
 
     function getData() {
-        return [];
+        return [
+            {
+                id: 1,
+                user: 'محمد',
+                services: [
+                    'تعویض روغن',
+                    'کارواش'
+                ],
+                price: 1200,
+                payment_type: 'online',
+                assign: false,
+            },
+            {
+                id: 2,
+                user: 'حسن',
+                services: [
+                    'تعویض فیلتر',
+                    'پنچری'
+                ],
+                price: 120000,
+                payment_type: 'cash',
+                assign: true,
+            }
+        ];
     }
 
 
@@ -40,14 +79,19 @@
 
         data() {
             return {
-                columns: ['id', 'name', 'code', 'uri'],
+                columns: ['id', 'user', 'services', 'payment_type', 'price', 'actions'],
                 data: getData(),
                 options: {
                     headings: {
-                        name: 'نام کشور',
-                        code: 'کد کشور',
-                        uri: 'مشاهده سوابق',
+                        user: 'کاربر',
+                        services: 'سرویس‌ها',
+                        payment_type: 'نوع پرداخت',
+                        price: 'هزینه',
+                        actions: 'اقدامات',
                         id: 'ردیف'
+                    },
+                    rowClassCallback: function (row) {
+                        return `assign-${row.assign}`
                     },
                     sortable: ['id','name', 'code'],
                     filterable: ['name', 'code'],
@@ -79,6 +123,11 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+    .assign-false {
+        background-color: #71f1873d;
+    }
+    .assign-true {
+        background-color: #ece9e51c;
+    }
 </style>

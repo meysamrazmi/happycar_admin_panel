@@ -9,20 +9,20 @@
                 <sidebar-link to="/orders" name="سفارش‌ها" icon="ti-shopping-cart-full"></sidebar-link>
                 <sidebar-link-group title="مدیربت پیام‌ها" icon="ti-comment-alt">
                     <template slot="subLink">
-                        <sidebar-link to="/messages" name="پیام‌ها" icon="ti-angle-double-left"></sidebar-link>
                         <sidebar-link to="/messages-group" name="کتگوری پیام‌ها" icon="ti-angle-double-left"></sidebar-link>
+                        <sidebar-link to="/messages" name="پیام‌ها" icon="ti-angle-double-left"></sidebar-link>
                     </template>
                 </sidebar-link-group>
                 <sidebar-link-group title="مدیربت محصولات" icon="ti-package">
                     <template slot="subLink">
-                        <sidebar-link to="/product-list" name="محصول‌ها" icon="ti-angle-double-left"></sidebar-link>
                         <sidebar-link to="/product-category-list" name="گروه کالایی" icon="ti-angle-double-left"></sidebar-link>
+                        <sidebar-link to="/product-list" name="محصول‌ها" icon="ti-angle-double-left"></sidebar-link>
                     </template>
                 </sidebar-link-group>
                 <sidebar-link-group title="مدیریت سرویس‌ها" icon="ti-layers-alt" >
                     <template slot="subLink">
-                        <sidebar-link to="/service-list" name="سرویس‌ها" icon="ti-angle-double-left"></sidebar-link>
                         <sidebar-link to="/service-category-list" name="گروه سرویس" icon="ti-angle-double-left"></sidebar-link>
+                        <sidebar-link to="/service-list" name="سرویس‌ها" icon="ti-angle-double-left"></sidebar-link>
                     </template>
                 </sidebar-link-group>
                 <sidebar-link-group title="مدیربت انبار" icon="ti-home">

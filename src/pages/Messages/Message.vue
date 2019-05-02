@@ -103,6 +103,6 @@
 <style>
     .divider-border {
         border-radius: 7px;
-        background: #dedede;
+        background: #e2e2e0;
     }
 </style>

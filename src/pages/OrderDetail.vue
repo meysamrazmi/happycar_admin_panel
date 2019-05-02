@@ -1,31 +1,57 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-sm-6">
+                <detail-card></detail-card>
+            </div>
+
+            <div class="col-sm-6">
+                <factor></factor>
             </div>
             <div class="col-12">
-                <card title="لیست آی‌پی‌ها" subTitle="دسترسی به اطلاعات آی‌پی‌ها">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="table-responsive">
-                                <div class="table-wrapper">
-                                    <v-client-table :columns="columns" :data="data" :options="options">
-                                        <a slot="uri" slot-scope="props" target="_blank" :href="props.row.uri" class="ti ti-eye"></a>
-                                    </v-client-table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <card class="location-height">
+                    <l-map :zoom="zoom" :center="center">
+                        <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+                        <l-marker :lat-lng="marker"></l-marker>
+                    </l-map>
                 </card>
             </div>
 
+            <div class="col-sm-6">
+                <card title="اطلاع به مشتری">
+                    <textarea class="form-control mb-3"></textarea>
+                    <div class="text-center">
+                        <button class="btn btn-warning mx-1">
+                            پیامک
+                        </button>
+                        <button class="btn btn-success mx-1">
+                            نوتیفیکیشن
+                        </button>
+                    </div>
+                </card>
+            </div>
+            <div class="col-sm-6">
+                <card title="اطلاع به تعمیرکار">
+                    <textarea class="form-control mb-3"></textarea>
+                    <div class="text-center">
+                        <button class="btn btn-warning mx-1">
+                            پیامک
+                        </button>
+                        <button class="btn btn-success mx-1">
+                            نوتیفیکیشن
+                        </button>
+                    </div>
+                </card>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-    import { ClientTable } from 'vue-tables-2'
-
+    import { ClientTable } from 'vue-tables-2';
+    import Factor from './Order/Factor';
+    import DetailCard from './Order/DetailCard';
+    import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
     function getData() {
         return [];
     }
@@ -35,37 +61,21 @@
         name: "order-detail",
 
         components:{
-            ClientTable
+            ClientTable,
+            Factor,
+            DetailCard,
+            LMap,
+            LTileLayer,
+            LMarker
         },
 
         data() {
             return {
-                columns: ['id', 'name', 'code', 'uri'],
-                data: getData(),
-                options: {
-                    headings: {
-                        name: 'نام کشور',
-                        code: 'کد کشور',
-                        uri: 'مشاهده سوابق',
-                        id: 'ردیف'
-                    },
-                    sortable: ['id','name', 'code'],
-                    filterable: ['name', 'code'],
-                    pagination: { chunk:10 },
-                    sortIcon: this.$store.state.tebleConfig.sortIcon,
-                    texts: this.$store.state.tebleConfig.texts,
-                    skin: this.$store.state.tebleConfig.skin,
-                    customSorting: {
-                        id: function (ascending) {
-                            return function (a, b) {
-                                if (ascending){
-                                    return a.id >= b.id ? 1 : -1;
-                                }
-                                return a.id <= b.id ? 1 : -1;
-                            }
-                        },
-                    }
-                }
+                zoom:16,
+                center:  L.latLng(35.6892, 51.3890),
+                url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+                attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                marker:  L.latLng(35.6892, 51.3890),
             }
         },
 
@@ -80,5 +90,7 @@
 </script>
 
 <style scoped>
-
+    .location-height {
+        height: 500px;
+    }
 </style>

@@ -90,7 +90,7 @@
                         } else if (this.type === "update") {
                             let data = {
                                 category_id: this.modalData.id,
-                                category_name: this.category,
+                                category: this.category,
                                 status: String(this.modalData.status)
                             };
                             this.$http.patch('/contact_us/category/', data).then((res) => {

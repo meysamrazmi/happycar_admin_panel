@@ -19,7 +19,7 @@ export default new Vuex.Store({
             sortIcon: {
                 base:'ti',
                 up:'ti-angle-up text-success p-1',
-                down:'ti-angle-down text-warning p-1',
+                down:'ti-angle-down text-danger p-1',
                 is:'ti-arrows-vertical text-primary p-1',
             },
             texts:{
