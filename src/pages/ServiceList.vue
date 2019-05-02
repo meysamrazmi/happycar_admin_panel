@@ -4,7 +4,7 @@
             <div class="col-12">
             </div>
             <div class="col-12">
-                <card title="لیست آی‌پی‌ها" subTitle="دسترسی به اطلاعات آی‌پی‌ها">
+                <card title="سرویس‌ها" subTitle="لیست سرویس‌ها">
                     <div class="col-12">
                         <div class="row">
                             <div class="col-6"></div>

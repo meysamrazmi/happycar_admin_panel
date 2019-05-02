@@ -25,6 +25,17 @@
                                             >
                                             </toggle-button>
                                         </div>
+                                        <div slot="image" slot-scope="props">
+                                            <img  :src="$store.state.placeholderImage"
+                                                 class="mr-thumb profile" alt="">
+                                            <!--<img  :src="`${$http.defaults.mediaUrl}${props.row.image}`"-->
+                                                 <!--class="mr-thumb" alt="">-->
+                                        </div>
+                                        <div slot="actions">
+                                            <router-link :to="{name: 'user-profile', id: '1'}">
+                                                <span class="ti-eye text-primary"></span>
+                                            </router-link>
+                                        </div>
                                     </v-client-table>
                                 </div>
                             </div>
@@ -50,7 +61,7 @@
 
         data() {
             return {
-                columns: ['id', 'name', 'phone', 'date_joined', 'last_login', 'active'],
+                columns: ['id', 'name', 'image', 'phone', 'date_joined', 'last_login', 'active', 'actions'],
                 data: [],
                 options: {
                     headings: {
@@ -58,9 +69,10 @@
                         phone: 'شماره',
                         active:  'وضعیت',
                         id: 'ردیف',
+                        image: 'تصویر',
                         date_joined: 'تاریخ ورود',
-                        last_login: 'آخرین ورود'
-
+                        last_login: 'آخرین ورود',
+                        actions: 'اقدامات'
                     },
                     sortable: ['id', 'name', 'active', 'date_joined', 'last_login'],
                     filterable: ['name', 'code'],
@@ -114,5 +126,7 @@
 </script>
 
 <style scoped>
-
+    .profile {
+        border-radius: 50%;
+    }
 </style>

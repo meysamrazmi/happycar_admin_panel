@@ -25,6 +25,8 @@ import OrderDetail from '@/pages/OrderDetail.vue';
 
 import ProductCategoryList from "@/pages/ProductCategoryList.vue";
 import ProductList from "@/pages/ProductList.vue";
+import ProductCategoryDetail from "@/pages/Product/ProductCategoryDetail.vue"
+import ProductDetail from "@/pages/Product/ProductDetail.vue"
 
 import ServiceCategoryList from "@/pages/ServiceCategoryList.vue";
 import ServiceList from "@/pages/ServiceList.vue";
@@ -36,6 +38,8 @@ import Slide from "@/pages/Slider/Slide.vue";
 
 import StoreList from "@/pages/StoreList.vue";
 import StoreProduct from "@/pages/StoreProduct.vue";
+import StoreDetail from "@/pages/Stores/StoreDetail.vue";
+
 // Login Register
 import login from "@/pages/login.vue";
 
@@ -62,11 +66,6 @@ const routes = [
                 name: "dashboard",
                 component: Dashboard,
                 meta: {requiresAuth: true}
-            },
-            {
-                path: "user-profile",
-                name: "user-profile",
-                component: UserProfile
             },
             {
                 path: "car-brand-list",
@@ -129,9 +128,19 @@ const routes = [
                 component: ProductCategoryList,
             },
             {
+                path: "product-category-detail/:id?",
+                name: "product-category-detail",
+                component: ProductCategoryDetail,
+            },
+            {
                 path: "product-list",
                 name: "product-list",
                 component: ProductList,
+            },
+            {
+                path: "product-detail/:id?",
+                name: "product-detail",
+                component: ProductDetail,
             },
             {
                 path: "service-category-list",
@@ -169,6 +178,11 @@ const routes = [
                 component: StoreList,
             },
             {
+                path: "store-detail",
+                name: "store-detail",
+                component: StoreDetail,
+            },
+            {
                 path: "store-product",
                 name: "store-product",
                 component: StoreProduct,
@@ -177,6 +191,11 @@ const routes = [
                 path: "users-list",
                 name: "users-list",
                 component: UserList,
+            },
+            {
+                path: "user-profile/:id",
+                name: "user-profile",
+                component: UserProfile,
             }
         ]
     },

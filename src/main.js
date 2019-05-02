@@ -14,7 +14,18 @@ import ImgInputer from 'vue-img-inputer';
 import "vue-notifyjs/themes/default.css";
 import "nprogress/nprogress.css"
 import 'vue-img-inputer/dist/index.css'
+import { Icon }  from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 
+
+// this part resolve an issue where the markers would not appear
+delete Icon.Default.prototype._getIconUrl;
+
+Icon.Default.mergeOptions({
+    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+    iconUrl: require('leaflet/dist/images/marker-icon.png'),
+    shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+});
 //vee validate
 import fa from 'vee-validate/dist/locale/fa';
 import VeeValidate, {Validator} from 'vee-validate';

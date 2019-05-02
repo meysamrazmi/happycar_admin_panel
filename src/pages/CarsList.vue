@@ -22,6 +22,12 @@
                             <div class="table-responsive">
                                 <div class="table-wrapper">
                                     <v-client-table :columns="columns" :data="data" :options="options">
+                                        <div slot="image" slot-scope="props">
+                                            <img v-if="props.row.image === null" :src="$store.state.placeholderImage"
+                                                 class="mr-thumb" alt="">
+                                            <img v-else :src="`${$http.defaults.mediaUrl}${props.row.image}`"
+                                                 class="mr-thumb" alt="">
+                                        </div>
                                         <div slot="actions" slot-scope="props">
                                             <router-link :to="{ name: 'edit-car', params: { id: props.row.id }}">
                                                 <a class="ti-pencil-alt text-primary pr-3"></a>
@@ -59,7 +65,7 @@
 
         data() {
             return {
-                columns: ['id', 'carModel', 'brand', 'types', 'actions'],
+                columns: ['id', 'carModel','image', 'brand', 'types', 'actions'],
                 data: [],
                 carTypes: [],
                 options: {
@@ -67,6 +73,7 @@
                         carModel: 'مدل خودرو',
                         brand: 'برند',
                         id: 'ردیف',
+                        image: 'تصویر',
                         actions: 'اقدامات',
                         types: 'تیپ‌ها'
                     },

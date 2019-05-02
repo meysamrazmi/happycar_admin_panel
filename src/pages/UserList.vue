@@ -25,6 +25,12 @@
                                             >
                                             </toggle-button>
                                         </div>
+                                        <div slot="actions" slot-scope="props">
+                                            <router-link :to="{name: 'user-profile', id:'1'}" class="text-white">
+                                                <a class="ti-eye text-primary">
+                                                </a>
+                                            </router-link>
+                                        </div>
                                     </v-client-table>
                                 </div>
                             </div>
@@ -50,7 +56,7 @@
 
         data() {
             return {
-                columns: ['id', 'name', 'phone', 'date_joined', 'last_login', 'active'],
+                columns: ['id', 'name', 'phone', 'date_joined', 'last_login', 'active', 'actions'],
                 data: [],
                 options: {
                     headings: {
@@ -59,8 +65,8 @@
                         active:  'وضعیت',
                         id: 'ردیف',
                         date_joined: 'تاریخ ورود',
-                        last_login: 'آخرین ورود'
-
+                        last_login: 'آخرین ورود',
+                        actions: 'اقدامات'
                     },
                     sortable: ['id', 'name', 'active', 'date_joined', 'last_login'],
                     filterable: ['name', 'code'],

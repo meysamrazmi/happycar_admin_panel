@@ -4,12 +4,14 @@
             <div class="col-12">
             </div>
             <div class="col-12">
-                <card title="لیست آی‌پی‌ها" subTitle="دسترسی به اطلاعات آی‌پی‌ها">
+                <card title=" پیام‌ها" subTitle="لیست پیام‌ها">
                     <div class="row">
                         <div class="col-12">
                             <div class="table-responsive">
                                 <div class="table-wrapper">
-                                    <v-client-table :columns="columns" :data="tableData" :options="options">
+                                    <v-client-table :columns="columns"
+                                                    :data="tableData"
+                                                    :options="options">
                                         <div slot="seen" slot-scope="props">
                                             <span v-if="props.row.seen" class="ti-check text-success">
                                             </span>
@@ -44,13 +46,13 @@
 
         data() {
             return {
-                columns: ['id', 'category', 'title', 'user', 'seen', 'see'],
+                columns: ['id', 'category.category', 'title', 'user.name', 'seen', 'see'],
                 options: {
                     headings: {
                         id: 'ردیف',
-                        category: 'دسته',
+                        'category.category': 'دسته',
                         title: 'عنوان',
-                        user: 'کاربر',
+                        'user.name': 'کاربر',
                         seen: 'مشاهده شده',
                         see: 'مشاهده'
                     },
@@ -60,6 +62,10 @@
                     sortIcon: this.$store.state.tebleConfig.sortIcon,
                     texts: this.$store.state.tebleConfig.texts,
                     skin: this.$store.state.tebleConfig.skin,
+                    rowClassCallback: function (row) {
+                        return `seen-${row.seen}`
+                    },
+                    descOrderColumns: ['id',],
                     customSorting: {
                         id: function (ascending) {
                             return function (a, b) {
@@ -84,12 +90,19 @@
             this.$store.dispatch('messages/getMessages')
         },
 
-        methods: {}
+        methods: {
+
+        }
 
 
     }
 </script>
 
-<style scoped>
-
+<style>
+    .seen-false {
+        background-color: #71f1873d;
+    }
+    .seen-true {
+        background-color: #ece9e51c;
+    }
 </style>

@@ -20,12 +20,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                            <router-link :to="{name: 'messages'}" class="nav-link">
                             <i class="ti-comment"></i>
                             <p class="mr-badge">
                                 {{ $store.state.messages.unreadMessages }}
                             </p>
-                        </a>
+                            </router-link>
                     </li>
 
                     <li class="nav-item">

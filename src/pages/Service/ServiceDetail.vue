@@ -2,7 +2,7 @@
     <div>
         <div class="row">
             <div class="col-12">
-                <card title="گروه سرویس" :subTitle="subTitle">
+                <card title=" سرویس" :subTitle="subTitle">
                     <div class="row mt-5 justify-content-center">
                         <div class="col-md-6 m-2">
                             <img-inputer
@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-sm-4">
                             <label>
-                                نوع اسلاید
+                                گروه سرویس
                             </label>
                             <select name="category_id"
                                     data-vv-as="گروه"
@@ -93,7 +93,7 @@
 <script>
 
     export default {
-        name: "service-category-detail",
+        name: "service-detail",
         components: {},
         data() {
             return {
@@ -117,9 +117,9 @@
         computed: {
             subTitle() {
                 if (this.create) {
-                    return 'اضافه کردن گروه سرویس جدید'
+                    return 'اضافه کردن سرویس جدید'
                 } else {
-                    return `بروز رسانی گروه سرویس ${this.fetchedService.name}`
+                    return `بروز رسانی سرویس ${this.fetchedService.name}`
                 }
             },
 
