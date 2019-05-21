@@ -5,7 +5,46 @@ html {
 .card .card-image {
   height: 160px;
 }
+
+.ui.fluid.dropdown {
+  direction: rtl;
+  text-align: right;
+}
+
+.ui.dropdown .menu > .item {
+  text-align: right !important;
+}
+
+.form-control-select {
+  background-color: #fffcf5 !important;
+  background-clip: padding-box !important;
+  border: 1px solid #a7a7a7 !important;
+}
+
+// Tabs
+
+ul.tabs-component-tabs {
+  list-style: none;
+}
+li.tabs-component-tab {
+  display: inline-block;
+  padding-left: 3rem;
+  font-size: 1.3rem;
+  opacity: .5;
+}
+a.tabs-component-tab-a {
+  color: inherit;
+  font-weight: inherit;
+}
+
+li.tabs-component-tab.is-active {
+  opacity: 1;
+  font-weight: 800;
+
+}
 //image input
+
+
 
 .img-inputer__inputer {
   display: none;

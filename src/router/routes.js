@@ -15,6 +15,7 @@ import EditCar from "@/pages/Car/EditCar.vue";
 import Discount from "@/pages/Discount.vue";
 
 import Experts from "@/pages/Experts.vue";
+import ExpertProfile from "@/pages/ExpertProfile.vue";
 
 import Messages from "@/pages/Messages.vue";
 import MessagesGroup from "@/pages/MessagesGroup.vue";
@@ -40,6 +41,7 @@ import StoreList from "@/pages/StoreList.vue";
 import StoreProduct from "@/pages/StoreProduct.vue";
 import StoreDetail from "@/pages/Stores/StoreDetail.vue";
 
+import AboutUs from "@/pages/AboutUs.vue";
 // Login Register
 import login from "@/pages/login.vue";
 
@@ -98,6 +100,11 @@ const routes = [
                 component: Experts
             },
             {
+                path: "expert-profile/:id",
+                name: "expert-profile",
+                component: ExpertProfile
+            },
+            {
                 path: "messages",
                 name: "messages",
                 component: Messages,
@@ -118,7 +125,7 @@ const routes = [
                 component: Orders,
             },
             {
-                path: "order-detail",
+                path: "order-detail/:id",
                 name: "order-detail",
                 component: OrderDetail,
             },
@@ -166,6 +173,11 @@ const routes = [
                 path: "slider",
                 name: "slider",
                 component: Slider,
+            },
+            {
+                path: "about-us",
+                name: "about-us",
+                component: AboutUs,
             },
             {
                 path: 'slide/:id?',

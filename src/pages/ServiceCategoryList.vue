@@ -109,13 +109,15 @@
                 let data = {
                     category_id: category.id
                 };
-                this.$http.delete('/services/category/', {data: data}).then((res) => {
-                    console.log(res);
-                    this.fetchCategoryList();
-                }).catch((err) => {
-                    console.log(err);
-                    this.fetchCategoryList();
-                })
+                this.askBeforeDelete(()=> {
+                    this.$http.delete('/services/category/', {data: data}).then((res) => {
+                        console.log(res);
+                        this.fetchCategoryList();
+                    }).catch((err) => {
+                        console.log(err);
+                        this.fetchCategoryList();
+                    })
+                });
             },
         }
 

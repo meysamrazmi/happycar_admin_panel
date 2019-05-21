@@ -138,16 +138,18 @@
                 let data = {
                     carModel_id: car.id
                 };
-                this.$http.delete("/car/models/", {data: data}).then((res)=> {
-                    this.fetchCars();
-                    this.fetchCarTypes();
-                }).catch((err)=> {
-                    this.$swal({
-                        type: 'warning',
-                        title: 'خطا',
-                        text: 'دوباره تلاش کنید'
+                this.askBeforeDelete(() => {
+                    this.$http.delete("/car/models/", {data: data}).then((res)=> {
+                        this.fetchCars();
+                        this.fetchCarTypes();
+                    }).catch((err)=> {
+                        this.$swal({
+                            type: 'warning',
+                            title: 'خطا',
+                            text: 'دوباره تلاش کنید'
+                        })
                     })
-                })
+                });
             }
         }
 

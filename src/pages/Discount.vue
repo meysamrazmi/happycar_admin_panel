@@ -4,7 +4,15 @@
             <div class="col-12">
             </div>
             <div class="col-12">
-                <card title="لیست آی‌پی‌ها" subTitle="دسترسی به اطلاعات آی‌پی‌ها">
+                <card title="کد تخفیف" subTitle="لیست کدهای تخفیف">
+                    <div class="row">
+                        <div class="col-6"></div>
+                        <div class="col-6">
+                            <p-button class="pull-left" type="success">
+                                    افزودن تخفیف
+                            </p-button>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="table-responsive">
@@ -18,67 +26,68 @@
                     </div>
                 </card>
             </div>
-
+            <discount-modal :show="modal.show" :modal-data="modal.data" :type="modal.type"></discount-modal>
         </div>
     </div>
 </template>
 
 <script>
-    import { ClientTable } from 'vue-tables-2'
+import { ClientTable } from "vue-tables-2";
+import DiscountModal from "./Discount/DiscountModal";
 
-    function getData() {
-        return [];
-    }
+function getData() {
+  return [];
+}
 
+export default {
+  name: "discount",
 
-    export default {
-        name: "discount",
+  components: {
+    ClientTable,
+    DiscountModal
+  },
 
-        components:{
-            ClientTable
+  data() {
+    return {
+      modal: {
+        show: false,
+        data: {},
+        type: ''
+      },
+      columns: ["id", "name", "code", "uri"],
+      data: getData(),
+      options: {
+        headings: {
+          name: "نام کشور",
+          code: "کد کشور",
+          uri: "مشاهده سوابق",
+          id: "ردیف"
         },
-
-        data() {
-            return {
-                columns: ['id', 'name', 'code', 'uri'],
-                data: getData(),
-                options: {
-                    headings: {
-                        name: 'نام کشور',
-                        code: 'کد کشور',
-                        uri: 'مشاهده سوابق',
-                        id: 'ردیف'
-                    },
-                    sortable: ['id','name', 'code'],
-                    filterable: ['name', 'code'],
-                    pagination: { chunk:10 },
-                    sortIcon: this.$store.state.tebleConfig.sortIcon,
-                    texts: this.$store.state.tebleConfig.texts,
-                    skin: this.$store.state.tebleConfig.skin,
-                    customSorting: {
-                        id: function (ascending) {
-                            return function (a, b) {
-                                if (ascending){
-                                    return a.id >= b.id ? 1 : -1;
-                                }
-                                return a.id <= b.id ? 1 : -1;
-                            }
-                        },
-                    }
-                }
-            }
-        },
-
-        mounted() {
-        },
-
-        methods: {
+        sortable: ["id", "name", "code"],
+        filterable: ["name", "code"],
+        pagination: { chunk: 10 },
+        sortIcon: this.$store.state.tebleConfig.sortIcon,
+        texts: this.$store.state.tebleConfig.texts,
+        skin: this.$store.state.tebleConfig.skin,
+        customSorting: {
+          id: function(ascending) {
+            return function(a, b) {
+              if (ascending) {
+                return a.id >= b.id ? 1 : -1;
+              }
+              return a.id <= b.id ? 1 : -1;
+            };
+          }
         }
+      }
+    };
+  },
 
+  mounted() {},
 
-    }
+  methods: {}
+};
 </script>
 
 <style scoped>
-
 </style>

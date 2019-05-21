@@ -108,13 +108,17 @@
                 let data = {
                     category_id: category.id
                 };
-                this.$http.delete('/products/category/', {data: data}).then((res) => {
-                    console.log(res);
-                    this.fetchCategoryList();
-                }).catch((err) => {
-                    console.log(err);
-                    this.fetchCategoryList();
-                })
+                this.askBeforeDelete(() => {
+                    this.$http.delete('/products/category/', {data: data}).then((res) => {
+                        console.log(res);
+                        this.fetchCategoryList();
+                    }).catch((err) => {
+                        console.log(err);
+                        this.fetchCategoryList();
+                    })
+                    }
+                );
+
             },
         }
 

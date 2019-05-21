@@ -43,20 +43,16 @@
                             <label>
                                 گروه سرویس
                             </label>
-                            <select name="category_id"
-                                    data-vv-as="گروه"
-                                    class="form-control"
-                                    v-validate="'required'"
-                                    :class="{ errorInput : errors.first('category_id') }"
-                                    v-model="service.category_id.id"
-                            >
-                                <option value="" selected disabled>
-                                    گروه
-                                </option>
-                                <option v-for="group in serviceGroup" :value="group.id" :key="group.id">
-                                    {{ group.name }}
-                                </option>
-                            </select>
+                            <model-list-select :list="serviceGroup"
+                                               v-model="service.category_id.id"
+                                               option-value="id"
+                                               data-vv-as="گروه"
+                                               name="category_id"
+                                               option-text="name"
+                                               v-validate="'required'"
+                                               class="form-control-select"
+                                               placeholder="گروه را انتخاب کنید">
+                            </model-list-select>
                             <span class="error-loger">
                               {{ errors.first('category_id') }}
                             </span>
@@ -91,10 +87,13 @@
 </template>
 
 <script>
+    import { ModelListSelect } from 'vue-search-select';
 
     export default {
         name: "service-detail",
-        components: {},
+        components: {
+            ModelListSelect
+        },
         data() {
             return {
                 id: '',

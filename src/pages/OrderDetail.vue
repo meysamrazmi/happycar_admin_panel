@@ -1,19 +1,60 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-sm-6">
-                <detail-card></detail-card>
+            <div class="col-md-6">
+                <detail-card :buyer="order.buyer"
+                             :date="order.preferred_date"
+                             :time="order.preferred_time_frame"
+                             :store="order.preferred_store"
+                             :address="order.delivering_address"
+                ></detail-card>
             </div>
 
             <div class="col-sm-6">
-                <factor></factor>
+                <factor :services="order.services" :products="order.products"></factor>
             </div>
             <div class="col-12">
-                <card class="location-height">
-                    <l-map :zoom="zoom" :center="center">
-                        <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-                        <l-marker :lat-lng="marker"></l-marker>
-                    </l-map>
+                <card title="متخصصین پیشنهادی">
+                    <div class="row">
+                        <div class="col-12 table-responsive">
+                            <table class="table ">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        نام
+                                    </th>
+                                    <th>
+                                        سفارش قبل
+                                    </th>
+                                    <th>
+                                        سفارش بعد
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        حسن شریعت
+                                    </td>
+                                    <td>
+                                        ۸-۹ انبار شرق
+                                    </td>
+                                    <td>
+                                        ۱۲-۱۴ انبار شمال
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-success">
+                                            اتصال
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </card>
             </div>
 
@@ -48,49 +89,67 @@
 </template>
 
 <script>
-    import { ClientTable } from 'vue-tables-2';
-    import Factor from './Order/Factor';
-    import DetailCard from './Order/DetailCard';
-    import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
-    function getData() {
-        return [];
+import { ClientTable } from "vue-tables-2";
+import Factor from "./Order/Factor";
+import DetailCard from "./Order/DetailCard";
+import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
+function getData() {
+  return [];
+}
+
+export default {
+  name: "order-detail",
+
+  components: {
+    ClientTable,
+    Factor,
+    DetailCard
+  },
+
+  data() {
+    return {
+      orderId: 0,
+      order:{}
+    };
+  },
+
+  created() {
+    this.orderId = this.$route.params.id;
+  },
+
+  mounted() {
+    this.fetchOrder();
+    this.fetchOrderExperts();
+  },
+
+  methods: {
+    fetchOrder() {
+      this.$http
+        .get(`/orders/admin/${this.orderId}/`)
+        .then(res => {
+          this.order = res.data
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    fetchOrderExperts() {
+      this.$http
+        .get(`orders/admin/${this.orderId}/experts/`)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err)
+        });
     }
-
-
-    export default {
-        name: "order-detail",
-
-        components:{
-            ClientTable,
-            Factor,
-            DetailCard,
-            LMap,
-            LTileLayer,
-            LMarker
-        },
-
-        data() {
-            return {
-                zoom:16,
-                center:  L.latLng(35.6892, 51.3890),
-                url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-                attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-                marker:  L.latLng(35.6892, 51.3890),
-            }
-        },
-
-        mounted() {
-        },
-
-        methods: {
-        }
-
-
-    }
+  }
+};
 </script>
 
 <style scoped>
-    .location-height {
-        height: 500px;
-    }
+.location-height {
+  height: 500px;
+}
 </style>

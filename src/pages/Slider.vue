@@ -81,9 +81,9 @@
 <script>
     import { ClientTable } from 'vue-tables-2';
 
+
     export default {
         name: "slider",
-
         components:{
             ClientTable,
         },
@@ -146,12 +146,15 @@
                 let data = {
                     slide_id: slide.id
                 };
-                this.$http.delete('/slider/manager/', {data: data}).then((res)=> {
-                    // console.log(res);
-                    this.fetchSlides();
-                }).catch((err)=> {
-                    // console.log(err);
-                })
+                this.askBeforeDelete(()=> {
+                    this.$http.delete('/slider/manager/', {data: data}).then((res)=> {
+                        // console.log(res);
+                        this.fetchSlides();
+                    }).catch((err)=> {
+                        // console.log(err);
+                    })
+                });
+
             },
 
             changeSliderStatus(slide) {

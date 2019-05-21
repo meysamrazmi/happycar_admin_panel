@@ -1,20 +1,20 @@
 <template>
     <card title="فاکتور">
-        <div class="divider-border p-2 my-2 prod-border">
+        <div class="divider-border p-2 my-2 prod-border" v-for="product in products">
             <strong>
-                تعویض روغن
+                {{ product.product.special_name }} - {{ product.product.general_name }}
             </strong>
             <span class="pr-4 pull-left">
-                            ۱۲۰۰
-                        </span>
+                {{ product.product.price | currency }} * {{ product.num_of_products }}
+            </span>
         </div>
-        <div class="divider-border p-2 my-2 prod-border">
+        <div class="divider-border p-2 my-2 prod-border" v-for="service in services">
             <strong>
-                کارواش
+                {{ service.name }}
             </strong>
             <span class="pr-4 pull-left ">
-                            ۱۲۰۰
-                        </span>
+                {{ service.price | currency }}
+            </span>
         </div>
         <div class="divider-border p-2 my-2 discount-border">
             <strong>
@@ -30,14 +30,32 @@
                 جمع کل
             </strong>
             <span class="pr-4 pull-left">
-                            ۳۴۰۰۰
-                        </span>
+                ۳۴۰۰۰
+            </span>
+        </div>
+        <div class="divider-border p-2 my-2">
+            <strong>
+                 زمان تخمینی
+            </strong>
+            <span class="pr-4 pull-left">
+                ۲: ۳۴‍
+            </span>
         </div>
     </card>
 </template>
 <script>
     export default {
-        name: 'factor'
+        name: 'factor',
+
+        props: {
+          products: {
+            type: Array
+          },
+
+          services: {
+            type: Array
+          }
+        }
     }
 </script>
 <style scoped>

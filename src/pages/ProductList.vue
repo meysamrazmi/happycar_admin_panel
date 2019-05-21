@@ -124,13 +124,16 @@
                 let data = {
                     product_id: product.id
                 };
-                this.$http.delete('/products/', {data: data}).then((res) => {
-                    console.log(res);
-                    this.fetchProductList();
-                }).catch((err) => {
-                    console.log(err);
-                    this.fetchProductList();
-                })
+                this.askBeforeDelete(()=> {
+                    this.$http.delete('/products/', {data: data}).then((res) => {
+                        console.log(res);
+                        this.fetchProductList();
+                    }).catch((err) => {
+                        console.log(err);
+                        this.fetchProductList();
+                    })
+                });
+
             },
 
             fetchProductList() {

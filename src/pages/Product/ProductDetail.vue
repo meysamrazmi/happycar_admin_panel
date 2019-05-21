@@ -44,20 +44,17 @@
                             <label>
                                 گروه کالا
                             </label>
-                            <select name="category_id"
-                                    data-vv-as="گروه"
-                                    class="form-control"
-                                    v-validate="'required'"
-                                    :class="{ errorInput : errors.first('category_id') }"
-                                    v-model="product.category_id.id"
-                            >
-                                <option value="" selected disabled>
-                                    گروه
-                                </option>
-                                <option v-for="group in productGroup" :value="group.id" :key="group.id">
-                                    {{ group.name }}
-                                </option>
-                            </select>
+
+                            <model-list-select :list="productGroup"
+                                               v-model="product.category_id.id"
+                                               option-value="id"
+                                               data-vv-as="گروه"
+                                               name="category_id"
+                                               option-text="name"
+                                               v-validate="'required'"
+                                               class="form-control-select"
+                                               placeholder="گروه کالا را انتخاب کنید">
+                            </model-list-select>
                             <span class="error-loger">
                               {{ errors.first('category_id') }}
                             </span>
@@ -65,22 +62,18 @@
 
                         <div class="col-sm-6">
                             <label>
-                                گروه سرویس
+                                 سرویس
                             </label>
-                            <select name="service_id"
-                                    data-vv-as="گروه"
-                                    class="form-control"
-                                    v-validate="'required'"
-                                    :class="{ errorInput : errors.first('service_id') }"
-                                    v-model="product.service_id.id"
-                            >
-                                <option value="" selected disabled>
-                                    گروه
-                                </option>
-                                <option v-for="group in serviceGroup" :value="group.id" :key="group.id">
-                                    {{ group.name }}
-                                </option>
-                            </select>
+                            <model-list-select :list="serviceGroup"
+                                               v-model="product.service_id.id"
+                                               option-value="id"
+                                               data-vv-as=" سرویس"
+                                               name="service_id"
+                                               option-text="name"
+                                               v-validate="'required'"
+                                               class="form-control-select"
+                                               placeholder=" سرویس را انتخاب کنید">
+                            </model-list-select>
                             <span class="error-loger">
                               {{ errors.first('service_id') }}
                             </span>
@@ -125,10 +118,13 @@
 </template>
 
 <script>
+    import { ModelListSelect } from 'vue-search-select';
 
     export default {
         name: "product-detail",
-        components: {},
+        components: {
+            ModelListSelect
+        },
         data() {
             return {
                 id: '',
@@ -179,7 +175,7 @@
                 this.create = false;
                 this.fetchProduct();
             }
-            this.fetchServiceCategoryList();
+            this.fetchServiceList();
             this.fetchProductCategoryList();
         },
 
@@ -208,8 +204,8 @@
                 })
             },
 
-            fetchServiceCategoryList() {
-                this.$http.get('/services/category/').then((res) => {
+            fetchServiceList() {
+                this.$http.get('/services/service/all/').then((res) => {
                     this.serviceGroup = res.data.result;
                 }).catch((err) => {
                     console.log(err);

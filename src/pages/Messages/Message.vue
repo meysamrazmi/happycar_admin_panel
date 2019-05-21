@@ -4,7 +4,7 @@
             <div class="col-12">
             </div>
             <div class="col-12">
-                <card title="لیست آی‌پی‌ها" subTitle="دسترسی به اطلاعات آی‌پی‌ها">
+                <card title="پیام‌ها" subTitle="جزییات پیام">
                     <div class="px-4">
                     <div class="row py-3 my-3 divider-border">
                         <div class=" col-sm-3">
@@ -13,7 +13,7 @@
                             </strong>
                         </div>
                         <div class=" col-sm-9">
-                            {{ comment.user }}
+                            {{ comment.user.name }}
                         </div>
                     </div>
                     <div class="row py-3 my-3 divider-border">
@@ -23,7 +23,7 @@
                             </strong>
                         </div>
                         <div class=" col-sm-9">
-                            {{ comment.category }}
+                            {{ comment.category.category }}
                         </div>
                     </div>
                     <div class="row py-3 my-3 divider-border">

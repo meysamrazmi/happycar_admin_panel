@@ -109,11 +109,13 @@
                 let data = {
                     store_id: store.id
                 };
-                this.$http.delete('/products/store/', {data: data}).then((res)=> {
-                    this.fetchStoreList();
-                }).catch((err)=> {
-                    this.fetchStoreList()
-                })
+                this.askBeforeDelete(() => {
+                    this.$http.delete('/products/store/', {data: data}).then((res)=> {
+                        this.fetchStoreList();
+                    }).catch((err)=> {
+                        this.fetchStoreList()
+                    })
+                });
             }
         }
 

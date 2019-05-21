@@ -10,30 +10,29 @@
                             <div class="table-responsive">
                                 <div class="table-wrapper">
                                     <v-client-table :columns="columns" :data="data" :options="options">
-                                        <div slot="date_joined" slot-scope="props">
-                                            {{chengeTime(props.row.date_joined)}}
+                                        <div slot="user.date_joined" slot-scope="props">
+                                            {{ chengeTime(props.row.user.date_joined) }}
                                         </div>
-                                        <div slot="last_login" slot-scope="props">
+                                        <div slot="user.last_login" slot-scope="props">
 
-                                            {{props.row.last_login ? chengeTime(props.row.last_login) : ''}}
+                                            {{ props.row.user.last_login ? chengeTime(props.row.user.last_login) : ''}}
                                         </div>
-                                        <div slot="active"
+                                        <div slot="user.active"
                                              slot-scope="props"
                                              @click="changeExpertStatus(props.row)"
                                         >
-                                            <toggle-button :value="props.row.active"
+                                            <toggle-button :value="props.row.user.active"
                                             >
                                             </toggle-button>
                                         </div>
                                         <div slot="image" slot-scope="props">
                                             <img  :src="$store.state.placeholderImage"
                                                  class="mr-thumb profile" alt="">
-                                            <!--<img  :src="`${$http.defaults.mediaUrl}${props.row.image}`"-->
-                                                 <!--class="mr-thumb" alt="">-->
                                         </div>
-                                        <div slot="actions">
-                                            <router-link :to="{name: 'user-profile', id: '1'}">
-                                                <span class="ti-eye text-primary"></span>
+                                        <div slot="actions" slot-scope="props">
+                                            <router-link :to="{name: 'expert-profile', params:{id: props.row.id}}" class="text-white">
+                                                <span class="ti-eye text-primary">
+                                                </span>
                                             </router-link>
                                         </div>
                                     </v-client-table>
@@ -61,21 +60,21 @@
 
         data() {
             return {
-                columns: ['id', 'name', 'image', 'phone', 'date_joined', 'last_login', 'active', 'actions'],
+                columns: ['id', 'user.name', 'image', 'user.phone', 'user.date_joined', 'user.last_login', 'user.active', 'actions'],
                 data: [],
                 options: {
                     headings: {
-                        name: 'نام',
-                        phone: 'شماره',
-                        active:  'وضعیت',
-                        id: 'ردیف',
+                        'user.name': 'نام',
+                        'user.phone': 'شماره',
+                        'user.active':  'وضعیت',
+                        id: 'شناسه',
                         image: 'تصویر',
-                        date_joined: 'تاریخ ورود',
-                        last_login: 'آخرین ورود',
+                        'user.date_joined': 'تاریخ ورود',
+                        'user.last_login': 'آخرین ورود',
                         actions: 'اقدامات'
                     },
-                    sortable: ['id', 'name', 'active', 'date_joined', 'last_login'],
-                    filterable: ['name', 'code'],
+                    sortable: ['id', 'user.name', 'user.active', 'user.date_joined', 'user.last_login'],
+                    filterable: ['user.name', 'user.code'],
                     pagination: {chunk: 10},
                     sortIcon: this.$store.state.tebleConfig.sortIcon,
                     texts: this.$store.state.tebleConfig.texts,
@@ -100,8 +99,8 @@
 
         methods: {
             fetchExpertsList() {
-                this.$http.get('/admin/expert/').then((res)=> {
-                    this.data = res.data;
+                this.$http.get('/profile/admin/expert/').then((res)=> {
+                    this.data = res.data.data;
                 }).catch((err)=> {
                     console.log(err);
                 })
@@ -112,7 +111,7 @@
             },
 
             changeExpertStatus(user) {
-                this.$http.patch(`/admin/expert/${user.id}`).then((res)=> {
+                this.$http.patch(`/admin/expert/${user.user.id}`).then((res)=> {
                     console.log(res);
                     this.fetchExpertsList();
                 }).catch((err)=> {

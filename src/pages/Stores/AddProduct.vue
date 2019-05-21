@@ -11,25 +11,20 @@
         <template slot="body">
             <form @submit.prevent @keyup.enter="sendRequest">
                 <div class="row">
-
                     <div class="col-sm-12">
                         <label>
                             انبار
                         </label>
-                        <select name="store_id"
-                                data-vv-as="انبار"
-                                class="form-control"
-                                v-validate="'required'"
-                                :class="{ errorInput : errors.first('store_id') }"
-                                v-model="productInStore.store_id.id"
-                        >
-                            <option value="" selected disabled>
-                                انبار
-                            </option>
-                            <option v-for="store in stores" :value="store.id" :key="store.id">
-                                {{ store.name }}
-                            </option>
-                        </select>
+                        <model-list-select :list="stores"
+                                           v-model="productInStore.store_id.id"
+                                           option-value="id"
+                                           data-vv-as="انبار"
+                                           name="store_id"
+                                           option-text="name"
+                                           v-validate="'required'"
+                                           class="form-control-select"
+                                           placeholder="انبار را انتخاب کنید">
+                        </model-list-select>
                         <span class="error-loger">
                               {{ errors.first('store_id') }}
                             </span>
@@ -39,20 +34,17 @@
                         <label>
                             محصول
                         </label>
-                        <select name="product_id"
-                                data-vv-as="محصول"
-                                class="form-control"
-                                v-validate="'required'"
-                                :class="{ errorInput : errors.first('product_id') }"
-                                v-model="productInStore.product_id.id"
-                        >
-                            <option value="" selected disabled>
-                                محصول
-                            </option>
-                            <option v-for="product in products" :value="product.id" :key="product.id">
-                                {{ product.special_name }}
-                            </option>
-                        </select>
+                        <model-list-select :list="products"
+                                           v-model="productInStore.product_id.id"
+                                           option-value="id"
+                                           data-vv-as="محصول"
+                                           name="product_id"
+                                           option-text="special_name"
+                                           :custom-text="productName"
+                                           v-validate="'required'"
+                                           class="form-control-select"
+                                           placeholder="محصول را انتخاب کنید">
+                        </model-list-select>
                         <span class="error-loger">
                               {{ errors.first('product_id') }}
                             </span>
@@ -85,10 +77,13 @@
 </template>
 
 <script>
-
+    import { ModelListSelect } from 'vue-search-select';
 
     export default {
         name: "add-product",
+        components: {
+            ModelListSelect
+        },
         props: {
             show: {
                 type: Boolean
@@ -107,6 +102,7 @@
                 category: '',
                 products: [],
                 stores: [],
+                item: {},
                 productInStore: {
                     product_id: {
                         name: '',
@@ -128,9 +124,21 @@
 
 
         methods: {
+
             closeModal() {
                 this.$emit('close');
                 this.showMe = false;
+                this.productInStore = {
+                    product_id: {
+                        name: '',
+                        id: ''
+                    },
+                    store_id: {
+                        name: '',
+                        id: ''
+                    },
+                    count: ''
+                };
                 setTimeout(()=>{
                     this.category = null;
                 }, 200)
@@ -190,6 +198,10 @@
                 }).catch((err) => {
                     console.log(err)
                 })
+            },
+
+            productName(item) {
+                return `${item.general_name} - ${item.special_name}`
             }
         },
         watch: {
@@ -223,4 +235,5 @@
         padding-top: 10px;
         color: red;
     }
+
 </style>

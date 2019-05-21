@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-4">
                     <div>
-                        درجه
+                        مرتبه
                     </div>
                     <div>
                         {{ user.grade }}
@@ -48,23 +48,41 @@
     </card>
 </template>
 <script>
-    import profileBack from '@/assets/img/profileBack.jpg'
-    export default {
-        props: {
-          user: {
-              type: Object
+  import profileBack from '@/assets/img/profileBack.jpg';
+
+  export default {
+    components: {
+    },
+    props: {
+      user: {
+        type: Object,
+        default: function () {
+          return {
+            grade: '',
+            user: {
+              name: 'name',
+              phone: 'phone'
+            }
           }
-        },
-
-        data() {
-            return {
-                profileBack,
-            };
-        },
-        methods: {
-
         }
-    };
+      }
+    },
+
+    data() {
+      return {
+        profileBack,
+        expertGrade: 0,
+        grades: []
+      };
+    },
+
+    mounted() {
+    },
+
+    methods: {
+
+    }
+  };
 </script>
 <style>
 </style>

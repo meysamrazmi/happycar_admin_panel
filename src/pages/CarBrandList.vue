@@ -110,13 +110,15 @@
                 let data = {
                     brand_id: brand.id
                 };
-                this.$http.delete('/car/brands/', {data: data}).then((res) => {
-                    console.log(res);
-                    this.fetchCarBrands()
-                }).catch((err) => {
-                    console.log(err);
-                    this.fetchCarBrands()
-                })
+                this.askBeforeDelete(() => {
+                    this.$http.delete('/car/brands/', {data: data}).then((res) => {
+                        console.log(res);
+                        this.fetchCarBrands()
+                    }).catch((err) => {
+                        console.log(err);
+                        this.fetchCarBrands()
+                    })
+                });
             },
 
             showModal(type, data) {
