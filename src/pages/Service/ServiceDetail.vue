@@ -14,7 +14,7 @@
                         </div>
                     </div>
                     <div class="row mt-5">
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
                             <fg-input type="text"
                                       name="name"
                                       label="نام"
@@ -27,7 +27,7 @@
                             >
                             </fg-input>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
                             <fg-input type="number"
                                       name="price"
                                       label="قیمت"
@@ -39,7 +39,18 @@
                             >
                             </fg-input>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
+                            <fg-input type="number"
+                                      name="time"
+                                      label="زمان تقریبی"
+                                      placeholder="زمان تقریبی"
+                                      v-model="service.execution_time"
+                                      data-vv-as="زمان تقریتی"
+                                      v-validate="{required: true}"
+                                      :err="errors.first('price')">
+                            </fg-input>
+                        </div>
+                        <div class="col-sm-6">
                             <label>
                                 گروه سرویس
                             </label>
@@ -107,7 +118,8 @@
                     name: '',
                     image: '',
                     description: '',
-                    price: undefined
+                    price: undefined,
+                    execution_time: undefined
                 },
                 imageFile: undefined,
                 serviceGroup: []
@@ -191,6 +203,7 @@
                                 serviceFormData.set('description', this.service.description);
                                 serviceFormData.set('name', this.service.name);
                                 serviceFormData.set('category_id', this.service.category_id.id);
+                                serviceFormData.set('execution_time', String(this.service.execution_time));
                                 serviceFormData.append('image', this.imageFile);
                                 this.$http.post('/services/service/', serviceFormData).then((res) => {
                                     this.$swal({

@@ -7,11 +7,16 @@
                              :time="order.preferred_time_frame"
                              :store="order.preferred_store"
                              :address="order.delivering_address"
+                             :payment_in_place="order.payment_in_place"
                 ></detail-card>
             </div>
 
             <div class="col-sm-6">
-                <factor :services="order.services" :products="order.products"></factor>
+                <factor :services="order.services"
+                        :products="order.products"
+                        :total_cost="order.total_cost"
+                        :paid_cost="order.paid_cost"
+                ></factor>
             </div>
             <div class="col-12">
                 <card title="متخصصین پیشنهادی">

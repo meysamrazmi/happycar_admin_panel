@@ -39,9 +39,12 @@
                 <strong>
                     نوع پرداخت
                 </strong>
-                <span class="pull-left">
-                آنلاین
-            </span>
+                <span class="pull-left" v-if="payment_in_place">
+                    درمحل
+                </span>
+                <span class="pull-left" v-else>
+                    آنلاین
+                </span>
             </div>
             </div>
 
@@ -101,6 +104,9 @@ export default {
     },
     address: {
       type: Object
+    },
+    payment_in_place: {
+      type: Boolean
     }
   },
 

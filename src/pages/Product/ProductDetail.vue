@@ -156,7 +156,7 @@
                 if (this.create) {
                     return 'اضافه کردن محصول جدید'
                 } else {
-                    return `بروز رسانی محصول ${this.fetchedProduct.name}`
+                    return `بروز رسانی محصول ${this.fetchedProduct.special_name}`
                 }
             },
 
@@ -181,24 +181,8 @@
 
         methods: {
             fetchProduct() {
-                this.$http.get(`/products/all/`).then((res) => {
-                    let temp = undefined;
-                    if (res.data.result.length !== 0) {
-                        res.data.result.forEach((product)=> {
-                            if(product.id === this.id) {
-                                temp = product;
-                            }
-                        });
-                        console.log(temp);
-                        if(temp) {
-                            this.fetchedProduct = Object.assign({}, temp);
-                            this.product = temp;
-                        } else {
-                            this.$router.push('/404')
-                        }
-                    } else {
-                        this.$router.push('/404')
-                    }
+                this.$http.get(`​/products​/${this.id}​/`).then((res) => {
+                    console.log(res)
                 }).catch((err) => {
                     // console.log(err)
                 })

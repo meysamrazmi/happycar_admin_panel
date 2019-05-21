@@ -33,7 +33,7 @@
                 </model-list-select>
 
                 <div class="text-center">
-                    <button class="btn-success btn">
+                    <button class="btn-success btn" @click="setExpertDetail">
                         ثبت
                     </button>
                 </div>
@@ -86,11 +86,13 @@ export default {
         .then(res => {
           this.user = res.data;
           this.expertGrade = this.user.grade;
+          this.expertSkills = this.user.providing_service_categories.map(service => service.id)
         })
         .catch(err => {
           console.log(err);
         });
     },
+
 
     fetchGrade() {
       this.$http.get('/profile/admin/grade/').then((res) => {
@@ -106,11 +108,32 @@ export default {
       }).catch((err) => {
         console.log(err)
       })
+    },
+
+    setExpertDetail() {
+      let data = {
+        grade_id: '',
+        providing_service_categories: []
+      };
+      data.grade_id = this.grades.find(skill => skill.title === this.expertGrade).id;
+      data.providing_service_categories = this.expertSkills;
+
+      this.$http
+        .put(`/profile/admin/expert/${this.userId}`, data)
+        .then(res => {
+          this.fetchExpertDetail()
+        })
+        .catch(err => {
+          this.fetchExpertDetail()
+          this.$swal({
+            type: 'warning',
+            title: 'خطا',
+            text: 'خطا دوباره تلاش کنید'
+          })
+        })
     }
   }
 };
 </script>
 <style scoped>
-
-
 </style>
