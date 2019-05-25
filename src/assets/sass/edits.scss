@@ -177,6 +177,10 @@ select.form-control:not([size]):not([multiple]){
 
 }
 
+.border-50 {
+  border-radius: 50%;
+}
+
 .actions-title span.notification .caret {
   display: none;
 }

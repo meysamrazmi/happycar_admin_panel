@@ -102,12 +102,10 @@ const users = {
 
     serverError: function() {
       swal({
+        type: 'warning',
         title: "خطا",
-        text: "خطای سرور.",
+        text: "خطای سرور. دوباره تلاش کنید.",
         confirmButtonText: "باشه"
-      });
-      router.push({
-        path: "/"
       });
     }
   },

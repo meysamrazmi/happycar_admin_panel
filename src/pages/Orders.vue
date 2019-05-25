@@ -44,35 +44,6 @@
 <script>
 // import { ServerTable } from "vue-tables-2";
 
-function getData() {
-  return [
-    {
-      id: 1,
-      user: "محمدرضا ابراهیمی",
-      code: "1234",
-      services: ["تعویض روغن", "کارواش"],
-      price: 1200,
-      status: "در انتظار تایید",
-      payment_type: "online",
-      assign: false,
-      carModel: "پژو ۲۰۶ تیپ ۶",
-      date: "12/4/54"
-    },
-    {
-      id: 2,
-      user: "حسن",
-      code: "232435",
-      status: "تایید شده",
-      services: ["تعویض فیلتر", "پنچری"],
-      price: 120000,
-      payment_type: "cash",
-      assign: true,
-      carModel: "پراید",
-      date: "12/4/54"
-    }
-  ];
-}
-
 export default {
   name: "orders",
 
@@ -92,7 +63,7 @@ export default {
         "total_cost",
         "actions"
       ],
-      data: getData(),
+      data: [],
       options: {
         requestFunction: function (data) {
           return this.$http.get("/orders/admin/", {
@@ -102,7 +73,7 @@ export default {
           }.bind(this));
         },
         responseAdapter: function(resp) {
-          return { data: resp.data.data, count: 10 };
+          return { data: resp.data.data, count: resp.data.count };
         },
         headings: {
           buyer: "کاربر",

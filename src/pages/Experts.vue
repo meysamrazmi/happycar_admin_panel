@@ -11,11 +11,11 @@
                                 <div class="table-wrapper">
                                     <v-client-table :columns="columns" :data="data" :options="options">
                                         <div slot="user.date_joined" slot-scope="props">
-                                            {{ chengeTime(props.row.user.date_joined) }}
+                                            {{ changeTime(props.row.user.date_joined) }}
                                         </div>
                                         <div slot="user.last_login" slot-scope="props">
 
-                                            {{ props.row.user.last_login ? chengeTime(props.row.user.last_login) : ''}}
+                                            {{ props.row.user.last_login ? changeTime(props.row.user.last_login) : ''}}
                                         </div>
                                         <div slot="user.active"
                                              slot-scope="props"
@@ -26,8 +26,11 @@
                                             </toggle-button>
                                         </div>
                                         <div slot="image" slot-scope="props">
+                                            <img class="mr-thumb profile"
+                                                 :src="`${$http.defaults.mediaUrl}${props.row.image}`"
+                                                 v-if="props.row.image" alt="">
                                             <img  :src="$store.state.placeholderImage"
-                                                 class="mr-thumb profile" alt="">
+                                                 class="mr-thumb profile" alt="" v-else>
                                         </div>
                                         <div slot="actions" slot-scope="props">
                                             <router-link :to="{name: 'expert-profile', params:{id: props.row.id}}" class="text-white">
@@ -60,7 +63,7 @@
 
         data() {
             return {
-                columns: ['id', 'user.name', 'image', 'user.phone', 'user.date_joined', 'user.last_login', 'user.active', 'actions'],
+                columns: ['id', 'user.name', 'image', 'user.phone', 'user.date_joined', 'user.active', 'actions'],
                 data: [],
                 options: {
                     headings: {
@@ -69,8 +72,7 @@
                         'user.active':  'وضعیت',
                         id: 'شناسه',
                         image: 'تصویر',
-                        'user.date_joined': 'تاریخ ورود',
-                        'user.last_login': 'آخرین ورود',
+                        'user.date_joined': 'تاریخ ثبت‌نام',
                         actions: 'اقدامات'
                     },
                     sortable: ['id', 'user.name', 'user.active', 'user.date_joined', 'user.last_login'],
@@ -106,7 +108,7 @@
                 })
             },
 
-            chengeTime(time) {
+            changeTime(time) {
                 return moment(time).format('jYYYY/jMM/jDD')
             },
 

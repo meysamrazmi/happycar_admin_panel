@@ -46,7 +46,7 @@
                             </label>
 
                             <model-list-select :list="productGroup"
-                                               v-model="product.category_id.id"
+                                               v-model="product.category_id"
                                                option-value="id"
                                                data-vv-as="گروه"
                                                name="category_id"
@@ -65,7 +65,7 @@
                                  سرویس
                             </label>
                             <model-list-select :list="serviceGroup"
-                                               v-model="product.service_id.id"
+                                               v-model="product.service_id"
                                                option-value="id"
                                                data-vv-as=" سرویس"
                                                name="service_id"
@@ -103,7 +103,20 @@
                             </fg-input>
                         </div>
 
-
+                        <div class="col-12">
+                            <div>
+                                <treeselect
+                                        :multiple="true"
+                                        :options="cars"
+                                        placeholder="تگ محصولات براساس خودرو"
+                                        v-model="car_type_ids"
+                                        :normalizer="normalizer"
+                                        value-consists-of="LEAF_PRIORITY"
+                                >
+                                    <div slot="value-label" slot-scope="{ node }">{{ node.raw.customLabel }}</div>
+                                </treeselect>
+                            </div>
+                        </div>
                         <div class="col-12 text-center mt-3">
                             <button class="btn btn-success" @click="sendProduct">
                                 ثبت
@@ -118,161 +131,247 @@
 </template>
 
 <script>
-    import { ModelListSelect } from 'vue-search-select';
+import { ModelListSelect } from "vue-search-select";
+import Treeselect from '@riophae/vue-treeselect';
 
-    export default {
-        name: "product-detail",
-        components: {
-            ModelListSelect
-        },
-        data() {
-            return {
-                id: '',
-                create: true,
-                fetchedProduct: {},
-                product: {
-                    category_id: {
-                        name: '',
-                        id: ''
-                    },
-                    service_id: {
-                        name: '',
-                        id: ''
-                    },
-                    special_name: '',
-                    general_name: '',
-                    image: '',
-                    description: '',
-                    customer_pric: undefined,
-                    repair_price: ''
-                },
-                imageFile: undefined,
-                serviceGroup: [],
-                productGroup: []
-            }
-        },
-        computed: {
-            subTitle() {
-                if (this.create) {
-                    return 'اضافه کردن محصول جدید'
-                } else {
-                    return `بروز رسانی محصول ${this.fetchedProduct.special_name}`
-                }
-            },
+export default {
+  name: "product-detail",
+  components: {
+    ModelListSelect,
+    Treeselect
+  },
 
-            imagePreview() {
-                if (!this.product.image) {
-                    return ''
-                } else {
-                    return `${this.$http.defaults.mediaUrl}${this.product.image}`
-                }
-            }
-        },
+  data() {
+    return {
+      cars: [],
+      car_type_ids: [],
+      id: "",
+      create: true,
+      fetchedProduct: {},
+      product: {
+        category_id: "",
+        service_id: "",
+        special_name: "",
+        general_name: "",
+        image: "",
+        description: "",
+        customer_pric: undefined,
+        repair_price: ""
+      },
+      imageFile: undefined,
+      serviceGroup: [],
+      productGroup: [],
+      tags: []
+    };
+  },
+  computed: {
 
-        mounted() {
-            this.id = this.$route.params.id;
-            if (this.$route.params.id) {
-                this.create = false;
-                this.fetchProduct();
-            }
-            this.fetchServiceList();
-            this.fetchProductCategoryList();
-        },
+    subTitle() {
+      if (this.create) {
+        return "اضافه کردن محصول جدید";
+      } else {
+        return `بروز رسانی محصول ${this.fetchedProduct.special_name}`;
+      }
+    },
 
-        methods: {
-            fetchProduct() {
-                this.$http.get(`​/products​/${this.id}​/`).then((res) => {
-                    console.log(res)
-                }).catch((err) => {
-                    // console.log(err)
-                })
-            },
-
-            fetchServiceList() {
-                this.$http.get('/services/service/all/').then((res) => {
-                    this.serviceGroup = res.data.result;
-                }).catch((err) => {
-                    console.log(err);
-                })
-            },
-
-            fetchProductCategoryList() {
-                this.$http.get('/products/category/').then((res) => {
-                    this.productGroup = res.data.result;
-                }).catch((err) => {
-                    console.log(err);
-                })
-            },
-            sendProduct() {
-                if (this.create) {
-                    this.$validator.validateAll().then((res)=> {
-                        if(res) {
-                            if(this.imageFile === undefined) {
-                                this.$swal({
-                                    type: 'warning',
-                                    title: 'خطا',
-                                    text: 'انتخاب عکس الزامی است'
-                                })
-                            }else {
-                                const productFormData = new FormData();
-                                productFormData.set('special_name', this.product.special_name);
-                                productFormData.set('general_name', this.product.general_name);
-                                productFormData.set('customer_pric', String(this.product.customer_pric));
-                                productFormData.set('repair_price', String(this.product.repair_price));
-                                productFormData.set('category_id', this.product.category_id.id);
-                                productFormData.set('service_id', this.product.service_id.id);
-                                productFormData.append('image', this.imageFile);
-                                this.$http.post('/products/', productFormData).then((res) => {
-                                    this.$swal({
-                                        type: 'success',
-                                        title: 'موفق',
-                                        text: 'عملیات با موفقیت انجام شد'
-                                    });
-                                    this.$router.push({name: 'product-list'});
-                                }).catch((err) => {
-                                    this.$swal({
-                                        type: 'warning',
-                                        title: 'خطا',
-                                        text: 'دوباره تلاش کنید'
-                                    })
-                                })
-                            }
-                        }
-                    });
-                } else {
-                    const productFormData = new FormData();
-                    const productObjectKeys = Object.keys(this.fetchedProduct);
-                    productFormData.set('product_id', this.id);
-                    productObjectKeys.forEach((key) => {
-                        if (this.product[key] !== this.fetchedProduct[key]) {
-                            productFormData.set(key, this.product[key]);
-                        }
-                    });
-                    productFormData.delete('image');
-                    if(this.imageFile !== undefined) {
-                        productFormData.append('image', this.imageFile);
-                    }
-
-                    this.$http.patch('/products/', productFormData).then((res)=> {
-                        this.$swal({
-                            type: 'success',
-                            title: 'موفق',
-                            text: 'عملیات با موفقیت انجام شد'
-                        });
-                        this.$router.push({name: 'product-list'});
-                    }).catch((err)=> {
-                        this.$swal({
-                            type: 'warning',
-                            title: 'خطا',
-                            text: 'دوباره تلاش کنید'
-                        })
-                    })
-                }
-            }
-        }
+    imagePreview() {
+      if (!this.product.image) {
+        return "";
+      } else {
+        return `${this.$http.defaults.mediaUrl}${this.product.image}`;
+      }
     }
+  },
+
+  mounted() {
+    this.id = this.$route.params.id;
+    if (this.$route.params.id) {
+      this.create = false;
+      this.fetchProduct();
+    }
+    this.fetchServiceList();
+    this.fetchProductCategoryList();
+    this.fetchCarsList();
+  },
+
+  methods: {
+
+    normalizer(node) {
+      return {
+        id: node.id,
+        label: node.name,
+        children: node.children
+      }
+    },
+
+    fetchProduct() {
+      this.$http
+        .get(`/products/${this.id}/`)
+        .then(res => {
+          console.log(res);
+          this.product = res.data;
+          this.fetchedProduct = Object.assign({}, res.data);
+          this.car_type_ids = [ ...res.data.related_car_types]
+        })
+        .catch(err => {
+          // console.log(err)
+        });
+    },
+
+    fetchServiceList() {
+      this.$http
+        .get("/services/service/all/")
+        .then(res => {
+          this.serviceGroup = res.data.result;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    fetchProductCategoryList() {
+      this.$http
+        .get("/products/category/")
+        .then(res => {
+          this.productGroup = res.data.result;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    fetchCarsList() {
+      this.$http
+        .get("/car/")
+        .then(res => {
+          this.cars = res.data;
+          this.cars.forEach((brand) => {
+            brand.id = `brand-${brand.id}`;
+            brand.customLabel = `${brand.name}`;
+            brand.children.forEach((model) => {
+              model.id = `model-${model.id}`;
+              model.customLabel = `${brand.name} / ${model.name}`;
+              model.children.forEach((type) => {
+                type.customLabel = `${brand.name} / ${model.name} / ${type.name}`;
+              })
+            })
+          })
+        })
+        .catch(err => console.log(err));
+    },
+
+    sendProduct() {
+      if (this.create) {
+        this.$validator.validateAll().then(res => {
+          if (res) {
+            if (this.imageFile === undefined) {
+              this.$swal({
+                type: "warning",
+                title: "خطا",
+                text: "انتخاب عکس الزامی است"
+              });
+            } else {
+              const productFormData = new FormData();
+              productFormData.set("special_name", this.product.special_name);
+              productFormData.set("general_name", this.product.general_name);
+              productFormData.set(
+                "customer_pric",
+                String(this.product.customer_pric)
+              );
+              productFormData.set(
+                "repair_price",
+                String(this.product.repair_price)
+              );
+              productFormData.set("category_id", this.product.category_id);
+              productFormData.set("service_id", this.product.service_id);
+              productFormData.append("image", this.imageFile);
+              this.$http
+                .post("/products/", productFormData)
+                .then(res => {
+                  let data = {
+                    product_id: res.data.result.id,
+                    car_type_ids: this.car_type_ids
+                  };
+                  this.$http
+                    .post('/car/', data)
+                    .then(res => {
+                      this.$swal({
+                        type: "success",
+                        title: "موفق",
+                        text: "عملیات با موفقیت انجام شد"
+                      });
+                      this.$router.push({ name: "product-list" });
+                    })
+                    .catch(err => {
+                      this.$swal({
+                        type: "warning",
+                        title: "خطا",
+                        text: "تگ محصولات آپدیت نشد.دوباره تلاش کنید"
+                      });
+                    });
+                  this.$router.push({ name: "product-list" });
+                })
+                .catch(err => {
+                  this.$swal({
+                    type: "warning",
+                    title: "خطا",
+                    text: "دوباره تلاش کنید"
+                  });
+                });
+            }
+          }
+        });
+      } else {
+        const productFormData = new FormData();
+        const productObjectKeys = Object.keys(this.fetchedProduct);
+        productFormData.set("product_id", this.id);
+        productObjectKeys.forEach(key => {
+          if (this.product[key] !== this.fetchedProduct[key]) {
+            productFormData.set(key, this.product[key]);
+          }
+        });
+        productFormData.delete("image");
+        if (this.imageFile !== undefined) {
+          productFormData.append("image", this.imageFile);
+        }
+
+        this.$http
+          .patch("/products/", productFormData)
+          .then(res => {
+            let data = {
+              product_id: this.id,
+              car_type_ids: this.car_type_ids
+            };
+            this.$http
+              .post('/car/', data)
+              .then(res => {
+                this.$swal({
+                  type: "success",
+                  title: "موفق",
+                  text: "عملیات با موفقیت انجام شد"
+                });
+                this.fetchProduct();
+              })
+              .catch(err => {
+                this.$swal({
+                  type: "warning",
+                  title: "خطا",
+                  text: "تگ محصولات آپدیت نشد.دوباره تلاش کنید"
+                });
+              })
+          })
+          .catch(err => {
+            this.$swal({
+              type: "warning",
+              title: "خطا",
+              text: "دوباره تلاش کنید"
+            });
+          });
+      }
+    }
+  }
+};
 </script>
 
 <style scoped>
-
 </style>

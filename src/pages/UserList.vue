@@ -56,7 +56,7 @@
 
         data() {
             return {
-                columns: ['id', 'name', 'phone', 'date_joined', 'last_login', 'active', 'actions'],
+                columns: ['id', 'name', 'phone', 'date_joined', 'active', 'actions'],
                 data: [],
                 options: {
                     headings: {
@@ -64,8 +64,7 @@
                         phone: 'شماره',
                         active:  'وضعیت',
                         id: 'ردیف',
-                        date_joined: 'تاریخ ورود',
-                        last_login: 'آخرین ورود',
+                        date_joined: 'تاریخ ثبت‌نام',
                         actions: 'اقدامات'
                     },
                     sortable: ['id', 'name', 'active', 'date_joined', 'last_login'],

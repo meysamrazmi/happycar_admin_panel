@@ -30,7 +30,7 @@
                         <div class="col-sm-6">
                             <fg-input type="number"
                                       name="price"
-                                      label="قیمت"
+                                      label="قیمت(تومان)"
                                       placeholder="قیمت"
                                       v-model="service.price"
                                       data-vv-as="قیمت"
@@ -42,12 +42,12 @@
                         <div class="col-sm-6">
                             <fg-input type="number"
                                       name="time"
-                                      label="زمان تقریبی"
+                                      label="زمان تقریبی(دقیقه)"
                                       placeholder="زمان تقریبی"
                                       v-model="service.execution_time"
                                       data-vv-as="زمان تقریتی"
                                       v-validate="{required: true}"
-                                      :err="errors.first('price')">
+                                      :err="errors.first('time')">
                             </fg-input>
                         </div>
                         <div class="col-sm-6">
