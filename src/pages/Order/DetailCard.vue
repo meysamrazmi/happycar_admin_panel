@@ -29,7 +29,7 @@
                     مبلغ
                 </strong>
                 <span class="pull-left">
-                {{ "12000" | currency }}
+                {{ total_cost | currency }}
             </span>
             </div>
             </div>
@@ -107,6 +107,9 @@ export default {
     },
     payment_in_place: {
       type: Boolean
+    },
+    total_cost: {
+      type: Number
     }
   },
 

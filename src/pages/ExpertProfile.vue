@@ -40,7 +40,7 @@
             </card>
         </div>
         <div class="col-12">
-            <expert-transactions></expert-transactions>
+            <expert-transactions :userId="userId"></expert-transactions>
         </div>
     </div>
 </template>

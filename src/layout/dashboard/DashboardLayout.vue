@@ -37,6 +37,7 @@
                     <template slot="subLink">
                         <sidebar-link to="/car-brand-list" name="برندها" icon="ti-angle-double-left"></sidebar-link>
                         <sidebar-link to="/cars-list" name="خودروها" icon="ti-angle-double-left"></sidebar-link>
+                        <sidebar-link to="/car-group" name="گروه خودرو" icon="ti-angle-double-left"></sidebar-link>
                     </template>
                 </sidebar-link-group>
             </template>

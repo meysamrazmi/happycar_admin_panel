@@ -8,6 +8,7 @@
                              :store="order.preferred_store"
                              :address="order.delivering_address"
                              :payment_in_place="order.payment_in_place"
+                             :total_cost="order.total_cost"
                 ></detail-card>
             </div>
 
@@ -63,6 +64,7 @@ import Factor from "./Order/Factor";
 import DetailCard from "./Order/DetailCard";
 import Expert from './Order/Expert';
 
+
 export default {
   name: "order-detail",
 
@@ -98,6 +100,8 @@ export default {
   },
 
   methods: {
+
+
     fetchOrder() {
       this.$http
         .get(`/orders/admin/${this.orderId}/`)

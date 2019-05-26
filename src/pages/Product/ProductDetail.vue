@@ -103,7 +103,7 @@
                             </fg-input>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-md-6">
                             <div>
                                 <treeselect
                                         :multiple="true"
@@ -114,6 +114,19 @@
                                         value-consists-of="LEAF_PRIORITY"
                                 >
                                     <div slot="value-label" slot-scope="{ node }">{{ node.raw.customLabel }}</div>
+                                </treeselect>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <treeselect
+                                        :multiple="true"
+                                        :options="groups"
+                                        placeholder="تگ محصولات براساس گروه خودرو"
+                                        v-model="car_group_ids"
+                                        :normalizer="normalizer"
+                                        value-consists-of="LEAF_PRIORITY"
+                                >
                                 </treeselect>
                             </div>
                         </div>
@@ -145,6 +158,7 @@ export default {
     return {
       cars: [],
       car_type_ids: [],
+      car_group_ids: [],
       id: "",
       create: true,
       fetchedProduct: {},
@@ -161,7 +175,8 @@ export default {
       imageFile: undefined,
       serviceGroup: [],
       productGroup: [],
-      tags: []
+      tags: [],
+      groups: []
     };
   },
   computed: {
@@ -192,6 +207,7 @@ export default {
     this.fetchServiceList();
     this.fetchProductCategoryList();
     this.fetchCarsList();
+    this.fetchGroups();
   },
 
   methods: {
@@ -211,7 +227,8 @@ export default {
           console.log(res);
           this.product = res.data;
           this.fetchedProduct = Object.assign({}, res.data);
-          this.car_type_ids = [ ...res.data.related_car_types]
+          this.car_type_ids = [ ...res.data.related_car_types ];
+          this.car_group_ids = [ ...res.data.related_car_groups ]
         })
         .catch(err => {
           // console.log(err)
@@ -227,6 +244,14 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+
+    fetchGroups() {
+      this.$http.get('/car/tags/').then(res => {
+        this.groups = res.data;
+      }).catch(err => {
+
+      })
     },
 
     fetchProductCategoryList() {
@@ -290,7 +315,8 @@ export default {
                 .then(res => {
                   let data = {
                     product_id: res.data.result.id,
-                    car_type_ids: this.car_type_ids
+                    car_type_ids: this.car_type_ids,
+                    car_group_ids: this.car_group_ids,
                   };
                   this.$http
                     .post('/car/', data)
@@ -340,7 +366,8 @@ export default {
           .then(res => {
             let data = {
               product_id: this.id,
-              car_type_ids: this.car_type_ids
+              car_type_ids: this.car_type_ids,
+              car_group_ids: this.car_group_ids
             };
             this.$http
               .post('/car/', data)

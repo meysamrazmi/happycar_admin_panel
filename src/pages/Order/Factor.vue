@@ -5,7 +5,7 @@
                 {{ product.product.special_name }} - {{ product.product.general_name }}
             </strong>
             <span class="pr-4 pull-left">
-                {{ product.product.price | currency }} * {{ product.num_of_products }}
+                {{ product.product.customer_pric | currency }} * {{ product.num_of_products }}
             </span>
         </div>
         <div class="divider-border p-2 my-2 prod-border" v-for="service in services">
@@ -48,6 +48,7 @@
             </strong>
             <span class="pr-4 pull-left">
                 {{ execution_time }}
+               دقیقه
             </span>
         </div>
     </card>
@@ -80,7 +81,7 @@ export default {
         return sum + service.execution_time;
       }, 0);
       console.log("sum_of_time", sum_of_time);
-      return this.formatTime(sum_of_time)
+      return sum_of_time
     }
   },
 

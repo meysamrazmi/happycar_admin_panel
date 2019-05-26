@@ -55,7 +55,7 @@
                                 گروه سرویس
                             </label>
                             <model-list-select :list="serviceGroup"
-                                               v-model="service.category_id.id"
+                                               v-model="service.category_id"
                                                option-value="id"
                                                data-vv-as="گروه"
                                                name="category_id"
@@ -167,6 +167,8 @@
                         if(temp) {
                             this.fetchedService = Object.assign({}, temp);
                             this.service = temp;
+                            this.service.category_id = temp.category_id.id;
+                            this.fetchedService.category_id = this.service.category_id;
                         } else {
                             this.$router.push('/404')
                         }

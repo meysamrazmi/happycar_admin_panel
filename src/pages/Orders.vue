@@ -24,6 +24,9 @@
                                         <div slot="total_cost" slot-scope="props">
                                         {{ props.row.total_cost | currency }}
                                         </div>
+                                        <div slot="preferred_date" slot-scope="props">
+                                            {{ changeTime(props.row.preferred_date)}}
+                                        </div>
                                         <div slot="actions" slot-scope="props">
                                         <router-link :to="{name: 'order-detail', params: {id:props.row.id}}">
                                             <a class="ti-eye text-primary"></a>
@@ -42,13 +45,12 @@
 </template>
 
 <script>
-// import { ServerTable } from "vue-tables-2";
+  import moment from "jalali-moment";
 
 export default {
   name: "orders",
 
   components: {
-    // 'v-server-table': ServerTable
   },
 
   data() {
@@ -109,11 +111,12 @@ export default {
   },
 
   mounted() {
-    this.fetchOrders();
   },
 
   methods: {
-    fetchOrders() {}
+    changeTime(time) {
+      return moment(time).format('jYYYY/jMM/jDD')
+    },
   }
 };
 </script>
