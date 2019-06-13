@@ -39,8 +39,8 @@ export default new Vuex.Store({
             skin: 'table table-bordered table-hover'
         },
         companyName: {
-            name: 'کارفیکس',
-            link: 'carfix.com'
+            name: 'هپی کار',
+            link: 'happycarapp.com'
         }
     }
 })
