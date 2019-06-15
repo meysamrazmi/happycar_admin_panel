@@ -5,6 +5,7 @@
                 <sidebar-link to="/dashboard" name="داشبورد" icon="ti-panel"></sidebar-link>
                 <sidebar-link to="/users-list" name="لیست کاربران" icon="ti-user"></sidebar-link>
                 <sidebar-link to="/experts" name="لیست متخصصین" icon="ti-medall"></sidebar-link>
+                <sidebar-link to="/repair-shops" name="لیست تعمیرگاه ها" icon="ti-location-pin"></sidebar-link>
                 <sidebar-link to="/slider" name="اسلایدر" icon="ti-image"></sidebar-link>
                 <sidebar-link to="/about-us" name="درباره‌ی ما" icon="ti-info-alt"></sidebar-link>
                 <sidebar-link to="/orders" name="سفارش‌ها" icon="ti-shopping-cart-full"></sidebar-link>

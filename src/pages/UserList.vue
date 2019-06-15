@@ -26,7 +26,7 @@
                                             </toggle-button>
                                         </div>
                                         <div slot="actions" slot-scope="props">
-                                            <router-link :to="{name: 'user-profile', id:'1'}" class="text-white">
+                                            <router-link :to="{name: 'user-profile', params:{id: props.row.id}}" class="text-white">
                                                 <a class="ti-eye text-primary">
                                                 </a>
                                             </router-link>

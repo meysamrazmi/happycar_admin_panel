@@ -43,6 +43,9 @@ import StoreProduct from "@/pages/StoreProduct.vue";
 import StoreDetail from "@/pages/Stores/StoreDetail.vue";
 
 import AboutUs from "@/pages/AboutUs.vue";
+
+import RepairShops from "@/pages/RepairShops";
+import RepairShop from "@/pages/RepairShops/shop.vue";
 // Login Register
 import login from "@/pages/login.vue";
 
@@ -214,7 +217,18 @@ const routes = [
         path: "user-profile/:id",
         name: "user-profile",
         component: UserProfile
-      }
+      },
+      {
+        path: "repair-shops",
+        name: "repair-shops",
+        component: RepairShops
+      },
+      {
+        path: "repair-shop/:id",
+        name: "repair-shop",
+        component: RepairShop,
+        props: true
+      },
     ]
   },
   { path: "*", component: NotFound }

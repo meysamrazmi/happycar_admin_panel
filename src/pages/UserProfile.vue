@@ -30,20 +30,20 @@
         <div class="col-12">
             <card title="تراکنش‌ها">
                 <div class="transaction-wrapper">
-                    <!--<div class="d-flex justify-content-around divider-border py-2 my-3">-->
-                        <!--<span>-->
-                            <!--ردیف-->
-                        <!--</span>-->
-                        <!--<span>-->
-                            <!--مقدار تراکنش-->
-                        <!--</span>-->
-                        <!--<span>-->
-                            <!--زمان-->
-                        <!--</span>-->
-                        <!--<span>-->
-                            <!--نوع-->
-                        <!--</span>-->
-                    <!--</div>-->
+                    <div class="d-flex justify-content-around divider-border py-2 my-3">
+                        <span>
+                            ردیف
+                        </span>
+                        <span>
+                            مقدار تراکنش
+                        </span>
+                        <span>
+                            زمان
+                        </span>
+                        <span>
+                            نوع
+                        </span>
+                    </div>
                     <div v-for="transaction in transactions"
                          :key="transaction.id"
                          :class="{'green-devider-border': transaction.type === 'in', 'red-devider-border': transaction.type === 'out'}"
