@@ -2,17 +2,17 @@
   <div>
     <div class="row">
       <div class="col-12">
-        <div class="radio-group">
+        <div class="radio-group" @click="refreshTable">
           <span>نمایش:</span>
-          <input type="radio" id="all" value="all" v-model="date">
+          <input type="radio" id="all" value="all" v-model="dateFiltered">
           <label for="all">همه</label>
-          <input type="radio" id="today" value="today" v-model="date">
+          <input type="radio" id="today" value="today" v-model="dateFiltered">
           <label for="today">امروز</label>
         </div>
 
         <div class="table-responsive">
           <div class="table-wrapper">
-            <v-server-table :columns="columns" :options="options">
+            <v-server-table ref="orders" :columns="columns" :options="options">
               <div slot="index" slot-scope="props">
                 {{ props.index }}
               </div>
@@ -28,6 +28,9 @@
               </div>
               <div slot="preferred_date" slot-scope="props">
                 {{ changeTime(props.row.preferred_date)}}
+              </div>
+              <div slot="created_at" slot-scope="props">
+                {{ changeTime(props.row.created_at)}}
               </div>
             </v-server-table>
           </div>
@@ -46,7 +49,7 @@
 
     data() {
       return {
-        date: 'all',
+        dateFiltered: 'all',
         columns: [
           "index",
           "code",
@@ -55,22 +58,11 @@
           "payment_in_place",
           "preferred_date",
           "total_cost",
+          "created_at",
         ],
         data: [],
         options: {
-          requestFunction: function (data) {
-            var a = data
-            console.log(this.date)
-            if(this.date != 'today'){
-              a = Object.assign({date: Math.floor(Date.now() / 1000)}, data)
-            }
-            console.log(a)
-            return this.$http.get("/orders/shop/admin/", {
-              params: a
-            }).catch(function (e) {
-              console.log(e)
-            }.bind(this));
-          },
+          requestFunction: this.reqFunc,
           responseAdapter: function(resp) {
             return { data: resp.data.data, count: resp.data.count };
           },
@@ -81,7 +73,8 @@
             total_cost: "هزینه",
             id: "شناسه",
             code: "کدسفارش",
-            preferred_date: "تاریخ",
+            preferred_date: "تاریخ انتخابی کاربر",
+            created_at  : "تاریخ ایجاد",
           },
           rowClassCallback: function(row) {
             return `assign-${row.confirmed}`;
@@ -107,18 +100,22 @@
       };
     },
 
-    computed: {
-      params: function(){
-        if(this.date != 'all'){
-          let today = new Date();
-          let dd = String(today.getDate()).padStart(2, '0');
-          let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-          let yyyy = today.getFullYear();
-
-          // today = yyyy + '-' + mm + '-' + dd;
-          return {date: today}
+    methods:{
+      reqFunc: function (data) {
+        var a = data
+        if(this.dateFiltered == 'today'){
+          a = Object.assign({date: Math.floor(Date.now() / 1000)}, data)
         }
-        return {}
+        return this.$http.get("/orders/shop/admin/", {
+          params: a
+        }).catch(function (e) {
+          console.log(e)
+        }.bind(this));
+      },
+      refreshTable: function(){
+        setTimeout(()=>{
+          this.$refs.orders.refresh()
+        },10);
       }
     }
   };
