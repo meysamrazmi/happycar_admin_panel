@@ -298,3 +298,34 @@ li.page-item.active {
     font-size: calc(100vw / 35);
   }
 }
+.VueTables__search {
+  display: none;
+}
+ul.tabs-component-tabs {
+  border-top: 1px solid #ddd;
+  > li {
+    padding: 0;
+    display: inline-flex;
+    position: relative;
+    > a {
+      padding: 10px 15px;
+    }
+    &.is-active > a:before {
+      content: "";
+      position: absolute;
+      height: 5px;
+      width: 100%;
+      right: 0;
+      background: #03A9F4;
+      top: -1px;
+      border-radius: 0 0 5px 5px;
+      z-index: 1;
+    }
+  }
+}
+.green-devider-border {
+  background-color: #d0ffd89e;
+}
+.red-devider-border {
+  background-color: #ffc2c27d;
+}

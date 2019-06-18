@@ -132,12 +132,4 @@
 
     };
 </script>
-<style scoped>
-    .green-devider-border {
-        background-color: #d0ffd89e;
-    }
 
-    .red-devider-border {
-        background-color: #ffc2c27d;
-    }
-</style>

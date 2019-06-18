@@ -46,6 +46,7 @@ import AboutUs from "@/pages/AboutUs.vue";
 
 import RepairShops from "@/pages/RepairShops";
 import RepairShop from "@/pages/RepairShops/shop.vue";
+import Transactions from "@/pages/Transactions";
 // Login Register
 import login from "@/pages/login.vue";
 
@@ -227,6 +228,12 @@ const routes = [
         path: "repair-shop/:id",
         name: "repair-shop",
         component: RepairShop,
+        props: true
+      },
+      {
+        path: "transactions",
+        name: "transactions",
+        component: Transactions,
         props: true
       },
     ]

@@ -16,9 +16,9 @@
 </template>
 
 <script>
-  import {Tabs, Tab} from 'vue-tabs-component';
-  import ExpertOrders from './ExpertOrders';
-  import Transactions from './Transactions';
+import {Tabs, Tab} from 'vue-tabs-component';
+import ExpertOrders from './ExpertOrders';
+import Transactions from './Transactions';
 
 export default {
   name: "expert-transactions",
