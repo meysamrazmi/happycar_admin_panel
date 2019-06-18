@@ -109,15 +109,6 @@ export default {
       }
     };
   },
-
-  mounted() {
-  },
-
-  methods: {
-    changeTime(time) {
-      return moment(time).format('jYYYY/jMM/jDD')
-    },
-  }
 };
 </script>
 

@@ -1,6 +1,7 @@
+import moment from "jalali-moment";
 const dateToPersian = {
   methods: {
-    chengeTime(time) {
+    changeTime: function (time) {
       return moment(time).format('jYYYY/jMM/jDD')
     },
   }

@@ -18,11 +18,11 @@
                         @click="RepairShops(props.row.id)">
                       <toggle-button :value="props.row.active"/>
                     </div>
-                    <div slot="actions" slot-scope="props">
-                      <router-link :to="{name: 'repair-shop', params: {id:props.row.id}}">
-                        <button class="ti-more-alt btn btn-xs btn-outline-info btn-round p-2"></button>
-                      </router-link>
-                    </div>
+                      <div slot="actions" slot-scope="props">
+                        <router-link :to="{name: 'repair-shop', params: {id:props.row.id}}">
+                          <button class="ti-more-alt btn btn-xs btn-outline-info btn-round p-2"></button>
+                        </router-link>
+                      </div>
                   </v-server-table>
                 </div>
               </div>
@@ -36,8 +36,6 @@
 </template>
 
 <script>
-  import moment from "jalali-moment";
-
   export default {
     name: "RepairShops",
 
@@ -99,9 +97,6 @@
     },
 
     methods: {
-      changeTime(time) {
-        return moment(time).format('jYYYY/jMM/jDD')
-      },
       changeRepairShopsStatus(id) {
         this.$http.patch(`/admin/repair_shop/${id}`).then((res)=> {
           this.$refs.repairShops.refresh();

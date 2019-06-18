@@ -1,29 +1,40 @@
 <template>
-    <div>
+  <div>
+    <div class="row">
+      <div class="col-12">
+      </div>
+      <div class="col-12">
         <div class="row">
-            <div class="col-12">
+          <div class="col-12">
+            <div class="table-responsive">
+              <div class="table-wrapper">
+                <v-server-table :url="`/wallet/admin/expert/${userId}/`" :columns="columns" :options="options">
+                  <div slot="amount" slot-scope="props">
+                    {{ props.row.amount | currency }}
+                  </div>
+                  <div slot="created_at" slot-scope="props">
+                    {{ changeTime(props.row.created_at)}}
+                  </div>
+                  <div slot="actions" slot-scope="props">
+                    <router-link :to="{name: 'order-detail', params: {id : props.row.boughtpack.id}}">
+                      <button class="btn btn-xs btn-outline-info btn-round p-2">مشاهده سفارش</button>
+                    </router-link>
+                  </div>
+                  <div slot="affected" slot-scope="props">
+                    <span :class="props.row.affected? 'ti-check': 'ti-close'"></span>
+                  </div>
+                </v-server-table>
+              </div>
             </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="table-responsive">
-                            <div class="table-wrapper">
-                                <v-server-table :url="`/wallet/admin/expert/${userId}/`" :columns="columns" :options="options">
-
-                                </v-server-table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+          </div>
         </div>
+      </div>
+
     </div>
+  </div>
 </template>
 
 <script>
-  // import { ServerTable } from "vue-tables-2";
-
   export default {
     name: "transactions",
     data() {
@@ -32,7 +43,9 @@
         columns: [
           "id",
           "amount",
-          "created_at"
+          "affected",
+          "created_at",
+          "actions",
         ],
         data: [],
         options: {
@@ -49,10 +62,12 @@
           headings: {
             id: "شناسه",
             amount: "مقدار",
-            created_at: "تاریخ"
+            created_at: "تاریخ",
+            actions: "مدیریت",
+            affected: "دریافت شده",
           },
           rowClassCallback: function(row) {
-            return `wallet-${row.confirmed}`;
+            return `wallet-${row.affected}`;
           },
           sortable: [],
           filterable: [],
@@ -75,19 +90,13 @@
     },
 
     mounted() {
-       this.userId = this.$route.params.id;
+      this.userId = this.$route.params.id;
     },
-
-    methods: {
-    }
   };
 </script>
 
-<style scoped>
-    .wallet-true {
-        background-color: #71f1873d;
-    }
-    .wallet-false {
-        background-color: #ece9e51c;
-    }
+<style>
+  .wallet-true {
+    background-color: rgba(111, 241, 133, 0.3);
+  }
 </style>

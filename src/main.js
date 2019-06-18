@@ -13,13 +13,15 @@ import ImgInputer from "vue-img-inputer";
 // filters
 import currency from "./filters/currency";
 import media from "./filters/media";
+//methods
+import dateToPersian from "@/mixins/dateToPersian";
+import Delete from "@/mixins/Delete";
 //css
 import "vue-notifyjs/themes/default.css";
 import "nprogress/nprogress.css";
 import "vue-img-inputer/dist/index.css";
 import { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
-import Delete from "@/mixins/Delete";
 
 // this part resolve an issue where the markers would not appear
 delete Icon.Default.prototype._getIconUrl;
@@ -54,6 +56,7 @@ Vue.use(require("vue-jalali-moment"));
 Vue.use(ClientTable);
 Vue.use(ServerTable);
 Vue.component("ImgInputer", ImgInputer);
+Vue.mixin(dateToPersian);
 Vue.mixin(Delete);
 Vue.filter("currency", currency);
 Vue.filter("media", media);

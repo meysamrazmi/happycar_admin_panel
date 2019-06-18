@@ -52,7 +52,6 @@
 
 <script>
     import { ClientTable } from 'vue-tables-2'
-    import moment from 'jalali-moment';
 
     export default {
         name: "experts",
@@ -106,10 +105,6 @@
                 }).catch((err)=> {
                     console.log(err);
                 })
-            },
-
-            changeTime(time) {
-                return moment(time).format('jYYYY/jMM/jDD')
             },
 
             changeExpertStatus(user) {
