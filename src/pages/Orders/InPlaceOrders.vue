@@ -13,12 +13,18 @@
         <div class="table-responsive">
           <div class="table-wrapper">
             <v-server-table ref="orders" :columns="columns" :options="options">
+              <div slot="index" slot-scope="props">
+                {{props.index}}
+              </div>
               <div slot="buyer" slot-scope="props">
                 {{ props.row.buyer.name }} - {{ props.row.buyer.phone }}
               </div>
               <div slot="payment_in_place" slot-scope="props">
                 <span v-if="props.row.payment_in_place" class="badge-info p-2 rounded">درمحل</span>
                 <span class="badge-success p-2 rounded" v-else>آنلاین</span>
+              </div>
+              <div slot="current_status" slot-scope="props">
+                {{ props.row.current_status | translateStatus }}
               </div>
               <div slot="total_cost" slot-scope="props">
                 {{ props.row.total_cost | currency }}
@@ -49,6 +55,7 @@
       return {
         dateFiltered: 'all',
         columns: [
+          "index",
           "id",
           "code",
           "buyer",
@@ -66,6 +73,7 @@
             return { data: resp.data.data, count: resp.data.count };
           },
           headings: {
+            index: 'ردیف',
             buyer: "کاربر",
             payment_in_place: "نوع پرداخت",
             total_cost: "هزینه",
@@ -117,6 +125,26 @@
         setTimeout(()=>{
           this.$refs.orders.refresh()
         },10);
+      }
+    },
+    filters: {
+      translateStatus: function (v) {
+        switch (v) {
+          case 'waiting':
+            return 'در انتظار تخصیص'
+            break
+          case 'assigned':
+            return  'تخصیص شده'
+            break
+          case 'done':
+            return 'انجام شده'
+            break
+          case 'canceled':
+            return 'لغو شده'
+            break
+          default:
+            return v
+        }
       }
     }
   };

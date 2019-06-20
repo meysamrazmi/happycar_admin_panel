@@ -1,42 +1,45 @@
 <template>
-    <div>
+  <div>
+    <div class="row">
+      <div class="col-12">
+      </div>
+      <div class="col-12">
         <div class="row">
-            <div class="col-12">
-            </div>
-            <div class="col-12">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="table-responsive">
-                                <div class="table-wrapper">
-                                    <v-server-table :url="`/orders/admin/`" :columns="columns" :options="options">
-                                        <div slot="buyer" slot-scope="props">
-                                            {{ props.row.buyer.name }} - {{ props.row.buyer.phone }}
-                                        </div>
-                                        <div slot="payment_in_place" slot-scope="props">
+          <div class="col-12">
+            <div class="table-responsive">
+              <div class="table-wrapper">
+                <v-server-table :url="`/orders/admin/`" :columns="columns" :options="options">
+                  <div slot="buyer" slot-scope="props">
+                    {{ props.row.buyer.name }} - {{ props.row.buyer.phone }}
+                  </div>
+                  <div slot="payment_in_place" slot-scope="props">
                                             <span v-if="props.row.payment_in_place" class="badge-info p-2 rounded">
                                                 درمحل
                                             </span>
-                                            <span class="badge-success p-2 rounded" v-else>
+                    <span class="badge-success p-2 rounded" v-else>
                                                 آنلاین
                                             </span>
-                                        </div>
-                                        <div slot="total_cost" slot-scope="props">
-                                            {{ props.row.total_cost | currency }}
-                                        </div>
-                                        <div slot="actions" slot-scope="props">
-                                            <router-link :to="{name: 'order-detail', params: {id:props.row.id}}">
-                                                <a class="ti-eye text-primary"></a>
-                                            </router-link>
-                                        </div>
-                                    </v-server-table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  </div>
+                  <div slot="current_status" slot-scope="props">
+                    {{ props.row.current_status | translateStatus }}
+                  </div>
+                  <div slot="total_cost" slot-scope="props">
+                    {{ props.row.total_cost | currency }}
+                  </div>
+                  <div slot="actions" slot-scope="props">
+                    <router-link :to="{name: 'order-detail', params: {id:props.row.id}}">
+                      <a class="ti-eye text-primary"></a>
+                    </router-link>
+                  </div>
+                </v-server-table>
+              </div>
             </div>
-
+          </div>
         </div>
+      </div>
+
     </div>
+  </div>
 </template>
 
 <script>
@@ -107,16 +110,34 @@
       this.userId = this.$route.params.id;
     },
 
-    methods: {
+    filters: {
+      translateStatus: function (v) {
+        switch (v) {
+          case 'waiting':
+              return 'در انتظار تخصیص'
+            break
+          case 'assigned':
+            return  'تخصیص شده'
+            break
+          case 'done':
+            return 'انجام شده'
+            break
+          case 'canceled':
+            return 'لغو شده'
+            break
+          default:
+            return v
+        }
+      }
     }
   };
 </script>
 
 <style scoped>
-    .wallet-true {
-        background-color: #71f1873d;
-    }
-    .wallet-false {
-        background-color: #ece9e51c;
-    }
+  .wallet-true {
+    background-color: #71f1873d;
+  }
+  .wallet-false {
+    background-color: #ece9e51c;
+  }
 </style>
