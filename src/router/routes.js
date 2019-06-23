@@ -152,7 +152,8 @@ const routes = [
       {
         path: "product-list",
         name: "product-list",
-        component: ProductList
+        component: ProductList,
+        props: (e) => ({ name: e.query.name })
       },
       {
         path: "product-detail/:id?",
@@ -200,7 +201,7 @@ const routes = [
         component: StoreList
       },
       {
-        path: "store-detail",
+        path: "store-detail/:id",
         name: "store-detail",
         component: StoreDetail
       },

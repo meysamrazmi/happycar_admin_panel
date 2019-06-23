@@ -21,7 +21,13 @@
             <div class="col-12">
               <div class="table-responsive">
                 <div class="table-wrapper">
-                  <v-client-table :columns="columns" :data="data" :options="options">
+                  <v-client-table
+                      ref="productsList"
+                      :columns="columns"
+                      :data="data"
+                      :options="options"
+                      @pagination="setPage"
+                  >
                     <div slot="index" slot-scope="props">
                       {{props.index}}
                     </div>
@@ -85,6 +91,7 @@
           sortable: ['id', 'special_name', 'general_name', 'category_id.name','service_id.name', 'customer_pric', 'repair_price'],
           filterable: ['special_name', 'general_name', 'category_id.name', 'service_id.name', 'customer_pric', 'repair_price'],
           pagination: {chunk: 10},
+          initialPage: this.$route.query.page != undefined && this.$route.query.page > 0 ? this.$route.query.page : 1,
           sortIcon: this.$store.state.tebleConfig.sortIcon,
           texts: this.$store.state.tebleConfig.texts,
           skin: this.$store.state.tebleConfig.skin,
@@ -125,7 +132,6 @@
     },
 
     methods: {
-
       deleteProduct(product) {
         let data = {
           product_id: product.id
@@ -148,6 +154,10 @@
         }).catch((err) => {
           console.log(err);
         })
+      },
+
+      setPage(){
+        this.$router.replace({ name: "product-list", query : {page: this.$refs.productsList.Page} })
       }
     },
 

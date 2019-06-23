@@ -8,7 +8,7 @@ import VueParticles from "vue-particles";
 import VueSweetalert from "vue-sweetalert2";
 import HighchartsVue from "highcharts-vue";
 import Highcharts from "highcharts";
-import { ClientTable, ServerTable } from "vue-tables-2";
+import {ServerTable, ClientTable, Event} from 'vue-tables-2';
 import ImgInputer from "vue-img-inputer";
 // filters
 import currency from "./filters/currency";
