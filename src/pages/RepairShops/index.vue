@@ -13,6 +13,9 @@
                     <div slot="date_joined" slot-scope="props">
                       {{ changeTime(props.row.date_joined)}}
                     </div>
+                    <div slot="last_login" slot-scope="props">
+                      {{ changeTime(props.row.date_joined)}}
+                    </div>
                     <div slot="active"
                         slot-scope="props"
                         @click="RepairShops(props.row.id)">
@@ -48,6 +51,7 @@
           "name",
           "phone",
           "date_joined",
+          "last_login",
           "active",
           "actions",
         ],
@@ -68,6 +72,7 @@
             active: "فعال",
             name: "نام",
             date_joined: "تاریخ عضویت",
+            last_login: "آخرین ورود",
             actions: "اقدامات",
           },
           rowClassCallback: function(row) {

@@ -62,7 +62,7 @@
 
         data() {
             return {
-                columns: ['id', 'user.name', 'image', 'user.phone', 'user.date_joined', 'user.active', 'actions'],
+                columns: ['id', 'user.name', 'image', 'user.phone', 'user.date_joined', 'user.last_login', 'user.active', 'actions'],
                 data: [],
                 options: {
                     headings: {
@@ -72,6 +72,7 @@
                         id: 'شناسه',
                         image: 'تصویر',
                         'user.date_joined': 'تاریخ ثبت‌نام',
+                        'user.last_login': 'آخرین ورود',
                         actions: 'اقدامات'
                     },
                     sortable: ['id', 'user.name', 'user.active', 'user.date_joined', 'user.last_login'],

@@ -149,7 +149,7 @@
       },
 
       fetchProductList() {
-        this.$http.get('/products/all/').then((res) => {
+        this.$http.get('/products/').then((res) => {
           this.data = res.data.result;
         }).catch((err) => {
           console.log(err);

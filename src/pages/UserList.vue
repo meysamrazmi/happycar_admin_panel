@@ -14,8 +14,7 @@
                                             {{chengeTime(props.row.date_joined)}}
                                         </div>
                                         <div slot="last_login" slot-scope="props">
-
-                                            {{props.row.last_login ? chengeTime(props.row.last_login) : ''}}
+                                            {{props.row.last_login ? chengeLoginTime(props.row.last_login) : ''}}
                                         </div>
                                         <div slot="active"
                                              slot-scope="props"
@@ -56,7 +55,7 @@
 
         data() {
             return {
-                columns: ['id', 'name', 'phone', 'date_joined', 'active', 'actions'],
+                columns: ['id', 'name', 'phone', 'date_joined', 'active', 'last_login', 'actions'],
                 data: [],
                 options: {
                     headings: {
@@ -65,6 +64,7 @@
                         active:  'وضعیت',
                         id: 'ردیف',
                         date_joined: 'تاریخ ثبت‌نام',
+                        last_login: 'آخرین ورود',
                         actions: 'اقدامات'
                     },
                     sortable: ['id', 'name', 'active', 'date_joined', 'last_login'],
@@ -102,6 +102,10 @@
 
             chengeTime(time) {
                 return moment(time).format('jYYYY/jMM/jDD')
+            },
+
+            chengeLoginTime(time) {
+                return moment(time).format('jYYYY/jMM/jDD, h:mm a')
             },
 
             changeUserStatus(user) {

@@ -158,12 +158,7 @@
                     let temp = undefined;
 
                     if (res.data.result.length !== 0) {
-                        res.data.result.forEach((service)=> {
-                            if(service.id === this.id) {
-                                temp = service;
-                            }
-                        });
-                        console.log(temp);
+                        temp = res.data.result.filter(service => service.id == this.id)[0]
                         if(temp) {
                             this.fetchedService = Object.assign({}, temp);
                             this.service = temp;
