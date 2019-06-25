@@ -17,7 +17,7 @@
                                 <div class="table-wrapper">
                                     <v-client-table :data="data" :columns="columns" :options="options" v-if="renderTable">
                                         <div slot="actions" slot-scope="props">
-                                                <a @click="openModal('update', props.row)" class="ti-eye text-primary"></a>
+                                            <a @click="openModal('update', props.row)" class="ti-eye text-primary"></a>
                                         </div>
                                     </v-client-table>
                                 </div>
@@ -63,7 +63,7 @@ export default {
           id: "شناسه"
         },
         sortable: [],
-        filterable: [],
+        filterable: ["name"],
         pagination: { chunk: 10 },
         sortIcon: this.$store.state.tebleConfig.sortIcon,
         texts: this.$store.state.tebleConfig.texts,

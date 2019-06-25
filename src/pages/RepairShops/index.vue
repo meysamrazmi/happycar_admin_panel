@@ -10,16 +10,14 @@
               <div class="table-responsive">
                 <div class="table-wrapper">
                   <v-server-table :columns="columns" :options="options" ref="repairShops">
-                    <div slot="date_joined" slot-scope="props">
-                      {{ changeTime(props.row.date_joined)}}
-                    </div>
-                    <div slot="last_login" slot-scope="props">
-                      {{ changeTime(props.row.date_joined)}}
-                    </div>
+                    <div slot="index" slot-scope="props">{{ props.index}}</div>
+                    <div slot="date_joined" slot-scope="props">{{ changeTime(props.row.user.date_joined)}}</div>
+                    <div slot="last_login" slot-scope="props">{{ changeTime(props.row.user.date_joined)}}</div>
+                    <div slot="available" slot-scope="props"><toggle-button :value="props.row.available"/></div>
                     <div slot="active"
                         slot-scope="props"
-                        @click="RepairShops(props.row.id)">
-                      <toggle-button :value="props.row.active"/>
+                        @click="changeRepairShopsStatus(props.row.user.id)">
+                      <toggle-button :value="!props.row.user.active" style="cursor: default;"/>
                     </div>
                       <div slot="actions" slot-scope="props">
                         <router-link :to="{name: 'repair-shop', params: {id:props.row.id}}">
@@ -48,29 +46,38 @@
     data() {
       return {
         columns: [
-          "name",
-          "phone",
+          "index",
+          "id",
+          "user.name",
+          "user.phone",
+          "address",
           "date_joined",
           "last_login",
+          "available",
           "active",
           "actions",
         ],
         data: [],
         options: {
           requestFunction: function (data) {
-            return this.$http.get("/admin/repair_shop/", {
+            return this.$http.get("/profile/admin/shop/", {
               params: data
             }).catch(function (e) {
               console.log(e)
             }.bind(this));
           },
           responseAdapter: function(resp) {
-            return { data: resp.data, count: resp.data.length };
+            console.log(resp)
+            return { data: resp.data.data, count: resp.data.count };
           },
           headings: {
-            phone: "تلفن",
-            active: "فعال",
-            name: "نام",
+            index: "ردیف",
+            id: "شناسه",
+            "user.phone": "تلفن",
+            active: "بلاک",
+            available: "فعال",
+            "user.name": "نام",
+            address: "آدرس",
             date_joined: "تاریخ عضویت",
             last_login: "آخرین ورود",
             actions: "اقدامات",
@@ -114,10 +121,7 @@
 </script>
 
 <style>
-  .assign-false {
-    background-color: #71f1873d;
-  }
-  .assign-true {
-    background-color: #ece9e51c;
-  }
+.toggle-wrapper{
+  cursor: default !important;
+}
 </style>

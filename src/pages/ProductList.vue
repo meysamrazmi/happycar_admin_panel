@@ -73,12 +73,13 @@
 
     data() {
       return {
-        columns: ['index', 'id', 'special_name', 'general_name', 'image', 'category_id.name', 'service_id.name', 'customer_pric', 'repair_price', 'actions'],
+        columns: ['index', 'id', 'special_name', 'general_name', 'code', 'image', 'category_id.name', 'service_id.name', 'customer_pric', 'repair_price', 'actions'],
         data: [],
         options: {
           headings: {
             special_name: 'نام تخصصی',
             general_name: 'نام عمومی',
+            code: 'کد محصول',
             'category_id.name': 'گروه',
             index: 'ردیف',
             id: 'شناسه',
@@ -91,7 +92,7 @@
           sortable: ['id', 'special_name', 'general_name', 'category_id.name','service_id.name', 'customer_pric', 'repair_price'],
           filterable: ['special_name', 'general_name', 'category_id.name', 'service_id.name', 'customer_pric', 'repair_price'],
           pagination: {chunk: 10},
-          initialPage: this.$route.query.page != undefined && this.$route.query.page > 0 ? this.$route.query.page : 1,
+          initialPage: this.$route.query != undefined && this.$route.query.page != undefined && this.$route.query.page > 0 ? this.$route.query.page : 1,
           sortIcon: this.$store.state.tebleConfig.sortIcon,
           texts: this.$store.state.tebleConfig.texts,
           skin: this.$store.state.tebleConfig.skin,
@@ -149,7 +150,7 @@
       },
 
       fetchProductList() {
-        this.$http.get('/products/').then((res) => {
+        this.$http.get('/products/all/').then((res) => {
           this.data = res.data.result;
         }).catch((err) => {
           console.log(err);
