@@ -39,8 +39,10 @@
                     <div slot="waitingTransfers" slot-scope="props">
 
                     </div>
-                    <div slot="transfers" slot-scope="props">
-
+                    <div slot="transfer" slot-scope="props">
+                      <p-button class="pull-left" type="success" @click.native="openModal(props.row.product.id)">
+                        درخواست کالا
+                      </p-button>
                     </div>
                   </v-client-table>
                 </div>
@@ -49,6 +51,11 @@
           </div>
         </card>
       </div>
+      <transfer-product :show="modal.show"
+                        :product_id="modal.product_id"
+                        :store_id="modal.store_id"
+                        @close="modal.show=false">
+      </transfer-product>
 
     </div>
   </div>
@@ -56,16 +63,17 @@
 
 <script>
   import {ClientTable} from 'vue-tables-2'
+  import TransferProduct from "./TransferProduct";
 
   export default {
     name: "product-list",
-    components: {ClientTable},
+    components: {TransferProduct, ClientTable},
     props:["products", "storeId"],
     data() {
       return {
         columns: ['index', 'product.id', 'product.special_name', 'product.general_name',
           'product.image', 'product.category_id.name', 'product.service_id.name', 'product.customer_pric',
-          'product.repair_price', 'stock', 'waitingTransfers', 'transfer'],
+          'product.repair_price', 'stock', 'transfer'],
         data: [],
         options: {
           headings: {
@@ -80,13 +88,17 @@
             'product.repair_price': 'قیمت تعمیرگاه',
             stock: 'موجودی',
             actions: 'اقدامات',
-            waitingTransfers: 'درخواست های در انتظار',
             transfer: 'درخواست انتقال'
           },
           pagination: {chunk: 25},
           texts: this.$store.state.tebleConfig.texts,
           skin: this.$store.state.tebleConfig.skin,
-        }
+        },
+        modal: {
+          show: false,
+          product_id: 0,
+          store_id: 0,
+        },
       }
     },
     computed: {
@@ -123,6 +135,12 @@
         }).catch((err) => {
           console.log(err);
         })
+      },
+      openModal(product_id) {
+        console.log(this.storeId)
+        this.modal.show = true;
+        this.modal.store_id = this.storeId;
+        this.modal.product_id = product_id;
       },
     },
 

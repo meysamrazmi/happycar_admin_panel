@@ -68,6 +68,25 @@
           </card>
         </div>
 
+        <div class="col-md-12">
+          <card title="محصولات در انتظار انتقال">
+            <v-client-table
+              ref="pendingInventory"
+              :columns="columns"
+              :data="pendings"
+              :options="options"
+            >
+              <div slot="new_inventory.product_id.image" slot-scope="props">
+                <img v-if="props.row.new_inventory.product_id.image === null" :src="$store.state.placeholderImage" class="mr-thumb" alt="">
+                <img v-else :src="`${$http.defaults.mediaUrl}${props.row.new_inventory.product_id.image}`" class="mr-thumb" alt="">
+              </div>
+              <div slot="actions" slot-scope="props">
+                <button class="btn btn-success" @click="acceptTransfer(props.row.id)">تایید</button>
+              </div>
+            </v-client-table>
+          </card>
+        </div>
+
       </div>
 
     </div>
@@ -109,6 +128,27 @@
         products: [],
         selectedProducts: [],
         storeProducts: [],
+
+        pendings: [],
+        columns: ['id', 'new_inventory.product_id.id', 'new_inventory.product_id.special_name',
+          'new_inventory.product_id.general_name',
+          'new_inventory.product_id.image',
+          'new_inventory.count', 'count', 'actions'],
+        options: {
+          headings: {
+            'new_inventory.product_id.id': 'شناسه محصول',
+            'new_inventory.product_id.special_name': 'نام تخصصی',
+            'new_inventory.product_id.general_name': 'نام عمومی',
+            'new_inventory.product_id.image': 'تصویر',
+            'new_inventory.count': 'موجودی انبار مقصد',
+            index: 'ردیف',
+            'count': 'تعداد درخواستی',
+            actions: 'اقدامات',
+          },
+          pagination: {chunk: 25},
+          texts: this.$store.state.tebleConfig.texts,
+          skin: this.$store.state.tebleConfig.skin,
+        },
       }
     },
     computed: {
@@ -144,22 +184,18 @@
       }
       this.fetchProductList()
       this.fetchStoreProducts()
+      this.pendingRequests()
     },
 
     methods: {
       fetchSlide() {
         this.$http.get(`/products/store/`).then((res) => {
           let temp = undefined;
-          console.log(res);
           if (res.data.result.length !== 0) {
             res.data.result.forEach((store)=> {
-              console.log(store.id, this.id);
-              if( parseInt(store.id) === parseInt(this.id)) {
-                console.log("in i,if");
+              if( parseInt(store.id) === parseInt(this.id))
                 temp = store;
-              }
             });
-            console.log(temp);
             if(temp) {
               this.fetchedStore = Object.assign({}, temp);
               this.store = temp;
@@ -172,7 +208,7 @@
             this.$router.push('/404')
           }
         }).catch((err) => {
-          // console.log(err)
+          console.log(err)
         })
       },
 
@@ -281,6 +317,23 @@
       updateRow(id){
         this.fetchStoreProducts()
       },
+
+      pendingRequests(){
+        this.$http.get(`/products/stock_transfers/${this.id}/`).then((res) => {
+          this.pendings = res.data.data
+        }).catch(error => {console.log(error)})
+      },
+
+      acceptTransfer(id){
+        this.$http.put(`/products/stock_transfer/${id}/`).then((res) => {
+          this.$swal({
+            type: 'success',
+            title: 'موفق',
+            text: 'عملیات با موفقیت انجام شد'
+          })
+          this.pendingRequests()
+        }).catch(error => {console.log(error)})
+      }
     }
   }
 </script>
