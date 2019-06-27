@@ -110,7 +110,7 @@
 
     methods: {
       changeRepairShopsStatus(id) {
-        this.$http.patch(`/admin/repair_shop/${id}`).then((res)=> {
+        this.$http.patch(`/admin/repair_shop/${id}/`).then((res)=> {
           this.$refs.repairShops.refresh();
         }).catch((err)=> {
           this.$refs.repairShops.refresh();

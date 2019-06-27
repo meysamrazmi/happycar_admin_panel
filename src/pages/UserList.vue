@@ -109,7 +109,7 @@
             },
 
             changeUserStatus(user) {
-                this.$http.patch(`/admin/customer/${user.id}`).then((res)=> {
+                this.$http.patch(`/admin/customer/${user.id}/`).then((res)=> {
                     console.log(res);
                     this.fetchUsersList();
                 }).catch((err)=> {

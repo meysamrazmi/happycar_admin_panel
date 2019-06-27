@@ -146,7 +146,7 @@
 
         methods: {
             fetchCar(id) {
-                this.$http.get(`/car/models/get/${id}`).then((res) => {
+                this.$http.get(`/car/models/get/${id}/`).then((res) => {
                     if (res.data.result.length !== 0) {
                         this.fetchedCar = Object.assign({}, res.data.result[0]);
                         this.car = res.data.result[0];
@@ -159,7 +159,7 @@
             },
 
             fetchTypes(id) {
-                this.$http.get(`/car/type/${id}`).then((res)=> {
+                this.$http.get(`/car/type/${id}/`).then((res)=> {
                     this.types = res.data.result;
                 }).catch((err) => {
 

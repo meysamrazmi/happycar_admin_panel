@@ -81,9 +81,7 @@ export default {
 
   methods: {
     fetchExpertDetail() {
-      this.$http
-        .get(`/profile/admin/expert/${this.userId}`)
-        .then(res => {
+      this.$http.get(`/profile/admin/expert/${this.userId}/`).then(res => {
           this.user = res.data;
           this.expertGrade = this.user.grade;
           this.expertSkills = this.user.providing_service_categories.map(service => service.id)
@@ -118,9 +116,7 @@ export default {
       data.grade_id = this.grades.find(skill => skill.title === this.expertGrade).id;
       data.providing_service_categories = this.expertSkills;
 
-      this.$http
-        .put(`/profile/admin/expert/${this.userId}`, data)
-        .then(res => {
+      this.$http.put(`/profile/admin/expert/${this.userId}/`, data).then(res => {
           this.fetchExpertDetail()
         })
         .catch(err => {
