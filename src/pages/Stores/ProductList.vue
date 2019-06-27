@@ -71,7 +71,7 @@
     props:["products", "storeId"],
     data() {
       return {
-        columns: ['index', 'product.id', 'product.special_name', 'product.general_name',
+        columns: ['index', 'product.id', 'product.special_name', 'product.general_name', 'product.code',
           'product.image', 'product.category_id.name', 'product.service_id.name', 'product.customer_pric',
           'product.repair_price', 'stock', 'transfer'],
         data: [],
@@ -79,6 +79,7 @@
           headings: {
             'product.special_name': 'نام تخصصی',
             'product.general_name': 'نام عمومی',
+            'product.code': 'کد',
             'product.category_id.name': 'گروه',
             index: 'ردیف',
             'product.id': 'شناسه',

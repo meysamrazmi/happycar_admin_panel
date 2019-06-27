@@ -4,6 +4,9 @@ const dateToPersian = {
     changeTime: function (time) {
       return moment(time).format('jYYYY/jMM/jDD')
     },
+    changeLoginTime(time) {
+      return moment(time).format('jYYYY/jMM/jDD, h:mm a')
+    },
   }
 };
 

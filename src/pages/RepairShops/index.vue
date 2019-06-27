@@ -12,7 +12,7 @@
                   <v-server-table :columns="columns" :options="options" ref="repairShops">
                     <div slot="index" slot-scope="props">{{ props.index}}</div>
                     <div slot="date_joined" slot-scope="props">{{ changeTime(props.row.user.date_joined)}}</div>
-                    <div slot="last_login" slot-scope="props">{{ changeTime(props.row.user.date_joined)}}</div>
+                    <div slot="last_login" slot-scope="props">{{props.row.last_login ? changeLoginTime(props.row.last_login) : ''}}</div>
                     <div slot="available" slot-scope="props"><toggle-button :value="props.row.available"/></div>
                     <div slot="active"
                         slot-scope="props"

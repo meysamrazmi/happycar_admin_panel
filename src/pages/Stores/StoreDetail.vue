@@ -130,8 +130,10 @@
         storeProducts: [],
 
         pendings: [],
-        columns: ['id', 'new_inventory.product_id.id', 'new_inventory.product_id.special_name',
+        columns: ['id', 'new_inventory.product_id.id',
+          'new_inventory.product_id.special_name',
           'new_inventory.product_id.general_name',
+          'new_inventory.product_id.code',
           'new_inventory.product_id.image',
           'new_inventory.count', 'count', 'actions'],
         options: {
@@ -139,6 +141,7 @@
             'new_inventory.product_id.id': 'شناسه محصول',
             'new_inventory.product_id.special_name': 'نام تخصصی',
             'new_inventory.product_id.general_name': 'نام عمومی',
+            'new_inventory.product_id.code': 'کد',
             'new_inventory.product_id.image': 'تصویر',
             'new_inventory.count': 'موجودی انبار مقصد',
             index: 'ردیف',
@@ -305,7 +308,7 @@
       normalizer(node) {
         return {
           id: node.id,
-          label: node.special_name + " - " + node.general_name,
+          label: node.special_name + " - " + node.general_name + " ( " + node.code + " )" ,
         }
       },
 

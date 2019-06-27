@@ -39,7 +39,6 @@ import Slider from "@/pages/Slider.vue";
 import Slide from "@/pages/Slider/Slide.vue";
 
 import StoreList from "@/pages/StoreList.vue";
-import StoreProduct from "@/pages/StoreProduct.vue";
 import StoreDetail from "@/pages/Stores/StoreDetail.vue";
 
 import AboutUs from "@/pages/AboutUs.vue";
@@ -204,11 +203,6 @@ const routes = [
         path: "store-detail/:id",
         name: "store-detail",
         component: StoreDetail
-      },
-      {
-        path: "store-product",
-        name: "store-product",
-        component: StoreProduct
       },
       {
         path: "users-list",

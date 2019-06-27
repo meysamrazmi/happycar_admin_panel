@@ -115,7 +115,6 @@
               >
               </fg-input>
             </div>
-
             <div class="col-md-6">
               <div>
                 <treeselect
@@ -215,11 +214,12 @@
     watch: {
       cars: {
         handler: function(newValue) {
+          let arr = newValue.filter(item => item.children.length)
           this.allCars = [{
-            customLabel: "انتخاب همه",
+            customLabel: "همه",
             id: "all",
-            name: "همه",
-            children: newValue
+            name: "انتخاب همه",
+            children: arr
           }]
         },
         deep: true

@@ -5,9 +5,10 @@
         </div>
         <div class="col-md-6">
             <card title="ویرایش متخصص">
-                <label>
-                    توانمندی‌ها
-                </label>
+                <label style="vertical-align: bottom;margin: 5px 0 5px 20px;">فعال</label>
+                <toggle-button :value="available" @change="available = !available"/>
+
+                <label>توانمندی‌ها</label>
                 <div class="abilities mb-4">
                     <div class="row">
                         <div v-for="skill in skills" :key="skill.id" class="col-6">
@@ -66,7 +67,8 @@ export default {
       grades: [],
       expertGrade: '',
       expertSkills: [],
-      skills: []
+      skills: [],
+      available: false
     };
   },
 
@@ -85,6 +87,7 @@ export default {
           this.user = res.data;
           this.expertGrade = this.user.grade;
           this.expertSkills = this.user.providing_service_categories.map(service => service.id)
+          this.available = res.available
         })
         .catch(err => {
           console.log(err);
@@ -111,7 +114,8 @@ export default {
     setExpertDetail() {
       let data = {
         grade_id: '',
-        providing_service_categories: []
+        providing_service_categories: [],
+        available: this.available,
       };
       data.grade_id = this.grades.find(skill => skill.title === this.expertGrade).id;
       data.providing_service_categories = this.expertSkills;
