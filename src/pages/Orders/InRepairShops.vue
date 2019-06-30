@@ -23,8 +23,8 @@
                 <span v-if="props.row.payment_in_place" class="badge-info p-2 rounded">درمحل</span>
                 <span class="badge-success p-2 rounded" v-else>آنلاین</span>
               </div>
-              <div slot="total_cost" slot-scope="props">
-                {{ props.row.total_cost | currency }}
+              <div slot="paid_cost" slot-scope="props">
+                {{ props.row.paid_cost | currency }}
               </div>
               <div slot="preferred_date" slot-scope="props">
                 {{ changeTime(props.row.preferred_date)}}
@@ -57,7 +57,7 @@
           "buyer",
           "payment_in_place",
           "preferred_date",
-          "total_cost",
+          "paid_cost",
           "created_at",
         ],
         data: [],
@@ -70,7 +70,7 @@
             index: "ردیف",
             buyer: "کاربر",
             payment_in_place: "نوع پرداخت",
-            total_cost: "هزینه",
+            paid_cost: "هزینه پرداختی",
             id: "شناسه",
             code: "کدسفارش",
             preferred_date: "تاریخ انتخابی کاربر",

@@ -26,8 +26,8 @@
               <div slot="current_status" slot-scope="props">
                 {{ props.row.current_status | translateStatus }}
               </div>
-              <div slot="total_cost" slot-scope="props">
-                {{ props.row.total_cost | currency }}
+              <div slot="paid_cost" slot-scope="props">
+                {{ props.row.paid_cost | currency }}
               </div>
               <div slot="preferred_date" slot-scope="props">
                 {{ changeTime(props.row.preferred_date)}}
@@ -62,7 +62,7 @@
           "payment_in_place",
           "current_status",
           "preferred_date",
-          "total_cost",
+          "paid_cost",
           "created_at",
           "actions"
         ],
@@ -76,7 +76,7 @@
             index: 'ردیف',
             buyer: "کاربر",
             payment_in_place: "نوع پرداخت",
-            total_cost: "هزینه",
+            paid_cost: "هزینه پرداختی",
             actions: "اقدامات",
             id: "شناسه",
             code: "کدسفارش",
