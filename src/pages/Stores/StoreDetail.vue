@@ -55,15 +55,10 @@
 
         <div class="col-md-12">
           <card>
-            <Treeselect
-              :multiple="true"
-              :options="products"
-              placeholder="محصولات"
-              v-model="selectedProducts"
-              :normalizer="normalizer"
-              value-consists-of="LEAF_PRIORITY"
-            />
-
+            <p-button class="mr-auto d-block mt-3"
+                      type="success"
+                      @click.native="modal.show = true"
+                      style="margin-bottom: -50px;z-index: 10;position: relative;">افزودن کالا</p-button>
             <ProductList :products="selected" :storeId="id" @update="updateRow(id)"/>
           </card>
         </div>
@@ -89,6 +84,13 @@
 
       </div>
 
+      <add-product :show="modal.show"
+                   :store_id="id"
+                   :products="products"
+                   :selectedProducts="selectedProducts"
+                   @close="modal.show=false"
+                   @update="updateRow(id)"/>
+
     </div>
   </div>
 </template>
@@ -97,6 +99,7 @@
   import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
   import Treeselect from '@riophae/vue-treeselect';
   import ProductList from '@/pages/Stores/ProductList.vue';
+  import AddProduct from '@/pages/Stores/AddProduct.vue';
 
   export default {
     name: "store-detail",
@@ -105,7 +108,8 @@
       LTileLayer,
       LMarker,
       Treeselect,
-      ProductList
+      ProductList,
+      AddProduct,
     },
     data() {
       return {
@@ -128,6 +132,9 @@
         products: [],
         selectedProducts: [],
         storeProducts: [],
+        modal: {
+          show: false,
+        },
 
         pendings: [],
         columns: ['id', 'new_inventory.product_id.id',
