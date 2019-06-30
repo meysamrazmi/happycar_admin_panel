@@ -106,7 +106,7 @@
       },
 
       changeExpertStatus(user) {
-        this.$http.patch(`/admin/expert/${user.user.id}`).then((res)=> {
+        this.$http.patch(`/admin/expert/${user.user.id}/`).then((res)=> {
           console.log(res);
           this.fetchExpertsList();
         }).catch((err)=> {
