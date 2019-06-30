@@ -4,6 +4,7 @@
             <div class="col-md-6">
                 <detail-card :buyer="order.buyer"
                              :buyer_car="order.buyer_car"
+                             :code="order.code"
                              :date="order.preferred_date"
                              :time="order.preferred_time_frame"
                              :store="order.preferred_store"

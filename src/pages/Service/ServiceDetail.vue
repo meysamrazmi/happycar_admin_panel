@@ -243,8 +243,8 @@
                   console.log(res)
                   if(this.service.related_car_groups.length > 1){
                     this.$http.patch('/services/service/', {
-                      servise_id: res.data.id,
-                      related_car_groups: this.service.related_car_groups.splice(0,1)
+                      servise_id: res.data.data.id,
+                      related_car_groups: this.service.related_car_groups
                     }).then((res)=> {
                       this.$swal({
                         type: 'success',

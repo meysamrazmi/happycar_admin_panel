@@ -1,5 +1,5 @@
 <template>
-  <card title="اطلاعات سفارش">
+  <card title="اطلاعات سفارش" :subTitle="'کد: ' + code">
     <div class="row">
       <div class="col-6">
         <div class="divider-border p-2 my-2">
@@ -108,6 +108,9 @@
         type: Object
       },
       date: {
+        type: String
+      },
+      code:{
         type: String
       },
       time: {

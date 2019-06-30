@@ -38,21 +38,8 @@
         <div class="row">
             <div class="col-12 table-responsive">
                 <table class="table ">
-                    <thead>
-                    <tr>
-                        <th>
-                            شروع سفارش
-                        </th>
-                        <th>
-                            پایان سفارش
-                        </th>
-                        <th>
-                            انبار
-                        </th>
-                    </tr>
-                    </thead>
                     <tbody>
-                    <template v-for="expert in experts">
+                        <template v-for="expert in experts">
                         <tr class="expert-info">
                             <td colspan="3">
                                 <div class="d-flex flex-row justify-content-between align-items-center">
@@ -73,8 +60,7 @@
                                     </span>
                                     </div>
                                     <div class="">
-                                        <vue-persian-datetime-picker v-model="startTime" type="time">
-                                        </vue-persian-datetime-picker>
+                                        <vue-persian-datetime-picker v-model="startTime" type="time" />
                                     </div>
                                     <button class="btn btn-success" @click="assignOrder(expert.id)">
                                         اتصال
