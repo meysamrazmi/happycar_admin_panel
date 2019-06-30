@@ -18,15 +18,7 @@
 
             <div class="col-12">
               <label style="vertical-align: bottom;margin: 5px 0 5px 20px;">فعال</label>
-              <!--<textarea name="available"-->
-                        <!--id="available"-->
-                        <!--data-vv-as="فعال"-->
-                        <!--v-validate="'required'"-->
-                        <!--:class="{ errorInput : errors.first('available') }"-->
-                        <!--class="form-control d-block w-100"-->
-                        <!--v-model="shop.available" />-->
-              <toggle-button :value="shop.available"
-                             @change="shop.available = !shop.available"/>
+              <toggle-button :value="shop.available"@change="shop.available = !shop.available"/>
               <span class="error-loger">{{ errors.first('available')}}</span>
             </div>
 
@@ -57,19 +49,26 @@
         </card>
       </div>
 
+      <div class="col-12">
+        <card title="سفارش‌ها">
+          <shops-orders :id="id"/>
+        </card>
+      </div>
+
     </div>
   </div>
 </template>
 
 <script>
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
-
+import ShopsOrders from '@/pages/Orders/ShopsOrders.vue';
 export default {
   name: "RepairShop",
   components: {
     LMap,
     LTileLayer,
     LMarker,
+    ShopsOrders,
   },
   data(){
     return{
@@ -101,8 +100,10 @@ export default {
       this.$http.get(`/profile/admin/shop/?id=${this.id}`).then((res)=> {
         this.originalShop = Object.assign({}, res.data.data[0]);
         this.shop = res.data.data[0]
-        this.center =  L.latLng(this.shop.latitude, this.shop.longitude);
-        this.marker =  L.latLng(this.shop.latitude, this.shop.longitude);
+        let lat = this.shop.latitude != 0 ? this.shop.latitude : 35.74466235151208
+        let lng = this.shop.longitude != 0 ? this.shop.longitude : 51.37524538390484
+        this.center =  L.latLng(lat, lng);
+        this.marker =  L.latLng(lat, lng);
       }).catch((err)=> {
         console.log(err)
       })

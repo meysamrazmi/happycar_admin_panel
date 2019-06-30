@@ -42,11 +42,8 @@
 
 <script>
   export default {
-    name: "InRepairShops",
-
-    components: {
-    },
-
+    name: "shops-orders",
+    props:["id"],
     data() {
       return {
         dateFiltered: 'all',
@@ -106,18 +103,30 @@
         if(this.dateFiltered == 'today'){
           a = Object.assign({date: Math.floor(Date.now() / 1000)}, data)
         }
-        return this.$http.get("/orders/shop/admin/", {
+        a = Object.assign({shop_id: this.id}, a)
+        return this.$http.get('/orders/shop/admin/', {
           params: a
         }).catch(function (e) {
           console.log(e)
         }.bind(this));
       },
+
       refreshTable: function(){
         setTimeout(()=>{
           this.$refs.orders.refresh()
-        },10);
+        },100);
       }
-    }
+    },
+
+    mounted: function (){
+      this.refreshTable()
+    },
+
+    watch:{
+      id(val){
+        this.refreshTable()
+      }
+    },
   };
 </script>
 
