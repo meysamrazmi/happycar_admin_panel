@@ -9,7 +9,6 @@
           <input type="radio" id="today" value="today" v-model="dateFiltered">
           <label for="today">امروز</label>
         </div>
-
         <div class="table-responsive">
           <div class="table-wrapper">
             <v-server-table ref="orders" :columns="columns" :options="options">
@@ -32,21 +31,54 @@
               <div slot="created_at" slot-scope="props">
                 {{ changeTime(props.row.created_at)}}
               </div>
+              <div slot="assigned_shop" slot-scope="props">
+                <p-button v-if="props.row.assigned_shop == null"
+                          type="success"
+                          @click.native="openModal(props.row.id)">تخصیص</p-button>
+                <span v-else>{{props.row.assigned_shop.user.name}}</span>
+              </div>
             </v-server-table>
           </div>
         </div>
+
+        <m-modal v-show="modal.show" @close="closeModal">
+          <template slot="header">تخصیص به تعمیرگاه</template>
+          <template slot="body">
+            <form @submit.prevent @keyup.enter="assignRepairShop">
+              <div class="row">
+                <div class="col-sm-12 pl-3">
+                  <label>از انبار:</label>
+                  <model-list-select :list="repairShops"
+                                     v-model="modal.selectedRepairShop"
+                                     option-value="id"
+                                     :custom-text="Names"
+                                     class="form-control-select"
+                                     placeholder="تعمیرگاه را انتخاب کنید" />
+                </div>
+                <div class="col-sm-12 pr-3">
+                  <fg-input type="number"
+                            v-model="modal.percent"
+                            label="ضریب تعمیرگاه:"
+                            placeholder="ضریب تعمیرگاه"/>
+                </div>
+              </div>
+              <div class="text-center">
+                <p-button type="info" round @click.native.prevent="assignRepairShop">ارسال</p-button>
+              </div>
+            </form>
+          </template>
+        </m-modal>
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import { ModelListSelect } from 'vue-search-select';
   export default {
     name: "InRepairShops",
-
-    components: {
-    },
-
+    components: {ModelListSelect},
     data() {
       return {
         dateFiltered: 'all',
@@ -59,6 +91,7 @@
           "preferred_date",
           "paid_cost",
           "created_at",
+          "assigned_shop",
         ],
         data: [],
         options: {
@@ -75,6 +108,7 @@
             code: "کدسفارش",
             preferred_date: "تاریخ انتخابی کاربر",
             created_at  : "تاریخ ایجاد",
+            assigned_shop: "تخصیص شده",
           },
           rowClassCallback: function(row) {
             return `assign-${row.confirmed}`;
@@ -96,10 +130,19 @@
               };
             }
           }
-        }
+        },
+        modal: {
+          show: false,
+          selectedRepairShop: 0,
+          orderId: 0,
+          percent: 0,
+        },
+        repairShops: [],
       };
     },
-
+    mounted(){
+      this.getRepairShops()
+    },
     methods:{
       reqFunc: function (data) {
         var a = data
@@ -112,11 +155,53 @@
           console.log(e)
         }.bind(this));
       },
+
       refreshTable: function(){
         setTimeout(()=>{
           this.$refs.orders.refresh()
         },10);
-      }
+      },
+
+      getRepairShops: function(){
+        this.$http.get("/profile/admin/shop/").then((res)=>{
+          this.repairShops = res.data.data
+        }).catch(function (e) {
+          console.log(e)
+        })
+      },
+
+      Names(item) {
+        return `${item.id} - ${item.user.name} (${item.available? 'فعال': '-'})`
+      },
+
+      closeModal() {
+        this.modal.show = false
+      },
+
+      openModal(id){
+        this.modal.show = true
+        this.modal.orderId = id
+        this.modal.selectedRepairShop = 0
+        this.modal.percent = 0
+      },
+
+      assignRepairShop(){
+        let percent = this.modal.percent
+        if(this.modal.percent >= 100) percent = 99
+        else if(this.modal.percent <= -100) percent = -99
+
+        let data = {
+          shop_id: this.modal.selectedRepairShop,
+          percent: percent
+        }
+        this.$http.post(`/orders/shop/admin/${this.modal.orderId}/`, data).then((res)=>{
+          this.$swal({ type: 'success', title: 'موفق', text: 'عملیات با موفقیت انجام شد'})
+          this.modal.show = false
+          this.refreshTable()
+        }).catch(function (e) {
+          console.log(e)
+        })
+      },
     }
   };
 </script>
