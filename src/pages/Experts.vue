@@ -16,6 +16,9 @@
                     <div slot="user.last_login" slot-scope="props">
                       {{props.row.user.last_login ? changeLoginTime(props.row.user.last_login) : ''}}
                     </div>
+                    <div slot="available" slot-scope="props">
+                      <span v-html="props.row.available? 'فعال': 'غیر فعال'"></span>
+                    </div>
                     <div slot="user.active"
                          slot-scope="props"
                          @click="changeExpertStatus(props.row)"
@@ -59,7 +62,7 @@
 
     data() {
       return {
-        columns: ['id', 'user.name', 'image', 'user.phone', 'user.date_joined', 'user.last_login', 'user.active', 'actions'],
+        columns: ['id', 'user.name', 'image', 'user.phone', 'user.date_joined', 'user.last_login', 'available', 'user.active', 'actions'],
         data: [],
         options: {
           headings: {
@@ -70,7 +73,8 @@
             image: 'تصویر',
             'user.date_joined': 'تاریخ ثبت‌نام',
             'user.last_login': 'آخرین ورود',
-            actions: 'اقدامات'
+            actions: 'اقدامات',
+            available: 'فعال'
           },
           sortable: ['id', 'user.name', 'user.active', 'user.date_joined', 'user.last_login'],
           filterable: ['user.name', 'user.code'],

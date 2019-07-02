@@ -127,7 +127,7 @@
     import moment from 'jalali-moment';
     import HighChart from './Dashboard/HighChart';
     import AutoChargeChart from './Dashboard/AutoChargeChart'
-
+    import Pushe from 'pushe-webpush'
 
     export default {
         components: {
@@ -197,7 +197,8 @@
         },
 
         mounted() {
-
+            Pushe.init("9gl6nyjkk38906zg");
+            Pushe.subscribe();
             // this.getUserCollection();
 
         },

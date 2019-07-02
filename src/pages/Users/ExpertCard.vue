@@ -7,7 +7,7 @@
             <div class="author">
                 <img :src="`$http.defaults.mediaUrl + user.image`" alt="" v-if="user.image !== null">
                 <img class="avatar border-white" :src="$store.state.placeholderImage" alt="..." v-else>
-                <h4 class="title">
+                <h4 class="title" v-if="user.user != undefined">
                     {{ user.user.name }}
                     <br>
                     <a>
