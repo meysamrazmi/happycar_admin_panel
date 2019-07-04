@@ -7,11 +7,16 @@
 
 <script>
   import logo from './assets/img/loader.gif'
+  import Pushe from 'pushe-webpush'
 export default {
       data() {
           return {
               logo,
           }
+      },
+      mounted() {
+        // Pushe.init("9gl6nyjkk38906zg");//https
+        Pushe.init("mg63xynnl83kw30g");//http
       }
 };
 </script>

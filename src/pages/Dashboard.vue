@@ -197,9 +197,16 @@
         },
 
         mounted() {
-            Pushe.init("9gl6nyjkk38906zg");
-            Pushe.subscribe();
-            // this.getUserCollection();
+          let options = {
+            title: 'عضویت در وب پوش هپی کار',
+            content: 'دریافت نوتیفیکیشن از سفارش های جدید',
+          }
+          Pushe.subscribe(options);
+          Pushe.getDeviceId()
+            .then((deviceId) => {
+              console.log(`deviceId is: ${deviceId}`);
+            });
+          // this.getUserCollection();
 
         },
         computed: {

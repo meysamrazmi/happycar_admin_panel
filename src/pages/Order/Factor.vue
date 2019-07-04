@@ -87,9 +87,9 @@ export default {
 
   computed: {
     execution_time() {
-      let sum_of_time = this.services.reduce((sum, service) => {
+      let sum_of_time = this.services != undefined ? this.services.reduce((sum, service) => {
         return sum + service.execution_time;
-      }, 0);
+      }, 0) : 0
       console.log("sum_of_time", sum_of_time);
       return sum_of_time
     }

@@ -2,7 +2,8 @@
     <div>
         <div class="row">
             <div class="col-md-6">
-                <detail-card :buyer="order.buyer"
+                <detail-card v-if="order.buyer"
+                             :buyer="order.buyer"
                              :buyer_car="order.buyer_car"
                              :code="order.code"
                              :date="order.preferred_date"
@@ -79,9 +80,9 @@ export default {
 
   computed: {
     execution_time() {
-      let sum_of_time = this.order.services.reduce((sum, service) => {
+      let sum_of_time = this.order.services != undefined ? this.order.services.reduce((sum, service) => {
         return sum + service.execution_time;
-      }, 0);
+      }, 0): 0
       return sum_of_time
     }
   },
