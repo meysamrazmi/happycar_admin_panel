@@ -82,7 +82,7 @@ export default {
     execution_time() {
       let sum_of_time = this.order.services != undefined ? this.order.services.reduce((sum, service) => {
         return sum + service.execution_time;
-      }, 0): 0
+      }, 0): 120
       return sum_of_time
     }
   },

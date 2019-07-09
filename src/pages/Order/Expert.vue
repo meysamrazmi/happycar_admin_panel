@@ -38,7 +38,7 @@
 
     <div class="row">
       <div class="col-12 table-responsive">
-        <v-server-table :columns="columns" :data="experts" :options="options">
+        <v-server-table :columns="columns" :data="data" :options="options">
           <div slot="index" slot-scope="props">
             {{ props.index }}
           </div>
@@ -50,16 +50,20 @@
           </div>
 
           <div slot="occupations" slot-scope="props">
-            <div v-for="occupation in props.row.occupations" class="d-flex justify-content-around">
+            <div v-for="occupation in props.row.occupations" class="d-flex justify-content-around flex-column">
               <div>
+                <span>شروع: </span>
                 {{ formatTime(occupation.occupation_start) }}
               </div>
               <div>
+                <span>پایان: </span>
                 {{ formatTime(occupation.occupation_end) }}
               </div>
               <div>
+                <span>انبار انتخابی: </span>
                 {{ occupation.preferred_store ? occupation.preferred_store : "ندارد" }}
               </div>
+              <hr style="margin: 5px 0;">
             </div>
           </div>
 
@@ -153,6 +157,7 @@
             text: 'زمان شروع الزامی‌است'
           })
         }else {
+          console.log(this.time)
           let data = {
             expert_id: expertId,
             start_time: Math.round(Date.parse(
@@ -160,7 +165,7 @@
             )/1000),
             end_time: Math.round(Date.parse(
               moment(`${this.date} ${this.startTime}`)
-                .add(this.time, "minutes")
+                .add(this.time > 0 ? this.time : 120, "minutes")
                 .format("YYYY-MM-DD HH:mm")
             )/1000)
           };

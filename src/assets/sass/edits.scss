@@ -329,3 +329,7 @@ ul.tabs-component-tabs {
 .ti-trash {
   display: none;
 }
+.vue-treeselect__multi-value {
+  max-height: 150px !important;
+  overflow: auto;
+}

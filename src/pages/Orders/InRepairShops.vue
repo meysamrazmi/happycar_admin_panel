@@ -22,6 +22,12 @@
                 <span v-if="props.row.payment_in_place" class="badge-info p-2 rounded">درمحل</span>
                 <span class="badge-success p-2 rounded" v-else>آنلاین</span>
               </div>
+              <div slot="current_status" slot-scope="props">
+                {{ props.row.current_status | translateStatus }}
+              </div>
+              <div slot="total_cost" slot-scope="props">
+                {{ props.row.total_cost | currency }}
+              </div>
               <div slot="paid_cost" slot-scope="props">
                 {{ props.row.paid_cost | currency }}
               </div>
@@ -35,7 +41,7 @@
                 <p-button v-if="props.row.assigned_shop == null"
                           type="success"
                           @click.native="openModal(props.row.id)">تخصیص</p-button>
-                <span v-else>{{props.row.assigned_shop.user.name}}</span>
+                <span v-else>{{props.row.assigned_shop}}</span>
               </div>
             </v-server-table>
           </div>
@@ -88,7 +94,9 @@
           "id",
           "buyer",
           "payment_in_place",
+          "current_status",
           "preferred_date",
+          "total_cost",
           "paid_cost",
           "created_at",
           "assigned_shop",
@@ -103,7 +111,9 @@
             index: "ردیف",
             buyer: "کاربر",
             payment_in_place: "نوع پرداخت",
-            paid_cost: "هزینه پرداختی",
+            current_status: "وضعیت",
+            paid_cost: "پرداختی",
+            total_cost: "هزینه",
             id: "شناسه",
             code: "کدسفارش",
             preferred_date: "تاریخ انتخابی کاربر",
@@ -114,7 +124,7 @@
             return `assign-${row.confirmed}`;
           },
           initFilters: {},
-          sortable: ["preferred_date", "total_cost"],
+          sortable: [],//["preferred_date", "total_cost"],
           perPage: 10,
           perPageValues: [10,25,50],
           sortIcon: this.$store.state.tebleConfig.sortIcon,
@@ -202,7 +212,32 @@
           console.log(e)
         })
       },
+    },
+
+    filters: {
+      translateStatus: function (v) {
+        switch (v) {
+          case 'waiting':
+            return 'در انتظار تخصیص'
+            break
+          case 'assigned':
+            return  'تخصیص شده'
+            break
+          case 'done':
+            return 'انجام شده'
+            break
+          case 'canceled':
+            return 'لغو شده'
+            break
+          case 'accepted':
+            return 'قبول شده'
+            break
+          default:
+            return v
+        }
+      }
     }
+
   };
 </script>
 

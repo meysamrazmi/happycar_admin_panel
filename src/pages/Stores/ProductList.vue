@@ -4,48 +4,46 @@
       <div class="col-12">
         <card title="محصولات این انبار">
           <div class="row">
-            <div class="col-12">
-              <div class="table-responsive">
-                <div class="table-wrapper">
-                  <v-client-table
-                      ref="productsList"
-                      :columns="columns"
-                      :data="products"
-                      :options="options"
-                  >
-                    <div slot="index" slot-scope="props">
-                      {{props.index}}
-                    </div>
-                    <div slot="product.image" slot-scope="props">
-                      <img v-if="props.row.product.image === null" :src="$store.state.placeholderImage"
-                           class="mr-thumb" alt="">
-                      <img v-else :src="`${$http.defaults.mediaUrl}${props.row.product.image}`"
-                           class="mr-thumb" alt="">
-                    </div>
-                    <div slot="product.customer_pric" slot-scope="props">
-                      {{props.row.product.customer_pric | currency}}
-                    </div>
-                    <div slot="product.repair_price" slot-scope="props">
-                      {{props.row.product.repair_price | currency}}
-                    </div>
-                    <div slot="stock" slot-scope="props" style="text-align: center;min-width: 60px;">
-                      {{props.row.count}}
-                      <fg-input type="string" name="name" v-model="count[props.index]" style="width: 50px;margin: auto;"/>
-                      <button class="ti-minus btn-outline-danger btn btn-xs btn-round p-2"
-                              @click="deleteProduct(props.row, props.index)"
-                              :disabled="!props.row.count"/>
-                      <button class="ti-plus btn-outline-success btn btn-xs btn-round p-2" @click="saveCount(props.row, props.index)"></button>
-                    </div>
-                    <div slot="waitingTransfers" slot-scope="props">
+            <div class="table-responsive">
+              <div class="table-wrapper">
+                <v-client-table
+                    ref="productsList"
+                    :columns="columns"
+                    :data="products"
+                    :options="options"
+                >
+                  <div slot="index" slot-scope="props">
+                    {{props.index}}
+                  </div>
+                  <div slot="product.image" slot-scope="props">
+                    <img v-if="props.row.product.image === null" :src="$store.state.placeholderImage"
+                         class="mr-thumb" alt="">
+                    <img v-else :src="`${$http.defaults.mediaUrl}${props.row.product.image}`"
+                         class="mr-thumb" alt="">
+                  </div>
+                  <div slot="product.customer_pric" slot-scope="props">
+                    {{props.row.product.customer_pric | currency}}
+                  </div>
+                  <div slot="product.repair_price" slot-scope="props">
+                    {{props.row.product.repair_price | currency}}
+                  </div>
+                  <div slot="stock" slot-scope="props" style="text-align: center;min-width: 60px;">
+                    {{props.row.count}}
+                    <fg-input type="string" name="name" v-model="count[props.index]" style="width: 50px;margin: auto;"/>
+                    <button class="ti-minus btn-outline-danger btn btn-xs btn-round p-2"
+                            @click="deleteProduct(props.row, props.index)"
+                            :disabled="!props.row.count"/>
+                    <button class="ti-plus btn-outline-success btn btn-xs btn-round p-2" @click="saveCount(props.row, props.index)"></button>
+                  </div>
+                  <div slot="waitingTransfers" slot-scope="props">
 
-                    </div>
-                    <div slot="transfer" slot-scope="props">
-                      <p-button class="pull-left" type="success" @click.native="openModal(props.row.product.id)">
-                        درخواست کالا
-                      </p-button>
-                    </div>
-                  </v-client-table>
-                </div>
+                  </div>
+                  <div slot="transfer" slot-scope="props">
+                    <p-button class="pull-left" type="success" @click.native="openModal(props.row.product.id)">
+                      درخواست کالا
+                    </p-button>
+                  </div>
+                </v-client-table>
               </div>
             </div>
           </div>
@@ -148,6 +146,8 @@
   }
 </script>
 
-<style scoped>
-
+<style>
+  .VueTables .table-responsive {
+    overflow-x: auto;
+  }
 </style>
