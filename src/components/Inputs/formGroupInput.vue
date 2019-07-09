@@ -59,9 +59,9 @@
     }
 </script>
 <style>
-    .errorInput {
-        border: 1px solid red !important;
-    }
+    /*.errorInput {*/
+        /*border: 1px solid red !important;*/
+    /*}*/
 
     .error-loger {
         display: block;

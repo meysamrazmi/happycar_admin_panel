@@ -4,7 +4,7 @@
             <div class="col-12">
             </div>
             <div class="col-12">
-                <card title="لیست آی‌پی‌ها" subTitle="دسترسی به اطلاعات آی‌پی‌ها">
+                <card title="پیام‌ها" subTitle="جزییات پیام">
                     <div class="px-4">
                     <div class="row py-3 my-3 divider-border">
                         <div class=" col-sm-3">
@@ -13,7 +13,7 @@
                             </strong>
                         </div>
                         <div class=" col-sm-9">
-                            {{ comment.user }}
+                            {{ comment.user.name }}
                         </div>
                     </div>
                     <div class="row py-3 my-3 divider-border">
@@ -23,7 +23,7 @@
                             </strong>
                         </div>
                         <div class=" col-sm-9">
-                            {{ comment.category }}
+                            {{ comment.category.category }}
                         </div>
                     </div>
                     <div class="row py-3 my-3 divider-border">
@@ -55,54 +55,57 @@
 </template>
 
 <script>
-    import { RHTTP } from '../../common/realTime-http';
-    export default {
-        name: "message",
+import { RHTTP } from "../../common/realTime-http";
+export default {
+  name: "message",
 
-        components: {
+  components: {},
 
-        },
+  data() {
+    return {
+      comment: {}
+    };
+  },
 
-        data() {
-            return {
-                comment: {}
-            }
-        },
+  computed: {},
 
-        computed:{
+  mounted() {
+    this.setMessageSeen();
+    this.getMessageDetail();
+  },
 
-        },
+  methods: {
+    setMessageSeen() {
+      this.$http
+        .patch("/contact_us/seen_message/", {
+          message_id: this.$route.params.id
+        })
+        .then(res => {
+          console.log(res);
+          this.$store.dispatch("messages/getMessages");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
 
-        mounted() {
-            this.setMessageSeen();
-            this.getMessageDetail();
-            this.$store.dispatch('messages/getMessages');
-        },
-
-        methods: {
-            setMessageSeen() {
-                this.$http.patch('/contact_us/seen_message/', {message_id: this.$route.params.id}).then((res)=> {
-                    console.log(res);
-                }).catch((err)=> {
-                    console.log(err);
-                })
-            },
-
-            getMessageDetail() {
-                this.$http.get(`/contact_us/message/${this.$route.params.id}/`).then((res)=> {
-                    this.comment = res.data.result[0];
-                }).catch((err)=> {
-                    console.log(err)
-                })
-            }
-        },
-
+    getMessageDetail() {
+      this.$http
+        .get(`/contact_us/message/${this.$route.params.id}/`)
+        .then(res => {
+          this.comment = res.data.result[0];
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
+  }
+};
 </script>
 
 <style>
-    .divider-border {
-        border-radius: 7px;
-        background: #e2e2e0;
-    }
+.divider-border {
+  border-radius: 7px;
+  background: #e2e2e0;
+}
 </style>

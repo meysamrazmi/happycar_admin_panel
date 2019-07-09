@@ -142,7 +142,7 @@
 
         methods: {
             fetchSlide(id) {
-                this.$http.get(`/slider/manager/${id}`).then((res) => {
+                this.$http.get(`/slider/manager/${id}/`).then((res) => {
                     if (res.data.result.length !== 0) {
                         this.fetchedSlide = Object.assign({}, res.data.result[0]);
                         this.slide = res.data.result[0];

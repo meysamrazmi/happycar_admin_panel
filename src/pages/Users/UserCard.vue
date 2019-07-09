@@ -5,12 +5,13 @@
         </div>
         <div>
             <div class="author">
-                <img class="avatar border-white" :src="$store.state.placeholderImage" alt="...">
+                <img :src="`$http.defaults.mediaUrl + user.image`" alt="" v-if="user.image !== null">
+                <img class="avatar border-white" :src="$store.state.placeholderImage" alt="..." v-else>
                 <h4 class="title">
-                    محمدرضا ابراهیمی
+                    {{ user.user.name }}
                     <br>
-                    <a href="#">
-                        <small>mr.ebrahimi@gmail.com</small>
+                    <a>
+                        <small class="text-black-50">{{ user.user.phone }}</small>
                     </a>
                 </h4>
             </div>
@@ -18,8 +19,29 @@
         <hr>
         <div class="text-center">
             <div class="row my-4">
-                <div class="col-12">
-                    09393273599
+                <div class="col-4">
+                    <div>
+                        امتیاز
+                    </div>
+                    <div>
+                        {{ user.score }}
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div>
+                        س. انجام شده
+                    </div>
+                    <div>
+                        {{ user.num_of_completed_services }}
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div>
+                        درجه
+                    </div>
+                    <div>
+                        {{ user.grade }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -28,6 +50,12 @@
 <script>
     import profileBack from '@/assets/img/profileBack.jpg'
     export default {
+        props: {
+          user: {
+              type: Object
+          }
+        },
+
         data() {
             return {
                 profileBack,

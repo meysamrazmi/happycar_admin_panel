@@ -5,7 +5,46 @@ html {
 .card .card-image {
   height: 160px;
 }
+
+.ui.fluid.dropdown {
+  direction: rtl;
+  text-align: right;
+}
+
+.ui.dropdown .menu > .item {
+  text-align: right !important;
+}
+
+.form-control-select {
+  background-color: #fffcf5 !important;
+  background-clip: padding-box !important;
+  border: 1px solid #a7a7a7 !important;
+}
+
+// Tabs
+
+ul.tabs-component-tabs {
+  list-style: none;
+}
+li.tabs-component-tab {
+  display: inline-block;
+  padding-left: 3rem;
+  font-size: 1.3rem;
+  opacity: .5;
+}
+a.tabs-component-tab-a {
+  color: inherit;
+  font-weight: inherit;
+}
+
+li.tabs-component-tab.is-active {
+  opacity: 1;
+  font-weight: 800;
+
+}
 //image input
+
+
 
 .img-inputer__inputer {
   display: none;
@@ -138,6 +177,10 @@ select.form-control:not([size]):not([multiple]){
 
 }
 
+.border-50 {
+  border-radius: 50%;
+}
+
 .actions-title span.notification .caret {
   display: none;
 }
@@ -216,7 +259,7 @@ li.page-item.active {
 }
 
 .table-wrapper {
-  padding: 70px 0px;
+  padding: 20px 0px;
 }
 
 .page-item {
@@ -254,4 +297,35 @@ li.page-item.active {
   html {
     font-size: calc(100vw / 35);
   }
+}
+ul.tabs-component-tabs {
+  border-top: 1px solid #ddd;
+  > li {
+    padding: 0;
+    display: inline-flex;
+    position: relative;
+    > a {
+      padding: 10px 15px;
+    }
+    &.is-active > a:before {
+      content: "";
+      position: absolute;
+      height: 5px;
+      width: 100%;
+      right: 0;
+      background: #03A9F4;
+      top: -1px;
+      border-radius: 0 0 5px 5px;
+      z-index: 1;
+    }
+  }
+}
+.green-devider-border {
+  background-color: #d0ffd89e;
+}
+.red-devider-border {
+  background-color: #ffc2c27d;
+}
+.ti-trash {
+  display: none;
 }

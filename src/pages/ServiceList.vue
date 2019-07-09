@@ -108,13 +108,15 @@
                 let data = {
                     servise_id: service.id
                 };
-                this.$http.delete('/services/service/', {data: data}).then((res) => {
-                    console.log(res);
-                    this.fetchServiceList();
-                }).catch((err) => {
-                    console.log(err);
-                    this.fetchServiceList();
-                })
+                this.askBeforeDelete(()=> {
+                    this.$http.delete('/services/service/', {data: data}).then((res) => {
+                        console.log(res);
+                        this.fetchServiceList();
+                    }).catch((err) => {
+                        console.log(err);
+                        this.fetchServiceList();
+                    })
+                });
             },
 
             fetchServiceList() {

@@ -11,22 +11,16 @@
                                 <div class="table-wrapper">
                                     <v-client-table :columns="columns" :data="data" :options="options">
                                         <div slot="date_joined" slot-scope="props">
-                                            {{chengeTime(props.row.date_joined)}}
+                                            {{changeTime(props.row.date_joined)}}
                                         </div>
                                         <div slot="last_login" slot-scope="props">
-
-                                            {{props.row.last_login ? chengeTime(props.row.last_login) : ''}}
+                                            {{props.row.last_login ? changeLoginTime(props.row.last_login) : ''}}
                                         </div>
-                                        <div slot="active"
-                                             slot-scope="props"
-                                             @click="changeUserStatus(props.row)"
-                                        >
-                                            <toggle-button :value="props.row.active"
-                                            >
-                                            </toggle-button>
+                                        <div slot="active" slot-scope="props" @click="changeUserStatus(props.row)">
+                                            <toggle-button :value="props.row.active" />
                                         </div>
                                         <div slot="actions" slot-scope="props">
-                                            <router-link :to="{name: 'user-profile', id:'1'}" class="text-white">
+                                            <router-link :to="{name: 'user-profile', params:{id: props.row.id}}" class="text-white">
                                                 <a class="ti-eye text-primary">
                                                 </a>
                                             </router-link>
@@ -56,7 +50,7 @@
 
         data() {
             return {
-                columns: ['id', 'name', 'phone', 'date_joined', 'last_login', 'active', 'actions'],
+                columns: ['id', 'name', 'phone', 'date_joined', 'active', 'last_login', 'actions'],
                 data: [],
                 options: {
                     headings: {
@@ -64,7 +58,7 @@
                         phone: 'شماره',
                         active:  'وضعیت',
                         id: 'ردیف',
-                        date_joined: 'تاریخ ورود',
+                        date_joined: 'تاریخ ثبت‌نام',
                         last_login: 'آخرین ورود',
                         actions: 'اقدامات'
                     },
@@ -101,12 +95,8 @@
                 })
             },
 
-            chengeTime(time) {
-                return moment(time).format('jYYYY/jMM/jDD')
-            },
-
             changeUserStatus(user) {
-                this.$http.patch(`/admin/customer/${user.id}`).then((res)=> {
+                this.$http.patch(`/admin/customer/${user.id}/`).then((res)=> {
                     console.log(res);
                     this.fetchUsersList();
                 }).catch((err)=> {

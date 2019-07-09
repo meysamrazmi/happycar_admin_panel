@@ -45,7 +45,8 @@ HTTP.interceptors.response.use((response) => {
     } else if (error.response.status === 402) {
         store.dispatch('users/userConfig', window.location.pathname);
 
-    } else if (error.response.status === 409) {
+    }
+    else if (error.response.status === 409) {
         store.dispatch("users/accessDenied")
     } else if(parseInt(error.response.status/500) === 1 ){
         store.dispatch('users/serverError')

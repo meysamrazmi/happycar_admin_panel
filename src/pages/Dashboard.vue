@@ -127,7 +127,7 @@
     import moment from 'jalali-moment';
     import HighChart from './Dashboard/HighChart';
     import AutoChargeChart from './Dashboard/AutoChargeChart'
-
+    import Pushe from 'pushe-webpush'
 
     export default {
         components: {
@@ -197,8 +197,16 @@
         },
 
         mounted() {
-
-            // this.getUserCollection();
+          let options = {
+            title: 'عضویت در وب پوش هپی کار',
+            content: 'دریافت نوتیفیکیشن از سفارش های جدید',
+          }
+          Pushe.subscribe(options);
+          Pushe.getDeviceId()
+            .then((deviceId) => {
+              console.log(`deviceId is: ${deviceId}`);
+            });
+          // this.getUserCollection();
 
         },
         computed: {

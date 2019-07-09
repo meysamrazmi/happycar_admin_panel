@@ -4,6 +4,7 @@ import users from './users';
 import messages from './messages';
 import services from './services';
 import placeholderImage from '../assets/img/image-placeholder-square.png';
+import Pushe from 'pushe-webpush'
 
 Vue.use(Vuex);
 
@@ -39,8 +40,8 @@ export default new Vuex.Store({
             skin: 'table table-bordered table-hover'
         },
         companyName: {
-            name: 'کارفیکس',
-            link: 'carfix.com'
+            name: 'هپی کار',
+            link: 'happycarapp.com'
         }
     }
 })

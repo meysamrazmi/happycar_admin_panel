@@ -1,96 +1,127 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-sm-6">
-                <detail-card></detail-card>
+            <div class="col-md-6">
+                <detail-card v-if="order.buyer"
+                             :buyer="order.buyer"
+                             :buyer_car="order.buyer_car"
+                             :code="order.code"
+                             :date="order.preferred_date"
+                             :time="order.preferred_time_frame"
+                             :store="order.preferred_store"
+                             :address="order.delivering_address"
+                             :payment_in_place="order.payment_in_place"
+                             :total_cost="order.total_cost"
+                ></detail-card>
             </div>
 
             <div class="col-sm-6">
-                <factor></factor>
+                <factor :services="order.services"
+                        :products="order.products"
+                        :total_cost="order.total_cost"
+                        :paid_cost="order.paid_cost"
+                ></factor>
             </div>
             <div class="col-12">
-                <card class="location-height">
-                    <l-map :zoom="zoom" :center="center">
-                        <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-                        <l-marker :lat-lng="marker"></l-marker>
-                    </l-map>
-                </card>
+                <expert :orderId="orderId"
+                        :date="order.preferred_date"
+                        :time="execution_time"
+                        :assinged_calender="order.assigned_calendar"
+                        @updateParent="fetchOrder"
+                ></expert>
             </div>
 
-            <div class="col-sm-6">
-                <card title="اطلاع به مشتری">
-                    <textarea class="form-control mb-3"></textarea>
-                    <div class="text-center">
-                        <button class="btn btn-warning mx-1">
-                            پیامک
-                        </button>
-                        <button class="btn btn-success mx-1">
-                            نوتیفیکیشن
-                        </button>
-                    </div>
-                </card>
-            </div>
-            <div class="col-sm-6">
-                <card title="اطلاع به تعمیرکار">
-                    <textarea class="form-control mb-3"></textarea>
-                    <div class="text-center">
-                        <button class="btn btn-warning mx-1">
-                            پیامک
-                        </button>
-                        <button class="btn btn-success mx-1">
-                            نوتیفیکیشن
-                        </button>
-                    </div>
-                </card>
-            </div>
+            <!--<div class="col-sm-6">-->
+                <!--<card title="اطلاع به مشتری">-->
+                    <!--<textarea class="form-control mb-3"></textarea>-->
+                    <!--<div class="text-center">-->
+                        <!--<button class="btn btn-warning mx-1">-->
+                            <!--پیامک-->
+                        <!--</button>-->
+                        <!--<button class="btn btn-success mx-1">-->
+                            <!--نوتیفیکیشن-->
+                        <!--</button>-->
+                    <!--</div>-->
+                <!--</card>-->
+            <!--</div>-->
+            <!--<div class="col-sm-6">-->
+                <!--<card title="اطلاع به تعمیرکار">-->
+                    <!--<textarea class="form-control mb-3"></textarea>-->
+                    <!--<div class="text-center">-->
+                        <!--<button class="btn btn-warning mx-1">-->
+                            <!--پیامک-->
+                        <!--</button>-->
+                        <!--<button class="btn btn-success mx-1">-->
+                            <!--نوتیفیکیشن-->
+                        <!--</button>-->
+                    <!--</div>-->
+                <!--</card>-->
+            <!--</div>-->
         </div>
     </div>
 </template>
 
 <script>
-    import { ClientTable } from 'vue-tables-2';
-    import Factor from './Order/Factor';
-    import DetailCard from './Order/DetailCard';
-    import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
-    function getData() {
-        return [];
+import { ClientTable } from "vue-tables-2";
+import Factor from "./Order/Factor";
+import DetailCard from "./Order/DetailCard";
+import Expert from './Order/Expert';
+
+
+export default {
+  name: "order-detail",
+
+  components: {
+    ClientTable,
+    Factor,
+    DetailCard,
+    Expert
+  },
+
+  computed: {
+    execution_time() {
+      let sum_of_time = this.order.services != undefined ? this.order.services.reduce((sum, service) => {
+        return sum + service.execution_time;
+      }, 0): 0
+      return sum_of_time
     }
+  },
+
+  data() {
+    return {
+      orderId: 0,
+      order:{}
+    };
+  },
+
+  created() {
+    this.orderId = this.$route.params.id;
+  },
+
+  mounted() {
+    this.fetchOrder();
+  },
+
+  methods: {
 
 
-    export default {
-        name: "order-detail",
+    fetchOrder() {
+      this.$http
+        .get(`/orders/admin/${this.orderId}/`)
+        .then(res => {
+          this.order = res.data
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
 
-        components:{
-            ClientTable,
-            Factor,
-            DetailCard,
-            LMap,
-            LTileLayer,
-            LMarker
-        },
-
-        data() {
-            return {
-                zoom:16,
-                center:  L.latLng(35.6892, 51.3890),
-                url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-                attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-                marker:  L.latLng(35.6892, 51.3890),
-            }
-        },
-
-        mounted() {
-        },
-
-        methods: {
-        }
-
-
-    }
+  }
+};
 </script>
 
 <style scoped>
-    .location-height {
-        height: 500px;
-    }
+.location-height {
+  height: 500px;
+}
 </style>

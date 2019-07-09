@@ -22,17 +22,16 @@
               <div class="table-responsive">
                 <div class="table-wrapper">
                   <v-client-table :columns="columns" :data="data" :options="options">
-                      <div slot="image" slot-scope="props">
-                          <img v-if="props.row.image === null" :src="$store.state.placeholderImage" class="mr-thumb" alt="">
-                          <img v-else :src="`${$http.defaults.mediaUrl}${props.row.image}`" class="mr-thumb" alt="">
-                      </div>
-                      <div slot="actions" slot-scope="props">
-                          <router-link :to="{name: 'store-detail', params: {id: props.row.id}}">
-                              <span class="ti-pencil-alt text-primary pr-3"></span>
-                          </router-link>
-                          <span class="ti-trash text-danger"
-                                @click="deleteStore(props.row)"></span>
-                      </div>
+                    <div slot="image" slot-scope="props">
+                      <img v-if="props.row.image === null" :src="$store.state.placeholderImage" class="mr-thumb" alt="">
+                      <img v-else :src="`${$http.defaults.mediaUrl}${props.row.image}`" class="mr-thumb" alt="">
+                    </div>
+                    <div slot="actions" slot-scope="props">
+                      <router-link :to="{name: 'store-detail', params: {id: props.row.id}}">
+                        <span class="ti-pencil-alt text-primary pr-3"></span>
+                      </router-link>
+                      <span class="ti-trash text-danger" @click="deleteStore(props.row)"></span>
+                    </div>
                   </v-client-table>
                 </div>
               </div>
@@ -109,11 +108,13 @@
                 let data = {
                     store_id: store.id
                 };
-                this.$http.delete('/products/store/', {data: data}).then((res)=> {
-                    this.fetchStoreList();
-                }).catch((err)=> {
-                    this.fetchStoreList()
-                })
+                this.askBeforeDelete(() => {
+                    this.$http.delete('/products/store/', {data: data}).then((res)=> {
+                        this.fetchStoreList();
+                    }).catch((err)=> {
+                        this.fetchStoreList()
+                    })
+                });
             }
         }
 

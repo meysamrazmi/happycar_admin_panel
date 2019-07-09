@@ -5,11 +5,16 @@
                 <sidebar-link to="/dashboard" name="داشبورد" icon="ti-panel"></sidebar-link>
                 <sidebar-link to="/users-list" name="لیست کاربران" icon="ti-user"></sidebar-link>
                 <sidebar-link to="/experts" name="لیست متخصصین" icon="ti-medall"></sidebar-link>
+                <sidebar-link to="/repair-shops" name="لیست تعمیرگاه ها" icon="ti-location-pin"></sidebar-link>
                 <sidebar-link to="/slider" name="اسلایدر" icon="ti-image"></sidebar-link>
+                <sidebar-link to="/about-us" name="درباره‌ی ما" icon="ti-info-alt"></sidebar-link>
                 <sidebar-link to="/orders" name="سفارش‌ها" icon="ti-shopping-cart-full"></sidebar-link>
+                <sidebar-link to="/transactions" name="تراکنش ها" icon="ti-stats-up"></sidebar-link>
+                <sidebar-link to="/discount" name="تخفیف" icon="ti-gift"></sidebar-link>
+                <sidebar-link to="/store-list" name="انبارها" icon="ti-home"></sidebar-link>
                 <sidebar-link-group title="مدیربت پیام‌ها" icon="ti-comment-alt">
                     <template slot="subLink">
-                        <sidebar-link to="/messages-group" name="کتگوری پیام‌ها" icon="ti-angle-double-left"></sidebar-link>
+                        <sidebar-link to="/messages-group" name="گروه پیام‌ها" icon="ti-angle-double-left"></sidebar-link>
                         <sidebar-link to="/messages" name="پیام‌ها" icon="ti-angle-double-left"></sidebar-link>
                     </template>
                 </sidebar-link-group>
@@ -25,16 +30,11 @@
                         <sidebar-link to="/service-list" name="سرویس‌ها" icon="ti-angle-double-left"></sidebar-link>
                     </template>
                 </sidebar-link-group>
-                <sidebar-link-group title="مدیربت انبار" icon="ti-home">
-                    <template slot="subLink">
-                        <sidebar-link to="/store-list" name="انبارها" icon="ti-angle-double-left"></sidebar-link>
-                        <sidebar-link to="/store-product" name="کالاهای انبار" icon="ti-angle-double-left"></sidebar-link>
-                    </template>
-                </sidebar-link-group>
                 <sidebar-link-group title="مدیربت خودروها" icon="ti-car">
                     <template slot="subLink">
                         <sidebar-link to="/car-brand-list" name="برندها" icon="ti-angle-double-left"></sidebar-link>
                         <sidebar-link to="/cars-list" name="خودروها" icon="ti-angle-double-left"></sidebar-link>
+                        <sidebar-link to="/car-group" name="گروه خودرو" icon="ti-angle-double-left"></sidebar-link>
                     </template>
                 </sidebar-link-group>
             </template>

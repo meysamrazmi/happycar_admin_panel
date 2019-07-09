@@ -1,132 +1,130 @@
 <template>
-    <div>
-        <div class="row">
+  <div>
+    <div class="row">
+      <div class="col-12">
+      </div>
+      <div class="col-12">
+        <card title="متخصصین" subTitle="لیست متخصصین سیار">
+          <div class="row">
             <div class="col-12">
-            </div>
-            <div class="col-12">
-                <card title="متخصصین" subTitle="لیست متخصصین سیار">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="table-responsive">
-                                <div class="table-wrapper">
-                                    <v-client-table :columns="columns" :data="data" :options="options">
-                                        <div slot="date_joined" slot-scope="props">
-                                            {{chengeTime(props.row.date_joined)}}
-                                        </div>
-                                        <div slot="last_login" slot-scope="props">
-
-                                            {{props.row.last_login ? chengeTime(props.row.last_login) : ''}}
-                                        </div>
-                                        <div slot="active"
-                                             slot-scope="props"
-                                             @click="changeExpertStatus(props.row)"
-                                        >
-                                            <toggle-button :value="props.row.active"
-                                            >
-                                            </toggle-button>
-                                        </div>
-                                        <div slot="image" slot-scope="props">
-                                            <img  :src="$store.state.placeholderImage"
-                                                 class="mr-thumb profile" alt="">
-                                            <!--<img  :src="`${$http.defaults.mediaUrl}${props.row.image}`"-->
-                                                 <!--class="mr-thumb" alt="">-->
-                                        </div>
-                                        <div slot="actions">
-                                            <router-link :to="{name: 'user-profile', id: '1'}">
-                                                <span class="ti-eye text-primary"></span>
-                                            </router-link>
-                                        </div>
-                                    </v-client-table>
-                                </div>
-                            </div>
-                        </div>
+              <div class="table-responsive">
+                <div class="table-wrapper">
+                  <v-client-table :columns="columns" :data="data" :options="options">
+                    <div slot="user.date_joined" slot-scope="props">
+                      {{ changeTime(props.row.user.date_joined) }}
                     </div>
-                </card>
+                    <div slot="user.last_login" slot-scope="props">
+                      {{props.row.user.last_login ? changeLoginTime(props.row.user.last_login) : ''}}
+                    </div>
+                    <div slot="available" slot-scope="props">
+                      <span v-html="props.row.available? 'فعال': 'غیر فعال'"></span>
+                    </div>
+                    <div slot="user.active"
+                         slot-scope="props"
+                         @click="changeExpertStatus(props.row)"
+                    >
+                      <toggle-button :value="props.row.user.active" />
+                    </div>
+                    <div slot="image" slot-scope="props">
+                      <img class="mr-thumb profile"
+                           :src="`${$http.defaults.mediaUrl}${props.row.image}`"
+                           v-if="props.row.image" alt="">
+                      <img  :src="$store.state.placeholderImage"
+                            class="mr-thumb profile" alt="" v-else>
+                    </div>
+                    <div slot="actions" slot-scope="props">
+                      <router-link :to="{name: 'expert-profile', params:{id: props.row.id}}" class="text-white">
+                                                <span class="ti-eye text-primary">
+                                                </span>
+                      </router-link>
+                    </div>
+                  </v-client-table>
+                </div>
+              </div>
             </div>
+          </div>
+        </card>
+      </div>
 
-        </div>
     </div>
+  </div>
 </template>
 
 <script>
-    import { ClientTable } from 'vue-tables-2'
-    import moment from 'jalali-moment';
+  import { ClientTable } from 'vue-tables-2'
 
-    export default {
-        name: "experts",
+  export default {
+    name: "experts",
 
-        components:{
-            ClientTable
-        },
+    components:{
+      ClientTable
+    },
 
-        data() {
-            return {
-                columns: ['id', 'name', 'image', 'phone', 'date_joined', 'last_login', 'active', 'actions'],
-                data: [],
-                options: {
-                    headings: {
-                        name: 'نام',
-                        phone: 'شماره',
-                        active:  'وضعیت',
-                        id: 'ردیف',
-                        image: 'تصویر',
-                        date_joined: 'تاریخ ورود',
-                        last_login: 'آخرین ورود',
-                        actions: 'اقدامات'
-                    },
-                    sortable: ['id', 'name', 'active', 'date_joined', 'last_login'],
-                    filterable: ['name', 'code'],
-                    pagination: {chunk: 10},
-                    sortIcon: this.$store.state.tebleConfig.sortIcon,
-                    texts: this.$store.state.tebleConfig.texts,
-                    skin: this.$store.state.tebleConfig.skin,
-                    customSorting: {
-                        id: function (ascending) {
-                            return function (a, b) {
-                                if (ascending) {
-                                    return a.id >= b.id ? 1 : -1;
-                                }
-                                return a.id <= b.id ? 1 : -1;
-                            }
-                        },
-                    }
+    data() {
+      return {
+        columns: ['id', 'user.name', 'image', 'user.phone', 'user.date_joined', 'user.last_login', 'available', 'user.active', 'actions'],
+        data: [],
+        options: {
+          headings: {
+            'user.name': 'نام',
+            'user.phone': 'شماره',
+            'user.active':  'وضعیت',
+            id: 'شناسه',
+            image: 'تصویر',
+            'user.date_joined': 'تاریخ ثبت‌نام',
+            'user.last_login': 'آخرین ورود',
+            actions: 'اقدامات',
+            available: 'فعال'
+          },
+          sortable: ['id', 'user.name', 'user.active', 'user.date_joined', 'user.last_login'],
+          filterable: ['user.name', 'user.code'],
+          pagination: {chunk: 10},
+          sortIcon: this.$store.state.tebleConfig.sortIcon,
+          texts: this.$store.state.tebleConfig.texts,
+          skin: this.$store.state.tebleConfig.skin,
+          customSorting: {
+            id: function (ascending) {
+              return function (a, b) {
+                if (ascending) {
+                  return a.id >= b.id ? 1 : -1;
                 }
-            }
-        },
-
-        mounted() {
-            this.fetchExpertsList()
-        },
-
-        methods: {
-            fetchExpertsList() {
-                this.$http.get('/admin/expert/').then((res)=> {
-                    this.data = res.data;
-                }).catch((err)=> {
-                    console.log(err);
-                })
+                return a.id <= b.id ? 1 : -1;
+              }
             },
-
-            chengeTime(time) {
-                return moment(time).format('jYYYY/jMM/jDD')
-            },
-
-            changeExpertStatus(user) {
-                this.$http.patch(`/admin/expert/${user.id}`).then((res)=> {
-                    console.log(res);
-                    this.fetchExpertsList();
-                }).catch((err)=> {
-                    console.log(err);
-                    this.fetchExpertsList();
-                })
-            }
+          }
         }
+      }
+    },
 
+    mounted() {
+      this.fetchExpertsList()
+    },
+
+    methods: {
+      fetchExpertsList() {
+        this.$http.get('/profile/admin/expert/').then((res)=> {
+          this.data = res.data.data;
+        }).catch((err)=> {
+          console.log(err);
+        })
+      },
+
+      changeExpertStatus(user) {
+        this.$http.patch(`/admin/expert/${user.user.id}/`).then((res)=> {
+          console.log(res);
+          this.fetchExpertsList();
+        }).catch((err)=> {
+          console.log(err);
+          this.fetchExpertsList();
+        })
+      }
     }
+
+  }
 </script>
 
 <style scoped>
-    .profile {
-        border-radius: 50%;
-    }
+  .profile {
+    border-radius: 50%;
+  }
 </style>
