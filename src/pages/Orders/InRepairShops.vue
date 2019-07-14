@@ -41,7 +41,7 @@
                 <p-button v-if="props.row.assigned_shop == null"
                           type="success"
                           @click.native="openModal(props.row.id)">تخصیص</p-button>
-                <span v-else>{{props.row.assigned_shop}}</span>
+                <a v-else :href="`/repair-shop/${props.row.assigned_shop}`" class="btn btn-xs btn-outline-info btn-round">{{props.row.assigned_shop}}</a>
               </div>
             </v-server-table>
           </div>

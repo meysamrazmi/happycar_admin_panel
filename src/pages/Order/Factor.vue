@@ -16,7 +16,7 @@
                 {{ service.price | currency }}
             </span>
         </div>
-        <div class="divider-border p-2 my-2 prod-border" v-for="service in services">
+        <div class="divider-border p-2 my-2 prod-border">
             <strong>توضیحات</strong>
             <span class="pr-4">
                 {{ description }}

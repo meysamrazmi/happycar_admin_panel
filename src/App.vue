@@ -15,8 +15,8 @@ export default {
           }
       },
       mounted() {
-        // Pushe.init("9gl6nyjkk38906zg");//https
-        Pushe.init("mg63xynnl83kw30g");//http
+        Pushe.init("9gl6nyjkk38906zg");//https
+        // Pushe.init("mg63xynnl83kw30g");//http
       }
 };
 </script>
