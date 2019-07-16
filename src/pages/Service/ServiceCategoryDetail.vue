@@ -27,6 +27,17 @@
                             >
                             </fg-input>
                         </div>
+                        <div class="col-12">
+                            <label class="d-block">توضیحات</label>
+                            <textarea name="description"
+                                      id="description"
+                                      data-vv-as="توضیحات"
+                                      v-validate="'required'"
+                                      :class="{ errorInput : errors.first('description') }"
+                                      class="form-control d-block w-100"
+                                      v-model="category.description" />
+                            <span class="error-loger">{{ errors.first('description')}}</span>
+                        </div>
                         <div class="col-12 text-center mt-3 ">
                             <button class="btn btn-success" @click="sendCategory">
                                 ثبت
@@ -52,7 +63,8 @@
                 fetchedCategory: {},
                 category: {
                     name: '',
-                    image: ''
+                    image: '',
+                    description: ''
                 },
                 imageFile: undefined
             }
@@ -123,6 +135,7 @@
                             }else {
                                 const slideFormData = new FormData();
                                 slideFormData.set('name', this.category.name);
+                                slideFormData.set('description', this.category.description);
                                 slideFormData.append('image', this.imageFile);
                                 this.$http.post('/services/category/', slideFormData).then((res) => {
                                     this.$swal({
@@ -149,6 +162,9 @@
                     if (this.category.name !== this.fetchedCategory.name) {
                         categoryFormData.set('name', this.category.name);
                     }
+                    if (this.category.description !== this.fetchedCategory.description) {
+                        categoryFormData.set('description', this.category.description);
+                    }
                     if(this.imageFile !== undefined) {
                         categoryFormData.append('image', this.imageFile);
                     }
@@ -172,7 +188,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>
