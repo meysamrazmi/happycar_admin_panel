@@ -133,10 +133,6 @@
     },
 
     methods: {
-      changeTime(time) {
-        return moment(time).format('تاریخ: jYYYY/jMM/jDD ساعت: HH:mm')
-      },
-
       reqFunc : function (data) {
         return this.$http.get(`orders/admin/${this.orderId}/experts/`, {
           params: data

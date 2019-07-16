@@ -63,9 +63,9 @@
 
 <script>
 import { ClientTable } from "vue-tables-2";
-import Factor from "./Order/Factor";
-import DetailCard from "./Order/DetailCard";
-import Expert from './Order/Expert';
+import Factor from "../Order/Factor";
+import DetailCard from "../Order/DetailCard";
+import Expert from '../Order/Expert';
 
 
 export default {

@@ -22,8 +22,9 @@ import Messages from "@/pages/Messages.vue";
 import MessagesGroup from "@/pages/MessagesGroup.vue";
 import Message from "@/pages/Messages/Message.vue";
 
-import Orders from "@/pages/Orders.vue";
-import OrderDetail from "@/pages/OrderDetail.vue";
+import Orders from "@/pages/Orders/Orders.vue";
+import OrderDetail from "@/pages/Orders/OrderDetail.vue";
+import ShopOrderDetail from "@/pages/Orders/ShopOrderDetail.vue";
 
 import ProductCategoryList from "@/pages/ProductCategoryList.vue";
 import ProductList from "@/pages/ProductList.vue";
@@ -137,6 +138,11 @@ const routes = [
         path: "order-detail/:id",
         name: "order-detail",
         component: OrderDetail
+      },
+      {
+        path: "shop-order-detail/:id",
+        name: "shop-order-detail",
+        component: ShopOrderDetail
       },
       {
         path: "product-category-list",

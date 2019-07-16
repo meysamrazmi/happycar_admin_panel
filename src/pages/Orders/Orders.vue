@@ -19,8 +19,8 @@
 
 <script>
 import {Tabs, Tab} from 'vue-tabs-component';
-import InPlaceOrders from './Orders/InPlaceOrders.vue';
-import InRepairShops from './Orders/InRepairShops.vue';
+import InPlaceOrders from './InPlaceOrders.vue';
+import InRepairShops from './InRepairShops.vue';
 
 export default {
   name: "orders",

@@ -279,7 +279,6 @@
           serviceObjectKeys.forEach((key) => {
             if (this.service[key] !== this.fetchedService[key]) {
               serviceFormData.set(key, this.service[key]);
-              console.log(this.service[key])
             }
           });
           serviceFormData.delete('image');

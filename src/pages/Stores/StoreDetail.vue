@@ -125,8 +125,10 @@
           name: '',
           address: '',
           image: undefined,
-          longitude: '',
-          latitude: ''
+          location: {
+            longitude: '',
+            latitude: ''
+          },
         },
         imageFile: undefined,
         products: [],
@@ -209,8 +211,8 @@
             if(temp) {
               this.fetchedStore = Object.assign({}, temp);
               this.store = temp;
-              this.center =  L.latLng(temp.latitude, temp.longitude);
-              this.marker =  L.latLng(temp.latitude, temp.longitude);
+              this.center =  L.latLng(temp.location.latitude, temp.location.longitude);
+              this.marker =  L.latLng(temp.location.latitude, temp.location.longitude);
             }else {
               this.$router.push('/404')
             }
@@ -233,19 +235,25 @@
                   text: 'انتخاب عکس الزامی است'
                 })
               }else {
-                const storeFormData = new FormData();
-                storeFormData.set('name', this.store.name);
-                storeFormData.set('longitude', this.store.longitude);
-                storeFormData.set('latitude', this.store.latitude);
-                storeFormData.set('address', this.store.address);
-                storeFormData.append('image', this.imageFile);
-                this.$http.post('/products/store/', storeFormData).then((res) => {
-                  this.$swal({
-                    type: 'success',
-                    title: 'موفق',
-                    text: 'عملیات با موفقیت انجام شد'
-                  });
-                  this.$router.push({name: 'store-list'});
+                let data = {
+                  location: this.store.location,
+                  name: this.store.name,
+                  address: this.store.address,
+                }
+
+                this.$http.post('/products/store/', data).then((res) => {
+                  console.log(res)
+                  const storeFormData = new FormData();
+                  storeFormData.set('store_id', res.data.data.id);
+                  storeFormData.append('image', this.imageFile);
+                  this.$http.patch('/products/store/', storeFormData).then((res)=> {
+                    this.$swal({
+                      type: 'success',
+                      title: 'موفق',
+                      text: 'عملیات با موفقیت انجام شد'
+                    });
+                    this.$router.push({name: 'store-list'});
+                  })
                 }).catch((err) => {
                   this.$swal({
                     type: 'warning',
@@ -256,12 +264,11 @@
               }
             }
           });
-
-
-        } else {
+        }
+        else {
           const storeFormData = new FormData();
           const storeObjectKeys = Object.keys(this.fetchedStore);
-          storeFormData.set('store_id', this.$route.params.id);
+          storeFormData.set('store_id', this.id);
           storeObjectKeys.forEach((key) => {
             if (this.store[key] !== this.fetchedStore[key]) {
               storeFormData.set(key, this.store[key]);
@@ -270,9 +277,14 @@
           storeFormData.delete('image');
           if(this.imageFile !== undefined) {
             storeFormData.append('image', this.imageFile);
+            //update image field
+            this.$http.patch('/products/store/', storeFormData).then((res)=> {}).catch((err)=> {})
           }
 
-          this.$http.patch('/products/store/', storeFormData).then((res)=> {
+          let data = Object.assign({store_id: this.id}, this.store)
+          delete data.image
+          //update other fields
+          this.$http.patch('/products/store/', data).then((res)=> {
             this.$swal({
               type: 'success',
               title: 'موفق',
@@ -291,8 +303,8 @@
 
       setLocation(location) {
         console.log(location);
-        this.store.latitude = location.lat;
-        this.store.longitude = location.lng;
+        this.store.location.latitude = location.lat;
+        this.store.location.longitude = location.lng;
       },
 
       fetchProductList() {

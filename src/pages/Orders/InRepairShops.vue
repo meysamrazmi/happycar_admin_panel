@@ -29,10 +29,14 @@
                 {{ props.row.total_cost | currency }}
               </div>
               <div slot="paid_cost" slot-scope="props">
+                <span v-if="props.row.paid_cost && props.row.paid_cost != props.row.total_cost" class="badge badge-warning mb-1 p-2">
+                  {{(((props.row.paid_cost / props.row.total_cost) - 1) * 100).toFixed(0) }} %
+                </span>
                 {{ props.row.paid_cost | currency }}
               </div>
               <div slot="preferred_date" slot-scope="props">
-                {{ changeTime(props.row.preferred_date)}}
+                {{ preferedTime(props.row.preferred_date)}}
+                <span class="d-block text-center" style="border-top: 1px solid #eee;">{{props.row.preferred_time_frame | translateTimeFrame}}</span>
               </div>
               <div slot="created_at" slot-scope="props">
                 {{ changeTime(props.row.created_at)}}
@@ -41,7 +45,7 @@
                 <p-button v-if="props.row.assigned_shop == null"
                           type="success"
                           @click.native="openModal(props.row.id)">تخصیص</p-button>
-                <a v-else :href="`/repair-shop/${props.row.assigned_shop}`" class="btn btn-xs btn-outline-info btn-round">{{props.row.assigned_shop}}</a>
+                <a v-else :href="`/repair-shop/${props.row.assigned_shop.id}`" class="btn btn-xs btn-outline-info btn-round">{{props.row.assigned_shop.user.name}}</a>
               </div>
             </v-server-table>
           </div>
@@ -81,6 +85,7 @@
 </template>
 
 <script>
+  import moment from "jalali-moment";
   import { ModelListSelect } from 'vue-search-select';
   export default {
     name: "InRepairShops",
@@ -212,6 +217,10 @@
           console.log(e)
         })
       },
+
+      preferedTime(time) {
+        return moment(time).format('jYYYY/jMM/jDD')
+      },
     },
 
     filters: {
@@ -231,6 +240,25 @@
             break
           case 'accepted':
             return 'قبول شده'
+            break
+          default:
+            return v
+        }
+      },
+
+      translateTimeFrame: function(v){
+        switch (v) {
+          case 0:
+            return '9-12'
+            break
+          case 1:
+            return '12-3'
+            break
+          case 2:
+            return '3-6'
+            break
+          case 3:
+            return '6-9'
             break
           default:
             return v

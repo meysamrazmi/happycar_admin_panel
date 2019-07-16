@@ -29,8 +29,9 @@
               <div slot="paid_cost" slot-scope="props">
                 {{ props.row.paid_cost | currency }}
               </div>
-              <div slot="preferred_date" slot-scope="props">
-                {{ changeTime(props.row.preferred_date)}}
+              <div slot="preferred_date" slot-scope="props" class="text-center">
+                {{ preferedTime(props.row.preferred_date)}}
+                <span class="d-block" style="border-top: 1px solid #eee;">{{props.row.preferred_time_frame | translateTimeFrame}}</span>
               </div>
               <div slot="created_at" slot-scope="props">
                 {{ changeTime(props.row.created_at)}}
@@ -49,6 +50,7 @@
 </template>
 
 <script>
+  import moment from "jalali-moment";
   export default {
     name: "InPlaceOrders",
     data() {
@@ -125,7 +127,11 @@
         setTimeout(()=>{
           this.$refs.orders.refresh()
         },10);
-      }
+      },
+
+      preferedTime(time) {
+        return moment(time).format('jYYYY/jMM/jDD')
+      },
     },
     filters: {
       translateStatus: function (v) {
@@ -145,7 +151,26 @@
           default:
             return v
         }
-      }
+      },
+
+      translateTimeFrame: function(v){
+        switch (v) {
+          case 0:
+            return '9-12'
+            break
+          case 1:
+            return '12-3'
+            break
+          case 2:
+            return '3-6'
+            break
+          case 3:
+            return '6-9'
+            break
+          default:
+            return v
+        }
+      },
     }
   };
 </script>

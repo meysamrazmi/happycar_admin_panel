@@ -75,13 +75,15 @@ export default {
       id: '',
       shop: {
         address: '',
-        longitude: '',
-        latitude: '',
+        location:{
+          longitude: '',
+          latitude: '',
+        },
         available: false,
         user: {},
       },
 
-      zoom:16,
+      zoom:14,
       url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       center:  L.latLng(35.6892, 51.3890),
@@ -100,8 +102,8 @@ export default {
       this.$http.get(`/profile/admin/shop/?id=${this.id}`).then((res)=> {
         this.originalShop = Object.assign({}, res.data.data[0]);
         this.shop = res.data.data[0]
-        let lat = this.shop.latitude != 0 ? this.shop.latitude : 35.74466235151208
-        let lng = this.shop.longitude != 0 ? this.shop.longitude : 51.37524538390484
+        let lat = this.shop.location.latitude != 0 ? this.shop.location.latitude : 35.74466235151208
+        let lng = this.shop.location.longitude != 0 ? this.shop.location.longitude : 51.37524538390484
         this.center =  L.latLng(lat, lng);
         this.marker =  L.latLng(lat, lng);
       }).catch((err)=> {
@@ -111,19 +113,25 @@ export default {
 
     setLocation(location) {
       console.log(location);
-      this.shop.latitude = location.lat;
-      this.shop.longitude = location.lng;
+      this.shop.location.latitude = location.lat;
+      this.shop.location.longitude = location.lng;
     },
 
     saveShop(){
-      const shopFormData = new FormData();
-      shopFormData.set('id', this.id);
-      Object.keys(this.shop).forEach((key) => {
-        shopFormData.set(key, this.shop[key]);
-      });
+      // const shopFormData = new FormData();
+      // shopFormData.set('id', this.id);
+      // Object.keys(this.shop).forEach((key) => {
+      //   shopFormData.set(key, this.shop[key]);
+      // });
+      let data = {
+        id: this.id,
+        location: this.shop.location,
+        address: this.shop.address,
+        available: this.shop.available
+      }
 
-      console.log(shopFormData)
-      this.$http.put(`/profile/admin/shop/?id=${this.id}`, shopFormData).then((res)=> {
+      console.log(data)
+      this.$http.put(`/profile/admin/shop/?id=${this.id}`, data).then((res)=> {
         this.$swal({
           type: 'success',
           title: 'موفق',

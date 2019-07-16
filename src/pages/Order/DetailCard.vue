@@ -48,41 +48,37 @@
         </div>
       </div>
 
-      <div class="col-12">
+      <div class="col-12" v-if="address && address.address">
         <div class="divider-border p-2 my-2">
-          <strong>
-            آدرس
-          </strong>
-          <span class="pr-4">
-                    {{ address.address }}
-                </span>
+          <strong>آدرس</strong>
+          <span class="pr-4">{{ address.address }}</span>
         </div>
       </div>
+      <div class="col-12" v-if="address && address.latitude && address.longitude" style="height: 200px;">
+        <l-map :zoom="zoom" :center="center">
+          <l-tile-layer :url="url"></l-tile-layer>
+          <l-marker :draggable="true" :lat-lng="marker"></l-marker>
+        </l-map>
+      </div>
+
 
       <div class="col-6">
         <div class="divider-border p-2 my-2 ">
-          <strong>
-            زمان انجام
-          </strong>
-          <span class="pull-left">
-                    {{ timeFrames[time] }}
-                </span>
+          <strong>زمان انجام</strong>
+          <span class="pull-left">{{ timeFrames[time] }}</span>
         </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-6" v-if="store">
         <div class="divider-border p-2 my-2">
-          <strong>
-            انبار
+          <strong>انبار
           </strong>
-          <span class="pull-left">
-                        {{ store }}
-                    </span>
+          <span class="pull-left">{{ store }}</span>
         </div>
       </div>
+      <hr class="col-11"/>
 
-      <div class="card-header col-6"><h4 class="card-title">اطلاعات خودرو</h4></div>
-      <div class="col-6"></div>
+      <div class="col-12" v-if="buyer_car"><h4 class="card-title">اطلاعات خودرو</h4></div>
       <div v-for="(val, name) in buyer_car"
            class="col-6"
            v-if="['brand', 'carModel', 'carType', 'covered_distance', 'plateNumber', 'production_year'].indexOf(name) > -1">
@@ -97,9 +93,14 @@
 </template>
 
 <script>
+  import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
   export default {
     name: "detail-card",
-
+    components: {
+      LMap,
+      LTileLayer,
+      LMarker,
+    },
     props: {
       buyer: {
         type: Object
@@ -132,8 +133,19 @@
 
     data() {
       return {
-        timeFrames: ["9 - 12", "12 - 15", "15 - 18", "18 - 21"]
+        timeFrames: ["9 - 12", "12 - 15", "15 - 18", "18 - 21"],
+
+        zoom:14,
+        url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       };
+    },
+    computed: {
+      center() {
+        return L.latLng(this.address.latitude, this.address.longitude)
+      },
+      marker() {
+        return L.latLng(this.address.latitude, this.address.longitude)
+      }
     },
     filters:{
       translateNames: function (value) {
