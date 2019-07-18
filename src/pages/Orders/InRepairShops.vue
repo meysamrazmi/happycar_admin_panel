@@ -41,7 +41,10 @@
               <div slot="created_at" slot-scope="props">
                 {{ changeTime(props.row.created_at)}}
               </div>
-              <div slot="assigned_shop" slot-scope="props">
+              <div slot="assigned_shop" slot-scope="props" style="white-space: nowrap;">
+                <router-link :to="{name: 'shop-order-detail', params: {id:props.row.id}}" class="ml-1">
+                  <span class="ti-more-alt btn btn-xs btn-outline-info btn-round p-2"></span>
+                </router-link>
                 <p-button v-if="props.row.assigned_shop == null"
                           type="success"
                           @click.native="openModal(props.row.id)">تخصیص</p-button>

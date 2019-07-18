@@ -65,13 +65,13 @@
 
         data() {
             return {
-                columns: ['id', 'carModel','image', 'brand', 'types', 'actions'],
+                columns: ['id', 'carModel','image', 'brand.brand', 'types', 'actions'],
                 data: [],
                 carTypes: [],
                 options: {
                     headings: {
                         carModel: 'مدل خودرو',
-                        brand: 'برند',
+                        'brand.brand': 'برند',
                         id: 'ردیف',
                         image: 'تصویر',
                         actions: 'اقدامات',

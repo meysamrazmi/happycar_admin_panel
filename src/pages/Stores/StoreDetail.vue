@@ -143,8 +143,12 @@
           'new_inventory.product_id.special_name',
           'new_inventory.product_id.general_name',
           'new_inventory.product_id.code',
+          'inventory.count',
           'new_inventory.product_id.image',
-          'new_inventory.count', 'count', 'actions'],
+          'new_inventory.store_id.name',
+          'new_inventory.count',
+          'count',
+          'actions'],
         options: {
           headings: {
             'new_inventory.product_id.id': 'شناسه محصول',
@@ -153,6 +157,8 @@
             'new_inventory.product_id.code': 'کد',
             'new_inventory.product_id.image': 'تصویر',
             'new_inventory.count': 'موجودی انبار مقصد',
+            'inventory.count': 'موجودی',
+            'new_inventory.store_id.name': 'درخواست کننده',
             index: 'ردیف',
             'count': 'تعداد درخواستی',
             actions: 'اقدامات',

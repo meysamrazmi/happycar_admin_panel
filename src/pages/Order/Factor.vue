@@ -34,10 +34,10 @@
         </div>
         <div class="divider-border p-2 my-2 discount-border">
             <strong>
-                تخفیف
+                ضریب
             </strong>
             <span class="pr-4 pull-left">
-                {{ total_cost - paid_cost | currency }}
+                {{ paid_cost - total_cost | currency }}
             </span>
         </div>
         <div class="divider-border p-2 my-2">
